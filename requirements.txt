@@ -1,0 +1,17 @@
+torch==1.13.1
+torchvision==0.14.1
+huggingface_hub==0.25.2
+xformers==0.0.16
+numpy<2
+triton
+pillow
+diffusers==0.11.1
+ftfy
+transformers
+opencv-python 
+tqdm
+pyyaml
+accelerate
+tensorboard
+av==12.0.0
+kornia
