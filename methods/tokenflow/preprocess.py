@@ -188,8 +188,8 @@ class Preprocess(nn.Module):
             paths = [f"{frames_path}/%05d.jpg" % i for i in range(n_frames)]
         self.paths = paths
         frames = [Image.open(path).convert('RGB') for path in paths]
-        if frames[0].size[0] == frames[0].size[1]:
-            frames = [frame.resize((512, 512), resample=Image.Resampling.LANCZOS) for frame in frames]
+       # if frames[0].size[0] == frames[0].size[1]:
+        frames = [frame.resize((512, 512), resample=Image.Resampling.LANCZOS) for frame in frames]
         frames = torch.stack([T.ToTensor()(frame) for frame in frames]).to(torch.float16).to(self.device)
         # encode to latents
         latents = self.encode_imgs(frames, deterministic=True).to(torch.float16).to(self.device)
