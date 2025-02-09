@@ -45,7 +45,7 @@ if __name__ == "__main__":
     parser.add_argument('--sd_version', type=str, default='2.1', choices=['1.5', '2.0', '2.1', 'ControlNet', 'depth'])
     parser.add_argument('--steps', type=int, default=500)
     parser.add_argument('--batch_size', type=int, default=8)
-    parser.add_argument('--save_steps', type=int, default=100)
+    parser.add_argument('--save_steps', type=int, default=50)
     parser.add_argument('--n_frames', type=int, default=24)
     parser.add_argument('--inversion_prompt', type=str, default=' ')  # Can be dynamically set per video
 

@@ -286,6 +286,7 @@ class Preprocess(nn.Module):
 
 def prep(opt):
     # timesteps to save
+    device = "cuda"
     if opt.sd_version == '2.1':
         model_key = "stabilityai/stable-diffusion-2-1-base"
     elif opt.sd_version == '2.0':
