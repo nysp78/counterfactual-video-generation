@@ -2,7 +2,7 @@ from typing import Type
 import torch
 import os
 
-from util import isinstance_str, batch_cosine_sim
+from .util import isinstance_str, batch_cosine_sim
 
 def register_pivotal(diffusion_model, is_pivotal):
     for _, module in diffusion_model.named_modules():

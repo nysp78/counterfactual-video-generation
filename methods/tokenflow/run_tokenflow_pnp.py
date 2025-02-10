@@ -14,8 +14,8 @@ from tqdm import tqdm
 from transformers import logging
 from diffusers import DDIMScheduler, StableDiffusionPipeline
 
-from tokenflow_utils import *
-from util import save_video, seed_everything
+from .tokenflow_utils import *
+from .util import save_video, seed_everything
 
 # suppress partial model loading warning
 logging.set_verbosity_error()
@@ -175,9 +175,9 @@ class TokenFlow(nn.Module):
         if frames[0].size[0] == frames[0].size[1]:
             frames = [frame.resize((512, 512), resample=Image.Resampling.LANCZOS) for frame in frames]
         frames = torch.stack([T.ToTensor()(frame) for frame in frames]).to(torch.float16).to(self.device)
-        save_video(frames, f'{self.config["output_path"]}/input_fps10.mp4', fps=10)
+       # save_video(frames, f'{self.config["output_path"]}/input_fps10.mp4', fps=10)
         save_video(frames, f'{self.config["output_path"]}/input_fps20.mp4', fps=20)
-        save_video(frames, f'{self.config["output_path"]}/input_fps30.mp4', fps=30)
+       # save_video(frames, f'{self.config["output_path"]}/input_fps30.mp4', fps=30)
         # encode to latents
         latents = self.encode_imgs(frames, deterministic=True).to(torch.float16).to(self.device)
         # get noise
@@ -245,9 +245,9 @@ class TokenFlow(nn.Module):
         decoded = self.decode_latents(self.latents)
         for i in range(len(decoded)):
             T.ToPILImage()(decoded[i]).save(f'{self.config["output_path"]}/vae_recon/%05d.png' % i)
-        save_video(decoded, f'{self.config["output_path"]}/vae_recon_10.mp4', fps=10)
+        #save_video(decoded, f'{self.config["output_path"]}/vae_recon_10.mp4', fps=10)
         save_video(decoded, f'{self.config["output_path"]}/vae_recon_20.mp4', fps=20)
-        save_video(decoded, f'{self.config["output_path"]}/vae_recon_30.mp4', fps=30)
+        #save_video(decoded, f'{self.config["output_path"]}/vae_recon_30.mp4', fps=30)
 
     def edit_video(self):
         os.makedirs(f'{self.config["output_path"]}/img_ode', exist_ok=True)
@@ -257,9 +257,9 @@ class TokenFlow(nn.Module):
         self.init_method(conv_injection_t=pnp_f_t, qk_injection_t=pnp_attn_t)
         noisy_latents = self.scheduler.add_noise(self.latents, self.eps, self.scheduler.timesteps[0])
         edited_frames = self.sample_loop(noisy_latents, torch.arange(self.config["n_frames"]))
-        save_video(edited_frames, f'{self.config["output_path"]}/tokenflow_PnP_fps_10.mp4')
+       # save_video(edited_frames, f'{self.config["output_path"]}/tokenflow_PnP_fps_10.mp4')
         save_video(edited_frames, f'{self.config["output_path"]}/tokenflow_PnP_fps_20.mp4', fps=20)
-        save_video(edited_frames, f'{self.config["output_path"]}/tokenflow_PnP_fps_30.mp4', fps=30)
+       # save_video(edited_frames, f'{self.config["output_path"]}/tokenflow_PnP_fps_30.mp4', fps=30)
         print('Done!')
 
     def sample_loop(self, x, indices):
