@@ -1,0 +1,619 @@
+{
+    "Zeem6k2bDFk_6_0": {
+      "factual": "He is young.",
+      "counterfactual": {
+        "age": "He is old, he has beard, he is bald.",
+        "gender": "She is young.",
+        "beard": "He is young, he has beard.",
+        "bald": "He is young, he is bald."
+      }
+    },
+    "v1OzyGbBM_o_5_0": {
+      "factual": "She is young.",
+      "counterfactual": {
+        "age": "She is old.",
+        "gender": "He is young, he has beard.",
+        "beard": "She is young, she has beard.",
+        "bald": "She is young, she is bald."
+      }
+    },
+    "vGi5mcULgz8_4_0": {
+      "factual": "A man is young, he has beard.",
+      "counterfactual": {
+        "age": "A man is old, he has beard, he is bald.",
+        "gender": "A woman is young.",
+        "beard": "A man is young.",
+        "bald": "A man is young, he has beard, he is bald."
+      }
+    },
+    "vhw3uKg9SJE_25_0": {
+      "factual": "This woman is young.",
+      "counterfactual": {
+        "age": "This woman is old.",
+        "gender": "This man is young, he has beard.",
+        "beard": "This woman is young, she has beard.",
+        "bald": "This woman is young, she is bald."
+      }
+    },
+    "vMkIT1SycG8_14_1": {
+      "factual": "She is young.",
+      "counterfactual": {
+        "age": "She is old.",
+        "gender": "He is young, he has beard.",
+        "beard": "She is young, she has beard.",
+        "bald": "She is young, she is bald."
+      }
+    },
+    "Xky1vMyIYE8_6_0": {
+      "factual": "She is old.",
+      "counterfactual": {
+        "age": "She is young.",
+        "gender": "He is old, he has beard, he is bald.",
+        "beard": "She is old, she has beard.",
+        "bald": "She is old, she is bald."
+      }
+    },
+    "xkzBmNcfBB8_0_0": {
+      "factual": "This man is old, he has beard.",
+      "counterfactual": {
+        "age": "This man is young.",
+        "gender": "This woman is old.",
+        "beard": "This man is old.",
+        "bald": "This man is old, he has beard, he is bald."
+      }
+    },
+    "xW31Zkra39U_27_0": {
+      "factual": "She is young.",
+      "counterfactual": {
+        "age": "She is old.",
+        "gender": "He is young, he has beard.",
+        "beard": "She is young, she has beard.",
+        "bald": "She is young, she is bald."
+      }
+    },
+    "Y927vRQrRno_8_0": {
+      "factual": "A woman is young.",
+      "counterfactual": {
+        "age": "A woman is old.",
+        "gender": "A man is young, he has beard.",
+        "beard": "A woman is young, she has beard.",
+        "bald": "A woman is young, she is bald."
+      }
+    },
+    "yksnYcqALUE_2_0": {
+      "factual": "She is young.",
+      "counterfactual": {
+        "age": "She is old.",
+        "gender": "He is young, he has beard.",
+        "beard": "She is young, she has beard.",
+        "bald": "She is young, she is bald."
+      }
+    },
+    "mi5ic9OVtIE_0_0": {
+      "factual": "A man is young.",
+      "counterfactual": {
+        "age": "A man is old, he has beard, he is bald.",
+        "gender": "A woman is young.",
+        "beard": "A man is young, he has beard.",
+        "bald": "A man is young, he is bald."
+      }
+    },
+    "pbkZ9Jp68n8_3_0": {
+      "factual": "This man has beard, he is old.",
+      "counterfactual": {
+        "age": "This man is young.",
+        "gender": "This woman is old.",
+        "beard": "This man is old.",
+        "bald": "This man has beard, he is old, he is bald."
+      }
+    },
+    "qCF9PXqJ0Ic_10_0": {
+      "factual": "He is young.",
+      "counterfactual": {
+        "age": "He is old, he has beard, he is bald.",
+        "gender": "She is young.",
+        "beard": "He is young, he has beard.",
+        "bald": "He is young, he is bald."
+      }
+    },
+    "qE-eho0hsjM_50_0": {
+      "factual": "He has beard, he is young, he is bald.",
+      "counterfactual": {
+        "age": "He is old, he has beard, he is bald.",
+        "gender": "She is young",
+        "beard": "He is young, he is bald.",
+        "bald": "He has beard, he is young."
+      }
+    },
+    "ra_1lxERsR4_10_0": {
+      "factual": "She is old.",
+      "counterfactual": {
+        "age": "She is young.",
+        "gender": "He is old, he has beard, he is bald.",
+        "beard": "She is old, she has beard.",
+        "bald": "She is old, she is bald."
+      }
+    },
+    "rzj8ssvHVMM_3_0": {
+      "factual": "He is young, he has beard.",
+      "counterfactual": {
+        "age": "He is old, he has beard, he is bald.",
+        "gender": "She is young.",
+        "beard": "He is young.",
+        "bald": "He is young, he has beard, he is bald."
+      }
+    },
+    "s__juO4C3Ic_5_1": {
+      "factual": "This man is young, he has beard.",
+      "counterfactual": {
+        "age": "This man is old, he has beard, he is bald.",
+        "gender": "This woman is young.",
+        "beard": "This man is young.",
+        "bald": "This man is young, he has beard, he is bald."
+      }
+    },
+    "tAH-l_iRQaQ_14_2": {
+      "factual": "This man is old.",
+      "counterfactual": {
+        "age": "This man is young.",
+        "gender": "This woman is old.",
+        "beard": "This man is old, he has beard.",
+        "bald": "This man is old, he is bald."
+      }
+    },
+    "-ThrENKIlzQ_23_0": {
+      "factual": "This man has beard, he is young.",
+      "counterfactual": {
+        "age": "This man is old, he has beard, he is bald.",
+        "gender": "This woman is young.",
+        "beard": "This man is young.",
+        "bald": "This man has beard, he is young, he is bald."
+      }
+    },
+    "uAog_AxZ40Y_37_0": {
+      "factual": "He is old, he has beard.",
+      "counterfactual": {
+        "age": "He is young.",
+        "gender": "She is old.",
+        "beard": "He is old.",
+        "bald": "He is old, he has beard, he is bald."
+      }
+    },
+
+
+    "g_Yrrk4eoXk_13_6": {
+      "factual": "She is old.",
+      "counterfactual": {
+        "age": "She is young.",
+        "gender": "He is old, he has beard, he is bald.",
+        "beard": "She is old, she has beard.",
+        "bald": "She is old, she is bald."
+      }
+    },
+    "g3grlAFSLIE_51_0": {
+      "factual": "A woman is old.",
+      "counterfactual": {
+        "age": "A woman is young.",
+        "gender": "A man is old, he has beard, he is bald.",
+        "beard": "A woman is old, she has beard.",
+        "bald": "A woman is old, she is bald."
+      }
+    },
+    "-H0bPZMgq44_7_0": {
+      "factual": "A man has beard, he is old.",
+      "counterfactual": {
+        "age": "A man is young.",
+        "gender": "A woman is old.",
+        "beard": "A man is old.",
+        "bald": "A man has beard, he is old, he is bald."
+      }
+    },
+    "hdxPWcivdm8_13_1": {
+      "factual": "She is young.",
+      "counterfactual": {
+        "age": "She is old.",
+        "gender": "He is young, he has beard.",
+        "beard": "She is young, she has beard.",
+        "bald": "She is young, she is bald."
+      }
+    },
+    "-KBCBTt2ldA_0_1": {
+      "factual": "She is young.",
+      "counterfactual": {
+        "age": "She is old.",
+        "gender": "He is young, he has beard.",
+        "beard": "She is young, she has beard.",
+        "bald": "She is young, she is bald."
+      }
+    },
+    "kmljXqyYtBE_19_0": {
+      "factual": "He has beard, this man is young.",
+      "counterfactual": {
+        "age": "He is old, he has beard, he is bald.",
+        "gender": "She is young.",
+        "beard": "This man is young.",
+        "bald": "He has beard, this man is young, he is bald."
+      }
+    },
+    "kOqCaiW6QCs_11_0": {
+      "factual": "He has beard, this man is old, he is bald.",
+      "counterfactual": {
+        "age": "He is young.",
+        "gender": "She is old.",
+        "beard": "He is old, he is bald.",
+        "bald": "He has beard, this man is old."
+      }
+    },
+    "-LJjxuHLI4U_51_5": {
+      "factual": "She is young.",
+      "counterfactual": {
+        "age": "She is old.",
+        "gender": "He is young, he has beard.",
+        "beard": "She is young, she has beard.",
+        "bald": "She is young, she is bald."
+      }
+    },
+    "m_YWPYjVqa4_9_0": {
+      "factual": "A man has beard, he is young.",
+      "counterfactual": {
+        "age": "A man is old, he has beard, he is bald.",
+        "gender": "A woman is young.",
+        "beard": "A man is young.",
+        "bald": "A man has beard, he is young, he is bald."
+      }
+    },
+    "m21Xn8R7188_15_0": {
+      "factual": "A man is old.",
+      "counterfactual": {
+        "age": "A man is young.",
+        "gender": "A woman is old.",
+        "beard": "A man is old, he has beard.",
+        "bald": "A man is old, he is bald."
+      }
+    },
+    "130vM0iQ-tw_14_2": {
+      "factual": "She is young.",
+      "counterfactual": {
+        "age": "She is old.",
+        "gender": "He is young, he has beard.",
+        "beard": "She is young, she has beard.",
+        "bald": "She is young, she is bald."
+      }
+    },
+    "a2y7PK4z01U_17_0": {
+      "factual": "He is young.",
+      "counterfactual": {
+        "age": "He is old, he has beard, he is bald.",
+        "gender": "She is young.",
+        "beard": "He is young, he has beard.",
+        "bald": "He is young, he is bald."
+      }
+    },
+    "a9H6UwV28-k_16_0": {
+      "factual": "A woman is young.",
+      "counterfactual": {
+        "age": "A woman is old.",
+        "gender": "A man is young, he has beard.",
+        "beard": "A woman is young, she has beard.",
+        "bald": "A woman is young, she is bald."
+      }
+    },
+    "aA3k-UN8-Uk_22_0": {
+      "factual": "She is old.",
+      "counterfactual": {
+        "age": "She is young.",
+        "gender": "He is old, he has beard, he is bald.",
+        "beard": "She is old, she has beard.",
+        "bald": "She is old, she is bald."
+      }
+    },
+    "-AdQECaFzxU_1_0": {
+      "factual": "This man is old.",
+      "counterfactual": {
+        "age": "This man is young.",
+        "gender": "This woman is old.",
+        "beard": "This man is old, he has beard.",
+        "bald": "This man is old, he is bald."
+      }
+    },
+    "aGRVuZHstlU_0_0": {
+      "factual": "She is young.",
+      "counterfactual": {
+        "age": "She is old.",
+        "gender": "He is young, he has beard.",
+        "beard": "She is young, she has beard.",
+        "bald": "She is young, she is bald."
+      }
+    },
+    "b5vjXRWFDYI_9_0": {
+      "factual": "This woman is young.",
+      "counterfactual": {
+        "age": "This woman is old.",
+        "gender": "This man is young, he has beard.",
+        "beard": "This woman is young, she has beard.",
+        "bald": "This woman is young, she is bald."
+      }
+    },
+    "bCOvQOS8Bfc_1_0": {
+      "factual": "A woman is young.",
+      "counterfactual": {
+        "age": "A woman is old.",
+        "gender": "A man is young, he has beard.",
+        "beard": "A woman is young, she has beard.",
+        "bald": "A woman is young, she is bald."
+      }
+    },
+    "-bQF5KqqgKA_1_0": {
+      "factual": "A woman is young.",
+      "counterfactual": {
+        "age": "A woman is old.",
+        "gender": "A man is young, he has beard.",
+        "beard": "A woman is young, she has beard.",
+        "bald": "A woman is young, she is bald."
+      }
+    },
+    "bqy2zrVCt8c_21_0": {
+      "factual": "He is old.",
+      "counterfactual": {
+        "age": "He is young.",
+        "gender": "She is old.",
+        "beard": "He is old, he has beard.",
+        "bald": "He is old, he is bald."
+      }
+    },
+
+
+    "c2igF2AfhJ0_19_0": {
+      "factual": "A man is young, he has beard.",
+      "counterfactual": {
+        "age": "A man is old, he has beard, he is bald.",
+        "gender": "A woman is young.",
+        "beard": "A man is young.",
+        "bald": "A man is young, he has beard, he is bald."
+      }
+    },
+    "cImOMABtLFI_2_1": {
+      "factual": "A man has beard, he is young.",
+      "counterfactual": {
+        "age": "A man is old, he has beard, he is bald.",
+        "gender": "A woman is young.",
+        "beard": "A man is young.",
+        "bald": "A man has beard, he is young, he is bald."
+      }
+    },
+    "-c-pO7H1Dlc_0_0": {
+      "factual": "He is young, this man has beard.",
+      "counterfactual": {
+        "age": "He is old, he has beard, he is bald.",
+        "gender": "She is young.",
+        "beard": "He is young.",
+        "bald": "He is young, this man has beard, he is bald."
+      }
+    },
+    "d-AM-aQT_xw_15_0": {
+      "factual": "He has beard, he is old, he is bald.",
+      "counterfactual": {
+        "age": "He is young.",
+        "gender": "She is old.",
+        "beard": "He is old, he is bald.",
+        "bald": "He has beard, he is old."
+      }
+    },
+    "dBwitl97_yM_22_1": {
+      "factual": "A man is young.",
+      "counterfactual": {
+        "age": "A man is old, he has beard, he is bald.",
+        "gender": "A woman is young.",
+        "beard": "A man is young, he has beard.",
+        "bald": "A man is young, he is bald."
+      }
+    },
+    "-DJseAmnmnc_8_0": {
+      "factual": "He has beard, he is young.",
+      "counterfactual": {
+        "age": "He is old, he has beard, he is bald.",
+        "gender": "She is young.",
+        "beard": "He is young.",
+        "bald": "He has beard, he is young, he is bald."
+      }
+    },
+    "dV06cJ5Ijv4_10_0": {
+      "factual": "A man is young, he has beard.",
+      "counterfactual": {
+        "age": "A man is old, he has beard, he is bald.",
+        "gender": "A woman is young.",
+        "beard": "A man is young.",
+        "bald": "A man is young, he has beard, he is bald."
+      }
+    },
+    "eFaetz1BEYg_0_0": {
+      "factual": "He is old.",
+      "counterfactual": {
+        "age": "He is young.",
+        "gender": "She is old.",
+        "beard": "He is old, he has beard.",
+        "bald": "He is old, he is bald."
+      }
+    },
+    "fMLDzGFeUTA_14_1": {
+      "factual": "A woman is young.",
+      "counterfactual": {
+        "age": "A woman is old.",
+        "gender": "A man is young, he has beard.",
+        "beard": "A woman is young, she has beard.",
+        "bald": "A woman is young, she is bald."
+      }
+    },
+    "05uOfaSaQpM_1_1": {
+      "factual": "A woman is young.",
+      "counterfactual": {
+        "age": "A woman is old.",
+        "gender": "A man is young, he has beard.",
+        "beard": "A woman is young, she has beard.",
+        "bald": "A woman is young, she is bald."
+      }
+    },
+    "-8ya_8Co8Ss_6_0": {
+      "factual": "She is young.",
+      "counterfactual": {
+        "age": "She is old.",
+        "gender": "He is young, he has beard.",
+        "beard": "She is young, she has beard.",
+        "bald": "She is young, she is bald."
+      }
+    },
+    "12dI8U5Rc-g_45_0": {
+      "factual": "He is old, he is bald",
+      "counterfactual": {
+        "age": "He is young.",
+        "gender": "She is old.",
+        "beard": "He is old, he has beard, he is bald.",
+        "bald": "He is old."
+      }
+    },
+    "17RnfGHRh9E_5_0": {
+      "factual": "She is young.",
+      "counterfactual": {
+        "age": "She is old.",
+        "gender": "He is young, he has beard.",
+        "beard": "She is young, she has beard.",
+        "bald": "She is young, she is bald."
+      }
+    },
+    "0xtFFvocggE_6_0": {
+      "factual": "He is old, he has beard, he is bald.",
+      "counterfactual": {
+        "age": "He is young.",
+        "gender": "She is old.",
+        "beard": "He is old, he is bald.",
+        "bald": "He is old, he has beard."
+      }
+    },
+    "1AzV0D0zZvQ_14_1": {
+      "factual": "A man has beard, he is young.",
+      "counterfactual": {
+        "age": "A man is old, he has beard, he is bald.",
+        "gender": "A woman is young.",
+        "beard": "A man is young.",
+        "bald": "A man has beard, he is young, he is bald."
+      }
+    },
+    "1F5naBzNfi8_0_0": {
+      "factual": "She is old.",
+      "counterfactual": {
+        "age": "She is young.",
+        "gender": "He is old, he has beard, he is bald.",
+        "beard": "She is old, she has beard.",
+        "bald": "She is old, she is bald."
+      }
+    },
+    "1F5naBzNfi8_5_0": {
+      "factual": "She is old.",
+      "counterfactual": {
+        "age": "She is young.",
+        "gender": "He is old, he has beard, he is bald.",
+        "beard": "She is old, she has beard.",
+        "bald": "She is old, she is bald."
+      }
+    },
+    "1MO3gP8vxoE_3_0": {
+      "factual": "She is old.",
+      "counterfactual": {
+        "age": "She is young.",
+        "gender": "He is old, he has beard, he is bald.",
+        "beard": "She is old, she has beard.",
+        "bald": "She is old, she is bald."
+      }
+    },
+    "-_B4fiuWwmo_0_1": {
+      "factual": "He has beard, he is young.",
+      "counterfactual": {
+        "age": "He is old, he has beard, he is bald.",
+        "gender": "She is young.",
+        "beard": "He is young.",
+        "bald": "He has beard, he is young, he is bald."
+      }
+    },
+    "-_B4fiuWwmo_27_0": {
+      "factual": "He is young, this man has beard.",
+      "counterfactual": {
+        "age": "He is old, he has beard, he is bald.",
+        "gender": "She is young.",
+        "beard": "He is young.",
+        "bald": "He is young, this man has beard, he is bald."
+      }
+    },
+    "_Ejt5HoqXHo_27_0": {
+      "factual": "A man is old.",
+      "counterfactual": {
+        "age": "A man is young.",
+        "gender": "A woman is old.",
+        "beard": "A man is old, he has beard.",
+        "bald": "A man is old, he is bald."
+      }
+    },
+    "-_zyvfId578_12_1": {
+      "factual": "She is young.",
+      "counterfactual": {
+        "age": "She is old.",
+        "gender": "He is young, he has beard.",
+        "beard": "She is young, she has beard.",
+        "bald": "She is young, she is bald."
+      }
+    },
+    "0era0Z6tGDU_19_1": {
+      "factual": "He has beard, he is young.",
+      "counterfactual": {
+        "age": "He is old, he has beard, he is bald.",
+        "gender": "She is young.",
+        "beard": "He is young.",
+        "bald": "He has beard, he is young, he is bald."
+      }
+    },
+    "0Lg-76xJhws_7_0": {
+      "factual": "This woman is young.",
+      "counterfactual": {
+        "age": "This woman is old.",
+        "gender": "This man is young, he has beard.",
+        "beard": "This woman is young, she has beard.",
+        "bald": "This woman is young, she is bald."
+      }
+    },
+    "0ne3CNpljDs_9_0": {
+      "factual": "A woman is young.",
+      "counterfactual": {
+        "age": "A woman is old.",
+        "gender": "A man is young, he has beard.",
+        "beard": "A woman is young, she has beard.",
+        "bald": "A woman is young, she is bald."
+      }
+    },
+    "0NKzcziNOl0_4_1": {
+      "factual": "She is old.",
+      "counterfactual": {
+        "age": "She is young.",
+        "gender": "He is old, he has beard, he is bald.",
+        "beard": "She is old, she has beard.",
+        "bald": "She is old, she is bald."
+      }
+    },
+    "0oOhuHiRENY_0_0": {
+      "factual": "He is young, he has beard, he is bald.",
+      "counterfactual": {
+        "age": "He is old, he has beard, he is bald.",
+        "gender": "She is young.",
+        "beard": "He is young, he is bald.",
+        "bald": "He is young, he has beard."
+      }
+    },
+    "0Rf9SA_DJJk_6_2": {
+      "factual": "She is young.",
+      "counterfactual": {
+        "age": "She is old.",
+        "gender": "He is young, he has beard.",
+        "beard": "She is young, she has beard.",
+        "bald": "She is young, she is bald."
+      }
+    }
+  }
+  
