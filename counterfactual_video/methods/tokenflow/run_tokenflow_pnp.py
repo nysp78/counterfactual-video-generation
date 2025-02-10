@@ -113,12 +113,12 @@ class TokenFlow(nn.Module):
         return inv_prompt
 
     def get_latents_path(self):
-        latents_path = os.path.join(config["latents_path"], f'sd_{config["sd_version"]}',
-                             Path(config["data_path"]).stem, f'steps_{config["n_inversion_steps"]}')
+        latents_path = os.path.join(self.config["latents_path"], f'sd_{self.config["sd_version"]}',
+                             Path(self.config["data_path"]).stem, f'steps_{self.config["n_inversion_steps"]}')
         latents_path = [x for x in glob.glob(f'{latents_path}/*') if '.' not in Path(x).name]
         n_frames = [int([x for x in latents_path[i].split('/') if 'nframes' in x][0].split('_')[1]) for i in range(len(latents_path))]
         latents_path = latents_path[np.argmax(n_frames)]
-        self.config["n_frames"] = min(max(n_frames), config["n_frames"])
+        self.config["n_frames"] = min(max(n_frames), self.config["n_frames"])
         if self.config["n_frames"] % self.config["batch_size"] != 0:
             # make n_frames divisible by batch_size
             self.config["n_frames"] = self.config["n_frames"] - (self.config["n_frames"] % self.config["batch_size"])
@@ -166,14 +166,14 @@ class TokenFlow(nn.Module):
     
     def get_data(self):
         # load frames
-        paths = [os.path.join(config["data_path"], "%05d.jpg" % idx) for idx in
+        paths = [os.path.join(self.config["data_path"], "%05d.jpg" % idx) for idx in
                                range(self.config["n_frames"])]
         if not os.path.exists(paths[0]):
-            paths = [os.path.join(config["data_path"], "%05d.png" % idx) for idx in
+            paths = [os.path.join(self.config["data_path"], "%05d.png" % idx) for idx in
                                    range(self.config["n_frames"])]
         frames = [Image.open(paths[idx]).convert('RGB') for idx in range(self.config["n_frames"])]
-        if frames[0].size[0] == frames[0].size[1]:
-            frames = [frame.resize((512, 512), resample=Image.Resampling.LANCZOS) for frame in frames]
+       # if frames[0].size[0] == frames[0].size[1]:
+        frames = [frame.resize((512, 512), resample=Image.Resampling.LANCZOS) for frame in frames]
         frames = torch.stack([T.ToTensor()(frame) for frame in frames]).to(torch.float16).to(self.device)
        # save_video(frames, f'{self.config["output_path"]}/input_fps10.mp4', fps=10)
         save_video(frames, f'{self.config["output_path"]}/input_fps20.mp4', fps=20)

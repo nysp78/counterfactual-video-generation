@@ -1,0 +1,23 @@
+# general
+seed: 1
+device: 'cuda'
+output_path: 'outputs/tokenflow-results'
+
+# data
+data_path: 
+latents_path: 'methods/tokenflow/inverted_latents' # should be the same as 'save_dir' arg used in preprocess
+n_inversion_steps: 500 # for retrieving the latents of the inversion
+n_frames: 24
+
+# diffusion
+sd_version: '2.1'
+guidance_scale: 4.5
+n_timesteps: 50
+batch_size: 8
+prompt: "some prompt"
+negative_prompt: "ugly, blurry, low res, unrealistic, unaesthetic"
+# pnp params -- injection thresholds ∈ [0, 1]
+pnp_attn_t: 0.5
+pnp_f_t: 0.8
+
+video: {}
