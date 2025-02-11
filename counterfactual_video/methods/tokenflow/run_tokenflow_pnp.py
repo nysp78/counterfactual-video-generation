@@ -15,7 +15,7 @@ from transformers import logging
 from diffusers import DDIMScheduler, StableDiffusionPipeline
 
 from .tokenflow_utils import *
-from .util import save_video, seed_everything
+from .util import save_video, save_videos_grid, seed_everything
 
 # suppress partial model loading warning
 logging.set_verbosity_error()
@@ -246,7 +246,7 @@ class TokenFlow(nn.Module):
         for i in range(len(decoded)):
             T.ToPILImage()(decoded[i]).save(f'{self.config["output_path"]}/vae_recon/%05d.png' % i)
         #save_video(decoded, f'{self.config["output_path"]}/vae_recon_10.mp4', fps=10)
-        save_video(decoded, f'{self.config["output_path"]}/vae_recon_20.mp4', fps=20)
+      #  save_video(decoded, f'{self.config["output_path"]}/vae_recon_20.mp4', fps=20)
         #save_video(decoded, f'{self.config["output_path"]}/vae_recon_30.mp4', fps=30)
 
     def edit_video(self):
@@ -261,6 +261,7 @@ class TokenFlow(nn.Module):
         save_video(edited_frames, f'{self.config["output_path"]}/tokenflow_PnP_fps_20.mp4', fps=20)
        # save_video(edited_frames, f'{self.config["output_path"]}/tokenflow_PnP_fps_30.mp4', fps=30)
         print('Done!')
+        return edited_frames
 
     def sample_loop(self, x, indices):
         os.makedirs(f'{self.config["output_path"]}/img_ode', exist_ok=True)

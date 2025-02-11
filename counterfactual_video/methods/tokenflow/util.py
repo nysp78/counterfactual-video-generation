@@ -3,17 +3,20 @@ from PIL import Image
 import torch
 import yaml
 import math
-
+import imageio
 import torchvision.transforms as T
 from torchvision.io import read_video,write_video
 import os
 import random
 import numpy as np
+from einops import rearrange
+import torchvision
 from torchvision.io import write_video
 # from kornia.filters import joint_bilateral_blur
 from kornia.geometry.transform import remap
 from kornia.utils.grid import create_meshgrid
 import cv2
+from PIL import Image, ImageDraw, ImageFont
 
 def save_video_frames(video_path, img_size=(512,512)):
     video, _, _ = read_video(video_path, output_format="TCHW")
@@ -83,6 +86,93 @@ def load_imgs(data_path, n_frames, device='cuda', pil=False):
     if pil:
         return torch.cat(imgs).to(device), pils
     return torch.cat(imgs).to(device)
+
+
+def save_videos_grid(videos: torch.Tensor, path: str, rescale=False, n_rows=5, fps=20):
+    videos = rearrange(videos, "b c t h w -> t b c h w")
+    outputs = []
+    for x in videos:
+        x = torchvision.utils.make_grid(x, nrow=n_rows)
+        x = x.transpose(0, 1).transpose(1, 2).squeeze(-1)
+        if rescale:
+            x = (x + 1.0) / 2.0  # -1,1 -> 0,1
+        x = (x * 255).numpy().astype(np.uint8)
+        outputs.append(x)
+
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    imageio.mimsave(path, outputs, fps=fps, loop=0)
+
+
+def save_videos_grid__(videos: torch.Tensor, path: str, titles=None, rescale=False, n_rows=5, fps=20):
+
+    videos = rearrange(videos, "b c t h w -> t b c h w")  # Rearrange to (T, B, C, H, W)
+    outputs = []
+    
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    
+    try:
+        font = ImageFont.truetype("arial.ttf", 25)  # Try Arial (if available)
+    except IOError:
+        font = ImageFont.truetype("DejaVuSans.ttf", 25)  # Use a larger fallback font
+
+    for frame in videos:
+        frame_list = []
+        max_width, max_height = 0, 0  # Track largest width & height
+
+        # Step 1: Modify Each Video Frame (Add Titles)
+        for idx, vid in enumerate(frame):  
+            img = vid.permute(1, 2, 0).cpu().numpy()  # Convert (C, H, W) -> (H, W, C)
+            
+            if rescale:
+                img = (img + 1.0) / 2.0  # Scale from [-1,1] range to [0,1]
+            img = (img * 255).astype(np.uint8)
+
+            # Convert to PIL image for adding text
+            img_pil = Image.fromarray(img)
+            draw = ImageDraw.Draw(img_pil)
+
+            # Title placement ABOVE the video
+            if titles and idx < len(titles):
+                text = titles[idx]
+                
+                # Get text size
+                bbox = draw.textbbox((0, 0), text, font=font)
+                text_width, text_height = bbox[2] - bbox[0], bbox[3] - bbox[1]
+                
+                # Create a new canvas (extra space at the top for text)
+                new_height = img_pil.height + text_height + 30  # More space for title
+                new_img = Image.new("RGB", (img_pil.width, new_height), (0, 0, 0))  # Black background
+                new_img.paste(img_pil, (0, text_height + 20))  # Paste video below the title
+                
+                # Draw text at the top center
+                draw = ImageDraw.Draw(new_img)
+                text_x = (new_img.width - text_width) // 2  # Center align
+                draw.text((text_x, 10), text, font=font, fill=(255, 255, 255))  # White text
+
+                img_pil = new_img  # Replace with updated image
+
+            # Update max width & height
+            max_width = max(max_width, img_pil.width)
+            max_height = max(max_height, img_pil.height)
+
+            frame_list.append(img_pil)
+
+        # Step 2: Resize All Frames to Match Max Dimensions
+        uniform_frames = []
+        for img_pil in frame_list:
+            padded_img = Image.new("RGB", (max_width, max_height), (0, 0, 0))  # Black padding
+            padded_img.paste(img_pil, (0, max_height - img_pil.height))  # Align at the bottom
+            uniform_frames.append(np.array(padded_img))
+
+        # Create a grid from the modified frames (with titles above)
+        grid = torchvision.utils.make_grid(torch.tensor(np.stack(uniform_frames)).permute(0, 3, 1, 2), nrow=n_rows)
+        grid = grid.permute(1, 2, 0).cpu().numpy()  # Convert (C, H, W) -> (H, W, C)
+        
+        outputs.append(grid)
+
+    # Save as GIF
+    imageio.mimsave(path, outputs, fps=fps, loop=0)
+
 
 
 def save_video(raw_frames, save_path, fps=10):

@@ -15,3 +15,5 @@ accelerate
 tensorboard
 av==12.0.0
 kornia
+imageio
+einops

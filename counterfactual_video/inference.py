@@ -4,7 +4,7 @@ import torch
 import subprocess
 from pathlib import Path
 from methods.tokenflow.run_tokenflow_pnp import TokenFlow
-from methods.tokenflow.util import seed_everything
+from methods.tokenflow.util import seed_everything, save_videos_grid, save_videos_grid__
 import os
 import yaml
 import json
@@ -40,8 +40,10 @@ if __name__ == '__main__':
                                          }
                    }
 
+        videos = []
+        text_descriptions = []
         for attr in prompts["counterfactual"].keys():
-            config["output_path"] = os.path.join(config["output_path"], attr,
+            config["output_path"] = os.path.join(config["output_path"] + "_cfg_scale_" + str(config["guidance_scale"]),"interventions", attr,
                                              video_id, config["video"][video_id]["prompt_variants"]["counterfactual"][attr])
             os.makedirs(config["output_path"], exist_ok=True)
             config["prompt"] = config["video"][video_id]["prompt_variants"]["counterfactual"][attr]
@@ -49,7 +51,27 @@ if __name__ == '__main__':
             print(config)
 
             if opt.method == "tokenflow":
-                pipeline = TokenFlow(config)
-                pipeline.edit_video()
+                grids_path =  os.path.join(base_path + "_cfg_scale_" + str(config["guidance_scale"]), video_id)
+                os.makedirs(grids_path, exist_ok=True)
 
+                pipeline = TokenFlow(config)
+                orig_frames = pipeline.frames
+
+                frames = pipeline.edit_video()
+
+                videos.append(frames.permute(1,0,2,3).unsqueeze(0).cpu())
+                text_descriptions.append(config["prompt"])
+              #  print(frames.shape)
             config["output_path"] = base_path #init base config output
+
+        videos = [orig_frames.permute(1,0,2,3).unsqueeze(0).cpu()] + videos
+        text_descriptions = [config["video"][video_id]["prompt_variants"]["factual"]] + text_descriptions
+        videos = torch.concat(videos)
+        print(videos.shape)
+        save_path = grids_path + "/output.gif"
+        print(save_path)
+        save_videos_grid__(videos, save_path, text_descriptions)
+        #save_videos_grid(videos,save_path)
+
+        videos = [] #empty list for grid plot
+        text_descriptions = []
