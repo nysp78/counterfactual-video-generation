@@ -52,7 +52,7 @@ if __name__ == '__main__':
             print(config)
 
             if opt.method == "tokenflow":
-                grids_path =  os.path.join(base_path + "_cfg_scale_" + str(config["guidance_scale"]), config["intervention_type"], video_id)
+                grids_path =  os.path.join(base_path + "_cfg_scale_" + str(config["guidance_scale"]), config["intervention_type"])
                 os.makedirs(grids_path, exist_ok=True)
 
                 pipeline = TokenFlow(config)
@@ -69,7 +69,7 @@ if __name__ == '__main__':
         text_descriptions = [config["video"][video_id]["prompt_variants"]["factual"]] + text_descriptions
         videos = torch.concat(videos)
         print(videos.shape)
-        save_path = grids_path + "/output.gif"
+        save_path = grids_path + "/" + f'{video_id}.gif'
         print(save_path)
         save_videos_grid__(videos, save_path, text_descriptions)
         #save_videos_grid(videos,save_path)
