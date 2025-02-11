@@ -2,7 +2,7 @@
 seed: 1
 device: 'cuda'
 output_path: 'outputs/tokenflow-results'
-
+intervention_type: "explicit"
 # data
 data_path: 
 latents_path: 'methods/tokenflow/inverted_latents' # should be the same as 'save_dir' arg used in preprocess

@@ -43,7 +43,8 @@ if __name__ == '__main__':
         videos = []
         text_descriptions = []
         for attr in prompts["counterfactual"].keys():
-            config["output_path"] = os.path.join(config["output_path"] + "_cfg_scale_" + str(config["guidance_scale"]),"interventions", attr,
+            config["output_path"] = os.path.join(config["output_path"] + "_cfg_scale_" + str(config["guidance_scale"]),
+                                                 config["intervention_type"], "interventions", attr,
                                              video_id, config["video"][video_id]["prompt_variants"]["counterfactual"][attr])
             os.makedirs(config["output_path"], exist_ok=True)
             config["prompt"] = config["video"][video_id]["prompt_variants"]["counterfactual"][attr]
@@ -51,7 +52,7 @@ if __name__ == '__main__':
             print(config)
 
             if opt.method == "tokenflow":
-                grids_path =  os.path.join(base_path + "_cfg_scale_" + str(config["guidance_scale"]), video_id)
+                grids_path =  os.path.join(base_path + "_cfg_scale_" + str(config["guidance_scale"]), config["intervention_type"], video_id)
                 os.makedirs(grids_path, exist_ok=True)
 
                 pipeline = TokenFlow(config)
