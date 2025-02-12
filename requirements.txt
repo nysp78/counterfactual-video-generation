@@ -17,3 +17,5 @@ av==12.0.0
 kornia
 imageio
 einops
+omegaconf
+timm
