@@ -485,8 +485,8 @@
       "counterfactual": {
         "age": "He is young.",
         "gender": "She is old.",
-        "beard": "He is old, he is bald.",
-        "bald": "He is old, he has beard."
+        "beard": "He is old, he has beard.",
+        "bald": "He is old, he is bald."
       }
     },
     "1AzV0D0zZvQ_14_1": {

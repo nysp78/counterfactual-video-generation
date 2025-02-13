@@ -2,7 +2,7 @@
 seed: 1
 device: 'cuda'
 output_path: 'outputs/tokenflow-results'
-intervention_type: "explicit"
+intervention_type: "implicit"
 # data
 data_path: 
 latents_path: 'methods/tokenflow/inverted_latents' # should be the same as 'save_dir' arg used in preprocess
@@ -11,9 +11,9 @@ n_frames: 24
 
 # diffusion
 sd_version: '2.1'
-guidance_scale: 4.5
+guidance_scale: 6.5
 n_timesteps: 50
-batch_size: 8
+batch_size: 24
 prompt: "some prompt"
 negative_prompt: "ugly, blurry, low res, unrealistic, unaesthetic"
 # pnp params -- injection thresholds ∈ [0, 1]

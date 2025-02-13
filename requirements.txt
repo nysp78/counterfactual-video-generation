@@ -19,3 +19,4 @@ imageio
 einops
 omegaconf
 timm
+bitsandbytes==0.35.4

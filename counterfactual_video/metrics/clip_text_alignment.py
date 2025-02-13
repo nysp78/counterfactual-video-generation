@@ -68,9 +68,9 @@ class ClipTextAlignment(nn.Module):
             image_input = transform(image_input)
             image_embs = self.model.get_image_features(image_input)
             image_embs = image_embs / torch.norm(image_embs, dim=-1, keepdim=True)
-           # score = (self.model.logit_scale.exp() * (text_embs @ image_embs.T)).cpu().squeeze().item()
+            score = (self.model.logit_scale.exp() * (text_embs @ image_embs.T)).cpu().squeeze().item()
            # Compute cosine similarity (without logit scale)
-            score = torch.nn.functional.cosine_similarity(text_embs, image_embs).cpu().squeeze().item()
+            #score = torch.nn.functional.cosine_similarity(text_embs, image_embs).cpu().squeeze().item()
             scores.append(score)
 
         return sum(scores) / len(scores)

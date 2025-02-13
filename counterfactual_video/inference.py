@@ -25,11 +25,11 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--method', choices =["tuneavideo", "tokenflow"], default="tokenflow")
     parser.add_argument('--base_config_path', type=str, default='methods/tokenflow/configs/config_pnp.yaml')
-    parser.add_argument('--counterfactuals_config_path', type=str, default='data/celebv_bench/counterfactual_explicit.json')
+    parser.add_argument('--counterfactuals_config_path', type=str, default='data/celebv_bench/counterfactual_implicit.json')
 
     opt = parser.parse_args()
     logger = logging.getLogger(__name__)
-
+   # device = "cuda:1"
     with open(opt.base_config_path, "r") as f:
         config = yaml.safe_load(f)
         base_path = config["output_path"]
@@ -77,13 +77,14 @@ if __name__ == '__main__':
 
 
             #calculate metrics
-            dover_score = DoverScore().evaluate(frames)
-            clip_score_temp = ClipConsistency().evaluate(frames)
-            clip_score_align = ClipTextAlignment().evaluate(frames, config["prompt"])
+            dover_score = DoverScore(device=config["device"]).evaluate(frames)
+            clip_score_temp = ClipConsistency(device=config["device"]).evaluate(frames)
+            clip_score_align = ClipTextAlignment(device=config["device"]).evaluate(frames, config["prompt"])
             video_quality.append(dover_score)
             temporal_consistency.append(clip_score_temp)
             text_video_align[attr].append(clip_score_align)
-            print(f"Metrics for video with id {video_id}: DOVER:{dover_score}, Text-to-Video align:{clip_score_align}, Temporal consistency:{clip_score_temp}")
+            prompt = config["prompt"]
+            print(f"{video_id}, {prompt}: DOVER:{dover_score}, Text-Video:{clip_score_align}, Temporal:{clip_score_temp}")
 
             videos.append(frames.permute(1,0,2,3).unsqueeze(0).cpu())
             text_descriptions.append(config["prompt"]) #add the counterfactual prompt

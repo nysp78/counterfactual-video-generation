@@ -45,7 +45,7 @@ class TokenFlow(nn.Module):
         # Create SD models
         print('Loading SD model')
 
-        pipe = StableDiffusionPipeline.from_pretrained(model_key, torch_dtype=torch.float16).to("cuda")
+        pipe = StableDiffusionPipeline.from_pretrained(model_key, torch_dtype=torch.float16).to(self.device)
         # pipe.enable_xformers_memory_efficient_attention()
 
         self.vae = pipe.vae
@@ -69,7 +69,7 @@ class TokenFlow(nn.Module):
         self.pnp_guidance_embeds = self.get_text_embeds(pnp_inversion_prompt, pnp_inversion_prompt).chunk(2)[0]
     
     @torch.no_grad()   
-    def prepare_depth_maps(self, model_type='DPT_Large', device='cuda'):
+    def prepare_depth_maps(self, model_type='DPT_Large', device="cuda"):
         depth_maps = []
         midas = torch.hub.load("intel-isl/MiDaS", model_type)
         midas.to(device)
@@ -89,7 +89,7 @@ class TokenFlow(nn.Module):
             latent_h = img.shape[0] // 8
             latent_w = img.shape[1] // 8
             
-            input_batch = transform(img).to(device)
+            input_batch = transform(img).to(self.device)
             prediction = midas(input_batch)
 
             depth_map = torch.nn.functional.interpolate(
@@ -145,6 +145,7 @@ class TokenFlow(nn.Module):
     @torch.no_grad()
     def encode_imgs(self, imgs, batch_size=VAE_BATCH_SIZE, deterministic=False):
         imgs = 2 * imgs - 1
+      #  print(imgs.device, self.vae.device)
         latents = []
         for i in range(0, len(imgs), batch_size):
             posterior = self.vae.encode(imgs[i:i + batch_size]).latent_dist
@@ -179,6 +180,8 @@ class TokenFlow(nn.Module):
         save_video(frames, f'{self.config["output_path"]}/input_fps20.mp4', fps=20)
        # save_video(frames, f'{self.config["output_path"]}/input_fps30.mp4', fps=30)
         # encode to latents
+
+     #   print(self.device)
         latents = self.encode_imgs(frames, deterministic=True).to(torch.float16).to(self.device)
         # get noise
         eps = self.get_ddim_eps(latents, range(self.config["n_frames"])).to(torch.float16).to(self.device)
@@ -218,7 +221,7 @@ class TokenFlow(nn.Module):
         denoised_latent = self.scheduler.step(noise_pred, t, x)['prev_sample']
         return denoised_latent
     
-    @torch.autocast(dtype=torch.float16, device_type='cuda')
+    @torch.autocast(dtype=torch.float16, device_type="cuda")
     def batched_denoise_step(self, x, t, indices):
         batch_size = self.config["batch_size"]
         denoised_latents = []
