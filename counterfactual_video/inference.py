@@ -25,7 +25,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--method', choices =["tuneavideo", "tokenflow"], default="tokenflow")
     parser.add_argument('--base_config_path', type=str, default='methods/tokenflow/configs/config_pnp.yaml')
-    parser.add_argument('--counterfactuals_config_path', type=str, default='data/celebv_bench/counterfactual_implicit.json')
+    parser.add_argument('--crf_config_path', type=str, default='data/celebv_bench/counterfactual_explicit.json')
 
     opt = parser.parse_args()
     logger = logging.getLogger(__name__)
@@ -34,7 +34,7 @@ if __name__ == '__main__':
         config = yaml.safe_load(f)
         base_path = config["output_path"]
 
-    with open(opt.counterfactuals_config_path, "r") as f:
+    with open(opt.crf_config_path, "r") as f:
         edited_prompts = json.load(f)
 
     seed_everything(config["seed"])

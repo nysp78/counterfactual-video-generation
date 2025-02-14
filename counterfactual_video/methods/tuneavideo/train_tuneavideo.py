@@ -24,7 +24,7 @@ from diffusers.utils import check_min_version
 from diffusers.utils.import_utils import is_xformers_available
 from tqdm.auto import tqdm
 from transformers import CLIPTextModel, CLIPTokenizer
-
+from huggingface_hub import snapshot_download
 from tuneavideo.models.unet import UNet3DConditionModel
 from tuneavideo.data.dataset import TuneAVideoDataset
 from tuneavideo.pipelines.pipeline_tuneavideo import TuneAVideoPipeline
@@ -101,6 +101,7 @@ def main(
         os.makedirs(f"{output_dir}/inv_latents", exist_ok=True)
         OmegaConf.save(config, os.path.join(output_dir, 'config.yaml'))
 
+    pretrained_model_path = snapshot_download(pretrained_model_path)
     # Load scheduler, tokenizer and models.
     noise_scheduler = DDPMScheduler.from_pretrained(pretrained_model_path, subfolder="scheduler")
     tokenizer = CLIPTokenizer.from_pretrained(pretrained_model_path, subfolder="tokenizer")
