@@ -9,4 +9,3 @@
 *.bin
 *.pkl
 *.safetensors
-*.yaml
