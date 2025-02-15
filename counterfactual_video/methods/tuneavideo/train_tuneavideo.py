@@ -315,7 +315,7 @@ def train(
                         accelerator.save_state(save_path)
                         logger.info(f"Saved state to {save_path}")
                 
-                if global_step % validation_steps == 100:
+                if global_step % validation_steps == 1:
                     if accelerator.is_main_process:
                         samples = []
                         generator = torch.Generator(device=latents.device)
@@ -347,15 +347,15 @@ def train(
 
     # Create the pipeline using the trained modules and save it.
     accelerator.wait_for_everyone()
-  #  if accelerator.is_main_process:
-  #      unet = accelerator.unwrap_model(unet)
-  #      pipeline = TuneAVideoPipeline.from_pretrained(
-  #          pretrained_model_path,
-  #          text_encoder=text_encoder,
-  #          vae=vae,
-  #          unet=unet,
-  #      )
-       # pipeline.save_pretrained(checkpoint_dir)
+    if accelerator.is_main_process:
+        unet = accelerator.unwrap_model(unet)
+        pipeline = TuneAVideoPipeline.from_pretrained(
+            pretrained_model_path,
+            text_encoder=text_encoder,
+            vae=vae,
+            unet=unet,
+        )
+        pipeline.save_pretrained(checkpoint_dir)
 
     accelerator.end_training()
 
