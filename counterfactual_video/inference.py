@@ -11,8 +11,10 @@ from tqdm import tqdm
 from torchvision import transforms
 import cv2
 import logging
+from methods.tuneavideo.pipelines.pipeline_tuneavideo import TuneAVideoPipeline
+from methods.tuneavideo.models.unet import UNet3DConditionModel
 from methods.tokenflow.run_tokenflow_pnp import TokenFlow
-from methods.tokenflow.util import seed_everything, save_videos_grid, save_videos_grid__
+from methods.tokenflow.util import seed_everything, save_videos_grid__
 from metrics.clip_consistency import ClipConsistency
 from metrics.clip_text_alignment import ClipTextAlignment
 from metrics.dover_score import DoverScore
@@ -23,8 +25,8 @@ from metrics.dover_score import DoverScore
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--method', choices =["tuneavideo", "tokenflow"], default="tokenflow")
-    parser.add_argument('--base_config_path', type=str, default='methods/tokenflow/configs/config_pnp.yaml')
+    parser.add_argument('--method', choices =["tuneavideo", "tokenflow"], default="tuneavideo")
+    parser.add_argument('--base_config_path', type=str, default='methods/tuneavideo/configs/config_tune_eval.yaml')
     parser.add_argument('--crf_config_path', type=str, default='data/celebv_bench/counterfactual_explicit.json')
 
     opt = parser.parse_args()
@@ -33,6 +35,7 @@ if __name__ == '__main__':
     with open(opt.base_config_path, "r") as f:
         config = yaml.safe_load(f)
         base_path = config["output_path"]
+        base_ckpt_path = config["checkpoint_dir"]
 
     with open(opt.crf_config_path, "r") as f:
         edited_prompts = json.load(f)
@@ -74,6 +77,19 @@ if __name__ == '__main__':
                 orig_frames = pipeline.frames
 
                 frames = pipeline.edit_video()
+            
+            if opt.method == "tuneavideo":
+                config["checkpoint_dir"] = os.path.join(base_ckpt_path, video_id)
+                print(config["checkpoint_dir"])
+                unet = UNet3DConditionModel.from_pretrained("methods/tuneavideo/checkpoints/-_zyvfId578_12_1/", subfolder='unet', torch_dtype=torch.float16).to('cuda')
+                pipe = TuneAVideoPipeline.from_pretrained(config["pretrained_model_path"], unet=unet, torch_dtype=torch.float16).to("cuda")
+
+                pipe.enable_xformers_memory_efficient_attention()
+                pipe.enable_vae_slicing()
+                
+                ddim_inv_latent = torch.load(config["checkpoint_dir"]+"/inv_latents/ddim_latent-1.pt").to(torch.float16)
+                frames = pipe(config["prompt"], latents=ddim_inv_latent, video_length=config["n_sample_frames"], height=512, width=512, 
+                              num_inference_steps=50, guidance_scale=config["guidance_scale"]).videos
 
 
             #calculate metrics

@@ -6,3 +6,7 @@
 *.txt
 *.pyc
 *.gif
+*.bin
+*.pkl
+*.safetensors
+*.yaml

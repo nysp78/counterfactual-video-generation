@@ -1,0 +1,42 @@
+pretrained_model_path: stabilityai/stable-diffusion-2-1-base
+checkpoint_dir: methods/tuneavideo/checkpoints/-_zyvfId578_12_1
+train_data:
+  video_path: data/celebv_bench/frames/-_zyvfId578_12_1
+  prompt: She is young.
+  n_sample_frames: 24
+  width: 512
+  height: 512
+  sample_start_idx: 0
+  sample_frame_rate: 1
+validation_data:
+  video_length: 24
+  width: 512
+  height: 512
+  num_inference_steps: 50
+  guidance_scale: 4.5
+  use_inv_latent: true
+  num_inv_steps: 50
+validation_steps: 400
+trainable_modules:
+- attn1.to_q
+- attn2.to_q
+- attn_temp
+train_batch_size: 1
+max_train_steps: 10
+learning_rate: '3e-5'
+scale_lr: false
+lr_scheduler: constant
+lr_warmup_steps: 0
+adam_beta1: 0.9
+adam_beta2: 0.999
+adam_weight_decay: 0.01
+adam_epsilon: 1.0e-08
+max_grad_norm: 1.0
+gradient_accumulation_steps: 1
+gradient_checkpointing: true
+checkpointing_steps: 400
+resume_from_checkpoint: null
+mixed_precision: fp16
+use_8bit_adam: false
+enable_xformers_memory_efficient_attention: true
+seed: 33

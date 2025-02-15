@@ -25,10 +25,10 @@ from diffusers.utils.import_utils import is_xformers_available
 from tqdm.auto import tqdm
 from transformers import CLIPTextModel, CLIPTokenizer
 from huggingface_hub import snapshot_download
-from tuneavideo.models.unet import UNet3DConditionModel
-from tuneavideo.data.dataset import TuneAVideoDataset
-from tuneavideo.pipelines.pipeline_tuneavideo import TuneAVideoPipeline
-from tuneavideo.util import save_videos_grid, ddim_inversion
+from .models.unet import UNet3DConditionModel
+from .data.dataset import TuneAVideoDataset
+from .pipelines.pipeline_tuneavideo import TuneAVideoPipeline
+from .util import save_videos_grid, ddim_inversion
 from einops import rearrange
 
 
@@ -38,9 +38,9 @@ check_min_version("0.10.0.dev0")
 logger = get_logger(__name__, log_level="INFO")
 
 
-def main(
+def train(
     pretrained_model_path: str,
-    output_dir: str,
+    checkpoint_dir: str,
     train_data: Dict,
     validation_data: Dict,
     validation_steps: int = 100,
@@ -96,10 +96,10 @@ def main(
 
     # Handle the output folder creation
     if accelerator.is_main_process:
-        os.makedirs(output_dir, exist_ok=True)
-        os.makedirs(f"{output_dir}/samples", exist_ok=True)
-        os.makedirs(f"{output_dir}/inv_latents", exist_ok=True)
-        OmegaConf.save(config, os.path.join(output_dir, 'config.yaml'))
+        os.makedirs(checkpoint_dir, exist_ok=True)
+        os.makedirs(f"{checkpoint_dir}/samples", exist_ok=True)
+        os.makedirs(f"{checkpoint_dir}/inv_latents", exist_ok=True)
+        OmegaConf.save(config, os.path.join(checkpoint_dir, 'config.yaml'))
 
     pretrained_model_path = snapshot_download(pretrained_model_path)
     # Load scheduler, tokenizer and models.
@@ -148,7 +148,7 @@ def main(
 
     optimizer = optimizer_cls(
         unet.parameters(),
-        lr=learning_rate,
+        lr= float(learning_rate),
         betas=(adam_beta1, adam_beta2),
         weight_decay=adam_weight_decay,
         eps=adam_epsilon,
@@ -174,7 +174,7 @@ def main(
     )
     validation_pipeline.enable_vae_slicing()
     ddim_inv_scheduler = DDIMScheduler.from_pretrained(pretrained_model_path, subfolder='scheduler')
-    ddim_inv_scheduler.set_timesteps(validation_data.num_inv_steps)
+    ddim_inv_scheduler.set_timesteps(validation_data["num_inv_steps"])
 
     # Scheduler
     lr_scheduler = get_scheduler(
@@ -230,12 +230,12 @@ def main(
             path = os.path.basename(resume_from_checkpoint)
         else:
             # Get the most recent checkpoint
-            dirs = os.listdir(output_dir)
+            dirs = os.listdir(checkpoint_dir)
             dirs = [d for d in dirs if d.startswith("checkpoint")]
             dirs = sorted(dirs, key=lambda x: int(x.split("-")[1]))
             path = dirs[-1]
         accelerator.print(f"Resuming from checkpoint {path}")
-        accelerator.load_state(os.path.join(output_dir, path))
+        accelerator.load_state(os.path.join(checkpoint_dir, path))
         global_step = int(path.split("-")[1])
 
         first_epoch = global_step // num_update_steps_per_epoch
@@ -309,26 +309,26 @@ def main(
                 accelerator.log({"train_loss": train_loss}, step=global_step)
                 train_loss = 0.0
 
-                if global_step % checkpointing_steps == 0:
+                if global_step % checkpointing_steps == 100:
                     if accelerator.is_main_process:
-                        save_path = os.path.join(output_dir, f"checkpoint-{global_step}")
+                        save_path = os.path.join(checkpoint_dir, f"checkpoint-{global_step}")
                         accelerator.save_state(save_path)
                         logger.info(f"Saved state to {save_path}")
-
-                if global_step % validation_steps == 0:
+                
+                if global_step % validation_steps == 100:
                     if accelerator.is_main_process:
                         samples = []
                         generator = torch.Generator(device=latents.device)
                         generator.manual_seed(seed)
 
                         ddim_inv_latent = None
-                        if validation_data.use_inv_latent:
-                            inv_latents_path = os.path.join(output_dir, f"inv_latents/ddim_latent-{global_step}.pt")
+                        if validation_data["use_inv_latent"]:
+                            inv_latents_path = os.path.join(checkpoint_dir, f"inv_latents/ddim_latent-{global_step}.pt")
                             ddim_inv_latent = ddim_inversion(
                                 validation_pipeline, ddim_inv_scheduler, video_latent=latents,
-                                num_inv_steps=validation_data.num_inv_steps, prompt="")[-1].to(weight_dtype)
+                                num_inv_steps=validation_data["num_inv_steps"], prompt="")[-1].to(weight_dtype)
                             torch.save(ddim_inv_latent, inv_latents_path)
-
+                '''
                         for idx, prompt in enumerate(validation_data.prompts):
                             sample = validation_pipeline(prompt, generator=generator, latents=ddim_inv_latent,
                                                          **validation_data).videos
@@ -338,7 +338,7 @@ def main(
                         save_path = f"{output_dir}/samples/sample-{global_step}.gif"
                         save_videos_grid(samples, save_path)
                         logger.info(f"Saved samples to {save_path}")
-
+                '''
             logs = {"step_loss": loss.detach().item(), "lr": lr_scheduler.get_last_lr()[0]}
             progress_bar.set_postfix(**logs)
 
@@ -347,15 +347,15 @@ def main(
 
     # Create the pipeline using the trained modules and save it.
     accelerator.wait_for_everyone()
-    if accelerator.is_main_process:
-        unet = accelerator.unwrap_model(unet)
-        pipeline = TuneAVideoPipeline.from_pretrained(
-            pretrained_model_path,
-            text_encoder=text_encoder,
-            vae=vae,
-            unet=unet,
-        )
-        pipeline.save_pretrained(output_dir)
+  #  if accelerator.is_main_process:
+  #      unet = accelerator.unwrap_model(unet)
+  #      pipeline = TuneAVideoPipeline.from_pretrained(
+  #          pretrained_model_path,
+  #          text_encoder=text_encoder,
+  #          vae=vae,
+  #          unet=unet,
+  #      )
+       # pipeline.save_pretrained(checkpoint_dir)
 
     accelerator.end_training()
 
@@ -365,4 +365,4 @@ if __name__ == "__main__":
     parser.add_argument("--config", type=str, default="./configs/tuneavideo.yaml")
     args = parser.parse_args()
 
-    main(**OmegaConf.load(args.config))
+    train(**OmegaConf.load(args.config))
