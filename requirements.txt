@@ -21,3 +21,4 @@ omegaconf
 timm
 bitsandbytes==0.35.4
 decord
+hf_transfer

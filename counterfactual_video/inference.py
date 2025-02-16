@@ -97,7 +97,8 @@ if __name__ == '__main__':
                 with torch.no_grad():
                     frames = pipe(config["prompt"], latents=ddim_inv_latent, video_length=config["video_length"], height=512, width=512, 
                               num_inference_steps=50, guidance_scale=config["guidance_scale"]).videos
-
+                    #save_videos_grid__(frames, f"{output_dir}/samples/sample-{global_step}/{prompt}.gif")
+                    save_videos_grid__(frames, f'{config["output_path"]}/edited_fps20.gif', fps=20)
 
             #calculate metrics
             dover_score = DoverScore(device=config["device"]).evaluate(frames)
