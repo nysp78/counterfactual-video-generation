@@ -53,8 +53,8 @@ if __name__ == "__main__":
         clean_memory()
 
         #Restart the script every 10 videos to avoid memory leaks
-        if (idx + 1) % 10 == 0:
-            print("Restarting script to clear memory...")
-            os.execv(sys.executable, ['python'] + sys.argv)
+       # if (idx + 1) % 10 == 0:
+       #     print("Restarting script to clear memory...")
+       #     os.execv(sys.executable, ['python'] + sys.argv)
 
     print("Tuning of all videos completed successfully!")
