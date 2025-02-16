@@ -7,10 +7,12 @@ from pathlib import Path
 import yaml
 import json
 import argparse
+import gc
 from tqdm import tqdm
 from torchvision import transforms
 import cv2
 import logging
+from methods.tuneavideo.models.modeling_utils import ModelMixin
 from methods.tuneavideo.pipelines.pipeline_tuneavideo import TuneAVideoPipeline
 from methods.tuneavideo.models.unet import UNet3DConditionModel
 from methods.tokenflow.run_tokenflow_pnp import TokenFlow
@@ -80,15 +82,20 @@ if __name__ == '__main__':
             
             if opt.method == "tuneavideo":
                 config["checkpoint_dir"] = os.path.join(base_ckpt_path, video_id)
-                print(config["checkpoint_dir"])
-                unet = UNet3DConditionModel.from_pretrained("methods/tuneavideo/checkpoints/-_zyvfId578_12_1/", subfolder='unet', torch_dtype=torch.float16).to('cuda')
+               # print(config["checkpoint_dir"])
+                config["checkpoint_dir"] = "methods/tuneavideo/checkpoints/-_zyvfId578_12_1"
+                
+                torch.cuda.empty_cache()
+                gc.collect()
+                config["checkpoint_dir"] = "methods/tuneavideo/checkpoints/-_zyvfId578_12_1"
+                unet = UNet3DConditionModel.from_pretrained(config["checkpoint_dir"], subfolder='unet', torch_dtype=torch.float16).to('cuda')
                 pipe = TuneAVideoPipeline.from_pretrained(config["pretrained_model_path"], unet=unet, torch_dtype=torch.float16).to("cuda")
 
-                pipe.enable_xformers_memory_efficient_attention()
+                #pipe.enable_xformers_memory_efficient_attention
                 pipe.enable_vae_slicing()
-                
                 ddim_inv_latent = torch.load(config["checkpoint_dir"]+"/inv_latents/ddim_latent-1.pt").to(torch.float16)
-                frames = pipe(config["prompt"], latents=ddim_inv_latent, video_length=config["n_sample_frames"], height=512, width=512, 
+                with torch.no_grad():
+                    frames = pipe(config["prompt"], latents=ddim_inv_latent, video_length=config["video_length"], height=512, width=512, 
                               num_inference_steps=50, guidance_scale=config["guidance_scale"]).videos
 
 

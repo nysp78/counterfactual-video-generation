@@ -3,7 +3,7 @@ checkpoint_dir: "methods/tuneavideo/checkpoints"
 output_path: "outputs/tuneavideo-results" 
 
 
-data_path: some
+data_path:
 video: {}
 intervention_type: "explicit"
 prompts:
@@ -14,10 +14,7 @@ num_inference_steps: 50
 guidance_scale: 4.5
 use_inv_latent: True
 num_inv_steps: 50
-
 validation_steps: 100
-
-
 seed: 33
 mixed_precision: fp16
 use_8bit_adam: False
