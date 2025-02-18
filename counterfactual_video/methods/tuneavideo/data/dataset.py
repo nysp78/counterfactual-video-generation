@@ -11,10 +11,10 @@ class TuneAVideoDataset(Dataset):
     def __init__(
             self,
             video_path: str,
-            prompt: str,
+            prompt: str = None,
             width: int = 512,    # Ensure width is 512
             height: int = 512,   # Ensure height is 512
-            n_sample_frames: int = 8,
+            n_sample_frames: int = 24,
             sample_start_idx: int = 0,
             sample_frame_rate: int = 1,
     ):
@@ -42,7 +42,7 @@ class TuneAVideoDataset(Dataset):
     def __len__(self):
         return 1
 
-    def __getitem__(self, index):
+    def __getitem__(self):
         # Load and sample video frames
         if 'mp4' in self.video_path:  # Video File
             vr = decord.VideoReader(self.video_path, width=self.width, height=self.height)  # Ensure 512x512

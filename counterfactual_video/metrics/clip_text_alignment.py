@@ -1,4 +1,4 @@
-''' 
+'''
     https://github.com/openai/CLIP
     https://github.com/mlfoundations/open_clip
     https://huggingface.co/docs/transformers/model_doc/clip#clip
@@ -39,15 +39,15 @@ class ClipTextAlignment(nn.Module):
     def preprocess(self, video, text):
         #text = sample['edit_prompt']
        # video = sample['edit_video']
-        
+
         text_inputs = self.preprocessor(
             text=text, padding=True, truncation=True, max_length=77, return_tensors='pt').to(self.device)
-        
+
         image_inputs = []
         for frame in video:
             image_inputs.append(self.preprocessor(
                 images=frame, padding=True, truncation=True, max_length=77, return_tensors='pt').to(self.device))
-        
+
         return text_inputs, image_inputs
 
     @torch.no_grad()
@@ -55,7 +55,7 @@ class ClipTextAlignment(nn.Module):
         #text_inputs, image_inputs = args
         transform = transforms.Compose([
                             transforms.Resize(224)])
-        
+
         text_tokens = self.tokenizer(text, return_tensors="pt", padding=True, truncation=True, max_length=77)
 
         text_input = text_tokens["input_ids"].to(self.device)
@@ -64,7 +64,7 @@ class ClipTextAlignment(nn.Module):
 
         scores = []
         for image_input in video:
-            image_input = image_input.unsqueeze(0)
+            image_input = image_input.unsqueeze(0).to(self.device)
             image_input = transform(image_input)
             image_embs = self.model.get_image_features(image_input)
             image_embs = image_embs / torch.norm(image_embs, dim=-1, keepdim=True)

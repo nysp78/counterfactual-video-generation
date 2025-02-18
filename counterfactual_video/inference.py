@@ -15,6 +15,7 @@ import logging
 from methods.tuneavideo.models.modeling_utils import ModelMixin
 from methods.tuneavideo.pipelines.pipeline_tuneavideo import TuneAVideoPipeline
 from methods.tuneavideo.models.unet import UNet3DConditionModel
+from methods.tuneavideo.data.dataset import TuneAVideoDataset
 from methods.tokenflow.run_tokenflow_pnp import TokenFlow
 from methods.tokenflow.util import seed_everything, save_videos_grid__
 from metrics.clip_consistency import ClipConsistency
@@ -43,13 +44,15 @@ if __name__ == '__main__':
         edited_prompts = json.load(f)
 
     seed_everything(config["seed"])
-    
+
     metrics = {}
     video_quality = [] #measured by dover
     text_video_align = {"age":[], "gender":[], "beard":[], "bald":[]} #measured by clip sim between text-frames
     temporal_consistency = [] #measured by clip sim between consecutive frames
 
+    num_videos = 0
     for video_id, prompts in tqdm(edited_prompts.items()):
+        num_videos+=1
         config["data_path"] = f"data/celebv_bench/frames/{video_id}"
         config["video"][video_id] = {
                          # Assumes your videos are in "data/video_id"
@@ -58,11 +61,12 @@ if __name__ == '__main__':
                                              "counterfactual": prompts["counterfactual"]
                                          }
                    }
-        
+
 
         videos = []
         text_descriptions = []
         for attr in prompts["counterfactual"].keys():
+            print("ATTTTR:", attr)
             config["output_path"] = os.path.join(config["output_path"] + "_cfg_scale_" + str(config["guidance_scale"]),
                                                  config["intervention_type"], "interventions", attr,
                                              video_id, config["video"][video_id]["prompt_variants"]["counterfactual"][attr])
@@ -70,35 +74,43 @@ if __name__ == '__main__':
             config["prompt"] = config["video"][video_id]["prompt_variants"]["counterfactual"][attr]
             assert os.path.exists(config["data_path"]), "Data path does not exist"
            # print(config)
+            grids_path =  os.path.join(base_path + "_cfg_scale_" + str(config["guidance_scale"]), config["intervention_type"])
 
             if opt.method == "tokenflow":
-                grids_path =  os.path.join(base_path + "_cfg_scale_" + str(config["guidance_scale"]), config["intervention_type"])
                 os.makedirs(grids_path, exist_ok=True)
 
                 pipeline = TokenFlow(config)
                 orig_frames = pipeline.frames
 
                 frames = pipeline.edit_video()
-            
+
             if opt.method == "tuneavideo":
                 config["checkpoint_dir"] = os.path.join(base_ckpt_path, video_id)
                # print(config["checkpoint_dir"])
-                config["checkpoint_dir"] = "methods/tuneavideo/checkpoints/-_zyvfId578_12_1"
-                
+
                 torch.cuda.empty_cache()
                 gc.collect()
-                config["checkpoint_dir"] = "methods/tuneavideo/checkpoints/-_zyvfId578_12_1"
-                unet = UNet3DConditionModel.from_pretrained(config["checkpoint_dir"], subfolder='unet', torch_dtype=torch.float16).to('cuda')
+                train_dataset = TuneAVideoDataset(video_path=config["data_path"],
+                                                  n_sample_frames=config["video_length"])
+                orig_frames = torch.tensor(train_dataset.__getitem__()["pixel_values"])
+                orig_frames = (orig_frames + 1) / 2
+                #print(orig_frames.min(), orig_frames.max())
+                unet = UNet3DConditionModel.from_pretrained(config["checkpoint_dir"], subfolder='unet', torch_dtype=torch.float16).to("cuda")
+                unet.enable_xformers_memory_efficient_attention()
                 pipe = TuneAVideoPipeline.from_pretrained(config["pretrained_model_path"], unet=unet, torch_dtype=torch.float16).to("cuda")
 
-                #pipe.enable_xformers_memory_efficient_attention
                 pipe.enable_vae_slicing()
-                ddim_inv_latent = torch.load(config["checkpoint_dir"]+"/inv_latents/ddim_latent-1.pt").to(torch.float16)
+                ddim_inv_latent = torch.load(config["checkpoint_dir"]+"/inv_latents/ddim_latent-400.pt").to(torch.float16)
                 with torch.no_grad():
-                    frames = pipe(config["prompt"], latents=ddim_inv_latent, video_length=config["video_length"], height=512, width=512, 
+                   # print("EDW", ddim_inv_latent.shape)
+                    frames = pipe(config["prompt"], latents=ddim_inv_latent, video_length=config["video_length"], height=512, width=512,
                               num_inference_steps=50, guidance_scale=config["guidance_scale"]).videos
-                    #save_videos_grid__(frames, f"{output_dir}/samples/sample-{global_step}/{prompt}.gif")
                     save_videos_grid__(frames, f'{config["output_path"]}/edited_fps20.gif', fps=20)
+                    print(frames.shape)
+                    frames = frames.permute(0,2,1,3,4)
+                    frames = frames.squeeze(0)
+
+
 
             #calculate metrics
             dover_score = DoverScore(device=config["device"]).evaluate(frames)
@@ -126,6 +138,8 @@ if __name__ == '__main__':
         save_videos_grid__(videos, save_path, text_descriptions)
         videos = [] #empty list for grid plot
         text_descriptions = []
+        if num_videos > 10:
+            break
 
 total_text_video_alignment = {key:np.array(value).mean() for key, value in text_video_align.items()}
 
