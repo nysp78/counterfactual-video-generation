@@ -31,7 +31,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--method', choices=["tuneavideo", "tokenflow"], default="tuneavideo")
     parser.add_argument('--base_config_path', type=str, default='methods/tuneavideo/configs/config_tune_eval.yaml')
-    parser.add_argument('--crf_config_path', type=str, default='data/celebv_bench/counterfactual_explicit.json')
+    parser.add_argument('--crf_config_path', type=str, default='data/celebv_bench/counterfactual_breaking_causal.json')
 
     opt = parser.parse_args()
     logger = logging.getLogger(__name__)
@@ -56,10 +56,10 @@ if __name__ == '__main__':
     #download stable diffusion pipeline
     model_key = snapshot_download("stabilityai/stable-diffusion-2-1-base")
   #  model_key = "stable-diffusion-2-1-base/"
-    pipe = StableDiffusionPipeline.from_pretrained(model_key, torch_dtype=torch.float16)
+   # pipe = StableDiffusionPipeline.from_pretrained(model_key, torch_dtype=torch.float16)
 
     #tune a video pipepline
-    pipe = TuneAVideoPipeline.from_pretrained(model_key, unet=None, torch_dtype=torch.float16).to(device)
+  #  pipe = TuneAVideoPipeline.from_pretrained(model_key, unet=None, torch_dtype=torch.float16).to(device)
 
 
     for video_id, prompts in tqdm(edited_prompts.items()):
@@ -86,15 +86,13 @@ if __name__ == '__main__':
 
             unet.enable_xformers_memory_efficient_attention()
 
-            #load from local checkpoint_dir
-            #pipe = TuneAVideoPipeline.from_pretrained(model_key, unet=unet, torch_dtype=torch.float16).to(device)
-            pipe.unet = unet
+            pipe = TuneAVideoPipeline.from_pretrained(model_key, unet=unet, torch_dtype=torch.float16).to(device)
         
             print("Tune-A-Video pipeline loaded!")
 
 
             pipe.enable_vae_slicing()
-            ddim_inv_latent = torch.load(config["checkpoint_dir"] + "/inv_latents/ddim_latent-400.pt").to(torch.float16).to(device)
+            ddim_inv_latent = torch.load(config["checkpoint_dir"] + "/inv_latents/ddim_latent-450.pt").to(torch.float16).to(device)
             print("Latents loaded!")
 
         for attr in prompts["counterfactual"].keys():
@@ -112,7 +110,7 @@ if __name__ == '__main__':
             #TokenFlow Processing
             if opt.method == "tokenflow":
                 os.makedirs(grids_path, exist_ok=True)
-                pipeline = TokenFlow(config, pipe)
+                pipeline = TokenFlow(config)
                 orig_frames = pipeline.frames.to(device)  # Ensure frames are on GPU
                 frames = pipeline.edit_video()
 
