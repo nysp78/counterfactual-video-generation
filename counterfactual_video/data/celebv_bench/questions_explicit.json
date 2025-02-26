@@ -6378,31 +6378,6 @@
           ]
         },
         "beard": {
-          "prompt": "He is young, he has beard.",
-          "questions": [
-            {
-              "question": "What is the age of this person?",
-              "options": { "A": "old", "B": "young" },
-              "correctAnswer": "young"
-            },
-            {
-              "question": "What is the gender of this person?",
-              "options": { "A": "man", "B": "woman" },
-              "correctAnswer": "man"
-            },
-            {
-              "question": "Does this person have a beard?",
-              "options": { "A": "Yes", "B": "No" },
-              "correctAnswer": "Yes"
-            },
-            {
-              "question": "Is this person bald?",
-              "options": { "A": "Yes", "B": "No" },
-              "correctAnswer": "No"
-            }
-          ]
-        },
-        "bald": {
           "prompt": "He is young, he is bald.",
           "questions": [
             {
@@ -6424,6 +6399,31 @@
               "question": "Is this person bald?",
               "options": { "A": "Yes", "B": "No" },
               "correctAnswer": "Yes"
+            }
+          ]
+        },
+        "bald": {
+          "prompt": "He is young, he has beard.",
+          "questions": [
+            {
+              "question": "What is the age of this person?",
+              "options": { "A": "old", "B": "young" },
+              "correctAnswer": "young"
+            },
+            {
+              "question": "What is the gender of this person?",
+              "options": { "A": "man", "B": "woman" },
+              "correctAnswer": "man"
+            },
+            {
+              "question": "Does this person have a beard?",
+              "options": { "A": "Yes", "B": "No" },
+              "correctAnswer": "Yes"
+            },
+            {
+              "question": "Is this person bald?",
+              "options": { "A": "Yes", "B": "No" },
+              "correctAnswer": "No"
             }
           ]
         }

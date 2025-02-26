@@ -15,6 +15,7 @@ from deepseek_vl2.utils.io import load_pil_images
 def extract_first_frame(video_path):
     # Open the video file
     cap = cv2.VideoCapture(video_path)
+   # print(cap)
     
     if not cap.isOpened():
         print("Error: Could not open video file.")
@@ -34,12 +35,13 @@ def extract_first_frame(video_path):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--outputs_path', type=str, default="outputs/tokenflow-results_cfg_scale_4.5")
-    parser.add_argument('--method', choices=["tuneavideo", "tokenflow"], default="tokenflow")
+    parser.add_argument('--outputs_path', type=str, default="outputs/tuneavideo-results_cfg_scale_4.5")
+    parser.add_argument('--method', choices=["tuneavideo", "tokenflow"], default="tuneavideo")
     parser.add_argument('--intervention_type', choices=["explicit", "implicit", "breaking_causal"], default="explicit")
     parser.add_argument('--questions_path', type=str, default='data/celebv_bench/questions_explicit.json')
  #   parser.add_argument('--crf_config_path', type=str, default='data/celebv_bench/counterfactual_explicit.json')
-
+   # frames = extract_first_frame("outputs/tokenflow-results_cfg_scale_4.5/explicit/interventions/beard/aGRVuZHstlU_0_0/She is old, she has beard./tokenflow_PnP_fps_20.mp4")
+   # print(frames.shape)
     opt = parser.parse_args()
     with open(opt.questions_path, "r") as f:
         multiple_choice_questions = json.load(f)
@@ -59,16 +61,20 @@ if __name__ == '__main__':
     effectiveness = {"age": [], "gender": [], "beard": [], "bald": []} 
     for video_id , questions in tqdm(multiple_choice_questions.items()):
         print("Evaluate video:", video_id)
-       # factual_frame = extract_first_frame(video_path=f"data/celebv_bench/videos/{video_id}.mp4")
-       # factual_frame = transform(factual_frame)
-        #print(np.array(factual_frame).shape)
+
         for attr in questions.keys():
            # print(questions)
             crf_prompt = questions[attr]["prompt"]
             base_path = f"{opt.outputs_path}/{opt.intervention_type}/interventions/{attr}/{video_id}/{crf_prompt}"
             if opt.method == "tokenflow":
+                #print("tokenflow")
                 counterfactual_frame = extract_first_frame(video_path = base_path + "/tokenflow_PnP_fps_20.mp4")
-                print(counterfactual_frame.shape)
+                #print(counterfactual_frame.shape)
+            if opt.method == "tuneavideo":
+               # print("tuneavideo")
+                counterfactual_frame = extract_first_frame(video_path = base_path + "/edited_fps20.gif")
+
+                
             
             counterfactual_frame = transform(counterfactual_frame)
             
@@ -109,7 +115,7 @@ if __name__ == '__main__':
                             use_cache=True
                         )
                 answer = tokenizer.decode(outputs[0].cpu().tolist(), skip_special_tokens=True)
-                print(f"{prepare_inputs['sft_format'][0]}", answer)
+              #  print(f"{prepare_inputs['sft_format'][0]}", answer)
                # print(answer)
                 answers.append(answer.lower().replace(".", ""))
 
@@ -123,5 +129,6 @@ if __name__ == '__main__':
             
         #print(questions.keys())
        # break
-    print(effectiveness)
+    total_effectiveness = {key: np.array(value).mean() for key, value in effectiveness.items()}
+    print(total_effectiveness)
     
