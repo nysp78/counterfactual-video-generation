@@ -16,13 +16,13 @@ validation_data:
   guidance_scale: 4.5
   use_inv_latent: true
   num_inv_steps: 50
-validation_steps: 400
+validation_steps: 450
 trainable_modules:
 - attn1.to_q
 - attn2.to_q
 - attn_temp
 train_batch_size: 1
-max_train_steps: 10
+max_train_steps: 450
 learning_rate: '3e-5'
 scale_lr: false
 lr_scheduler: constant
@@ -34,7 +34,7 @@ adam_epsilon: 1.0e-08
 max_grad_norm: 1.0
 gradient_accumulation_steps: 1
 gradient_checkpointing: true
-checkpointing_steps: 400
+checkpointing_steps: 450
 resume_from_checkpoint: null
 mixed_precision: fp16
 use_8bit_adam: false

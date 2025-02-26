@@ -276,6 +276,7 @@ def train(
                 noisy_latents = noise_scheduler.add_noise(latents, noise, timesteps)
 
                 # Get the text embedding for conditioning
+               # print(batch["prompt_ids"])
                 encoder_hidden_states = text_encoder(batch["prompt_ids"])[0]
 
                 # Get the target for loss depending on the prediction type

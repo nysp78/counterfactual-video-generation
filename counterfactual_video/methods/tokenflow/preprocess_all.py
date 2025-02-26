@@ -38,7 +38,7 @@ def preprocess_all_videos(data_dir, params):
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--data_dir', type=str, default='data/celebv_bench', help="Directory containing video files")
+    parser.add_argument('--data_dir', type=str, default='../../data/celebv_bench', help="Directory containing video files")
     parser.add_argument('--H', type=int, default=512)
     parser.add_argument('--W', type=int, default=512)
     parser.add_argument('--save_dir', type=str, default='inverted_latents')

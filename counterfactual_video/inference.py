@@ -31,7 +31,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--method', choices=["tuneavideo", "tokenflow"], default="tuneavideo")
     parser.add_argument('--base_config_path', type=str, default='methods/tuneavideo/configs/config_tune_eval.yaml')
-    parser.add_argument('--crf_config_path', type=str, default='data/celebv_bench/counterfactual_breaking_causal.json')
+    parser.add_argument('--crf_config_path', type=str, default='data/celebv_bench/counterfactual_explicit.json')
 
     opt = parser.parse_args()
     logger = logging.getLogger(__name__)
@@ -54,7 +54,7 @@ if __name__ == '__main__':
     temporal_consistency = []  # Measured by CLIP frame consistency
 
     #download stable diffusion pipeline
-    model_key = snapshot_download("stabilityai/stable-diffusion-2-1-base")
+    model_key = snapshot_download(config["pretrained_model_path"])
   #  model_key = "stable-diffusion-2-1-base/"
    # pipe = StableDiffusionPipeline.from_pretrained(model_key, torch_dtype=torch.float16)
 
@@ -78,6 +78,11 @@ if __name__ == '__main__':
         if opt.method == "tuneavideo":
             print("Loading Tune-A-Video checkpoints!")
             config["checkpoint_dir"] = os.path.join(base_ckpt_path, video_id)
+            trained_videos = os.listdir("methods/tuneavideo/checkpoints_v2")
+            if video_id not in trained_videos:
+                print("Video all ready trained!")
+                continue
+
             train_dataset = TuneAVideoDataset(video_path=config["data_path"], n_sample_frames=config["video_length"])
             print("Tune-A-Video dataset created!")
 
@@ -92,7 +97,7 @@ if __name__ == '__main__':
 
 
             pipe.enable_vae_slicing()
-            ddim_inv_latent = torch.load(config["checkpoint_dir"] + "/inv_latents/ddim_latent-450.pt").to(torch.float16).to(device)
+            ddim_inv_latent = torch.load(config["checkpoint_dir"] + "/inv_latents/ddim_latent-500.pt").to(torch.float16).to(device)
             print("Latents loaded!")
 
         for attr in prompts["counterfactual"].keys():
@@ -122,6 +127,7 @@ if __name__ == '__main__':
                 orig_frames = (orig_frames + 1) / 2  # Normalize to [0,1]
 
                 with torch.no_grad():
+
                     frames = pipe(config["prompt"], latents=ddim_inv_latent, video_length=config["video_length"],
                                   height=512, width=512, num_inference_steps=50, guidance_scale=config["guidance_scale"]).videos.to(device)
 

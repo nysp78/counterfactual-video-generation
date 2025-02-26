@@ -1,8 +1,8 @@
 # general
 seed: 1
 device: 'cuda'
-output_path: 'outputs/tokenflow-results'
-intervention_type: "implicit"
+output_path: 'outputs_v2/tokenflow-results'
+intervention_type: "explicit"
 # data
 data_path: 
 latents_path: 'methods/tokenflow/inverted_latents' # should be the same as 'save_dir' arg used in preprocess
@@ -11,7 +11,7 @@ n_frames: 24
 
 # diffusion
 sd_version: '2.1'
-guidance_scale: 6.5
+guidance_scale: 3.5
 n_timesteps: 50
 batch_size: 24
 prompt: "some prompt"

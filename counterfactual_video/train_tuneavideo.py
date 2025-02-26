@@ -33,6 +33,10 @@ if __name__ == "__main__":
     base_ckpt_path = config["checkpoint_dir"]
 
     for idx, video in enumerate(video_files):
+        trained_videos = os.listdir("methods/tuneavideo/checkpoints_v2")
+        if video in trained_videos:
+            print("Video all ready trained!")
+            continue
         print(f"Training on video {idx + 1}/{len(video_files)}: {video}")
 
         config["train_data"]["video_path"] = os.path.join(params.data_dir, video)

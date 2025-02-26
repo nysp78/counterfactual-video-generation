@@ -1,0 +1,104 @@
+{
+    "Zeem6k2bDFk_6_0": {
+      "age": {
+        "prompt": "He is old, he has beard, he is bald.",
+        "questions": [
+          {
+            "question": "What is the age of this person?",
+            "options": { "A": "old", "B": "young" },
+            "correctAnswer": "old"
+          },
+          {
+            "question": "What is the gender of this person?",
+            "options": { "A": "man", "B": "woman" },
+            "correctAnswer": "man"
+          },
+          {
+            "question": "Does this person have a beard?",
+            "options": { "A": "Yes", "B": "No" },
+            "correctAnswer": "Yes"
+          },
+          {
+            "question": "Is this person bald?",
+            "options": { "A": "Yes", "B": "No" },
+            "correctAnswer": "Yes"
+          }
+        ]
+      },
+      "gender": {
+        "prompt": "She is young.",
+        "questions": [
+          {
+            "question": "What is the age of this person?",
+            "options": { "A": "old", "B": "young" },
+            "correctAnswer": "young"
+          },
+          {
+            "question": "What is the gender of this person?",
+            "options": { "A": "woman", "B": "man" },
+            "correctAnswer": "woman"
+          },
+          {
+            "question": "Does this person have a beard?",
+            "options": { "A": "Yes", "B": "No" },
+            "correctAnswer": "No"
+          },
+          {
+            "question": "Is this person bald?",
+            "options": { "A": "Yes", "B": "No" },
+            "correctAnswer": "No"
+          }
+        ]
+      },
+      "beard": {
+        "prompt": "He is young, he has beard.",
+        "questions": [
+          {
+            "question": "What is the age of this person?",
+            "options": { "A": "old", "B": "young" },
+            "correctAnswer": "young"
+          },
+          {
+            "question": "What is the gender of this person?",
+            "options": { "A": "man", "B": "woman" },
+            "correctAnswer": "man"
+          },
+          {
+            "question": "Does this person have a beard?",
+            "options": { "A": "Yes", "B": "No" },
+            "correctAnswer": "Yes"
+          },
+          {
+            "question": "Is this person bald?",
+            "options": { "A": "Yes", "B": "No" },
+            "correctAnswer": "No"
+          }
+        ]
+      },
+      "bald": {
+        "prompt": "He is young, he is bald.",
+        "questions": [
+          {
+            "question": "What is the age of this person?",
+            "options": { "A": "old", "B": "young" },
+            "correctAnswer": "young"
+          },
+          {
+            "question": "What is the gender of this person?",
+            "options": { "A": "man", "B": "woman" },
+            "correctAnswer": "man"
+          },
+          {
+            "question": "Does this person have a beard?",
+            "options": { "A": "Yes", "B": "No" },
+            "correctAnswer": "No"
+          },
+          {
+            "question": "Is this person bald?",
+            "options": { "A": "Yes", "B": "No" },
+            "correctAnswer": "Yes"
+          }
+        ]
+      }
+    }
+  }

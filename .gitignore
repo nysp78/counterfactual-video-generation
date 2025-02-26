@@ -9,3 +9,5 @@
 *.bin
 *.pkl
 *.safetensors
+counterfactual_video/methods/tuneavideo/checkpoints
+counterfactual_video/methods/tuneavideo/checkpoints_v2

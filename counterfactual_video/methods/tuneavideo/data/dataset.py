@@ -42,7 +42,7 @@ class TuneAVideoDataset(Dataset):
     def __len__(self):
         return 1
 
-    def __getitem__(self):
+    def __getitem__(self, index=None):
         # Load and sample video frames
         if 'mp4' in self.video_path:  # Video File
             vr = decord.VideoReader(self.video_path, width=self.width, height=self.height)  # Ensure 512x512
