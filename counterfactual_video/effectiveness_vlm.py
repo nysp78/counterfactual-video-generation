@@ -111,16 +111,17 @@ if __name__ == '__main__':
                 answer = tokenizer.decode(outputs[0].cpu().tolist(), skip_special_tokens=True)
                 print(f"{prepare_inputs['sft_format'][0]}", answer)
                # print(answer)
-                answers.append(answer.lower())
+                answers.append(answer.lower().replace(".", ""))
+
             
                 
             
-            
+           # print(correct_answers, answers)
             effectiveness[attr].append((np.array(answers)==np.array(correct_answers)).sum() / len(answers))
                 
             
             
         #print(questions.keys())
-        break
+       # break
     print(effectiveness)
     
