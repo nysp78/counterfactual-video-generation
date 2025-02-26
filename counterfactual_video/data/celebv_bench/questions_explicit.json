@@ -3316,7 +3316,7 @@
         ]
       },
       "beard": {
-        "prompt": "She is old, she has beard.",
+        "prompt": "She is young, she has beard.",
         "questions": [
           {
             "question": "What is the age of this person?",
@@ -3341,7 +3341,7 @@
         ]
       },
       "bald": {
-        "prompt": "She is old, she is bald.",
+        "prompt": "She is young, she is bald.",
         "questions": [
           {
             "question": "What is the age of this person?",
