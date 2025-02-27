@@ -36,7 +36,7 @@ def extract_first_frame(video_path):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", type = str, default="deepseek-ai/deepseek-vl2-tiny")
-    parser.add_argument('--outputs_path', type=str, default="outputs/tuneavideo-results_cfg_scale_4.5")
+    parser.add_argument('--outputs_path', type=str, default="outputs/tuneavideo-results_cfg_scale_6.5")
     parser.add_argument('--method', choices=["tuneavideo", "tokenflow"], default="tuneavideo")
     parser.add_argument('--intervention_type', choices=["explicit", "implicit", "breaking_causal"], default="breaking_causal")
     parser.add_argument('--questions_path', type=str, default='data/celebv_bench/questions_breaking_causal.json')
