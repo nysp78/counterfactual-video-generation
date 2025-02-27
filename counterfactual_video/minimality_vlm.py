@@ -32,8 +32,8 @@ def extract_first_frame(video_path):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", type = str, default="deepseek-ai/deepseek-vl2-tiny")
-    parser.add_argument('--outputs_path', type=str, default="outputs/tuneavideo-results_cfg_scale_4.5")
-    parser.add_argument('--method', choices=["tuneavideo", "tokenflow"], default="tuneavideo")
+    parser.add_argument('--outputs_path', type=str, default="outputs/tokenflow-results_cfg_scale_4.5")
+    parser.add_argument('--method', choices=["tuneavideo", "tokenflow"], default="tokenflow")
     parser.add_argument('--intervention_type', choices=["explicit", "implicit", "breaking_causal"], default="explicit")
     parser.add_argument('--crf_config_path', type=str, default='data/celebv_bench/counterfactual_explicit.json')
  #   
@@ -56,9 +56,8 @@ if __name__ == '__main__':
     vl_gpt: DeepseekVLV2ForCausalLM = AutoModelForCausalLM.from_pretrained(model_path, trust_remote_code=True)
     vl_gpt = vl_gpt.to(torch.bfloat16)
         
-    #frame = extract_first_frame(video_path=
-    #print(frame.shape)
-    #pil_img = transforms.ToPILImage()(frame)
+
+    bleu_scores = []
     transform = Compose([ToPILImage(), Resize((512,512))])
     for video_id , prompts in tqdm(crf_prompts.items()):
         print("Evaluate video:", video_id)
@@ -142,10 +141,9 @@ if __name__ == '__main__':
             pred = [tokenizer.decode(counterfactual_filtered[0], skip_special_tokens=True)]
             target = [[tokenizer.decode(factual_filtered[0], skip_special_tokens=True)]]
             bleu_score = BLEUScore()(pred, target)
-            print(bleu_score)
+            bleu_scores.append(bleu_score)
+            print("video_id:", video_id, bleu_score)
             deepseekr1.to("cpu")
                 
-            break
-
-       # print(answers)
-        break
+bleu_scores = np.array(bleu_scores)
+print("BlEU score:", np.mean(bleu_scores))
