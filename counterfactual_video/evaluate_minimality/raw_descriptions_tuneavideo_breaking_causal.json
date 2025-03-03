@@ -1,0 +1,152 @@
+{
+    "vGi5mcULgz8_4_0": {
+        "factual": "The image shows a person with short hair, wearing a brown shirt. The background appears to be an indoor setting, possibly a room with bookshelves containing books and other items. The lighting is soft, and the overall color tone is cool, giving the image a slightly bluish hue.",
+        "counterfactual": {
+            "gender": "The image shows a person with short hair and a beard. The person is wearing a dark-colored top. In the background, there is a bookshelf with several books and binders. The overall color tone of the image is blue, giving it a cool, monochromatic appearance."
+        }
+    },
+    "xkzBmNcfBB8_0_0": {
+        "factual": "The image shows a person with blue skin and a white beard. The individual is wearing a plaid shirt with a mix of colors, including red, blue, and white. The background is plain and light-colored, providing a neutral backdrop that highlights the subject.",
+        "counterfactual": {
+            "gender": "The image shows a person with a distinctive blue hue covering their face and upper body. The individual has a white beard and hair, and is wearing a checkered shirt. The background is a plain, light-colored wall, providing a neutral backdrop that emphasizes the subject."
+        }
+    },
+    "pbkZ9Jp68n8_3_0": {
+        "factual": "The image shows a person with a serious expression, illuminated by a blue light. The individual has a beard and is wearing a dark hooded garment. Around their neck, there is a string of beads, which could be a rosary or prayer beads. The background is dark, emphasizing the subject's face and the lighting effect.",
+        "counterfactual": {
+            "gender": "The image depicts a person with a solemn expression, wearing a dark hooded garment and a string of beads around their neck. The lighting casts a purple hue over the scene, creating a dramatic and somewhat mysterious atmosphere. The background appears to be dimly lit, possibly indicating an indoor setting."
+        }
+    },
+    "qE-eho0hsjM_50_0": {
+        "factual": "The image shows a person with a blue-tinted face and a beard, wearing a plaid shirt. The background features a pinkish hue, possibly from lighting, and there appears to be a computer monitor or similar device behind the person.",
+        "counterfactual": {
+            "gender": "The image shows a person with a bald head and a full beard. The background is a vibrant pink hue, and there appears to be a computer monitor or screen behind the person. The lighting gives the image a slightly surreal or stylized appearance."
+        }
+    },
+    "rzj8ssvHVMM_3_0": {
+        "factual": "The image shows a person wearing a brown cap with a logo on the front. The person has curly hair and a beard, and is wearing a yellow shirt. The background consists of a pattern of light blue and beige squares.",
+        "counterfactual": {
+            "gender": "The image features a person with a blue-tinted face and purple lipstick. They are wearing a brown cap and a yellow shirt. The background consists of a pattern of blue and beige squares."
+        }
+    },
+    "s__juO4C3Ic_5_1": {
+        "factual": "The image features a person with dark skin, wearing a green garment with a leaf pattern. The background is a deep blue, creating a striking contrast with the subject's skin tone. The person has short, textured hair styled upwards.",
+        "counterfactual": {
+            "gender": "The image features a person with dark skin, wearing a green garment. The background is a deep blue, creating a striking contrast with the subject. The person's hair is styled in an intricate updo, adding a unique and artistic touch to the overall composition."
+        }
+    },
+    "-ThrENKIlzQ_23_0": {
+        "factual": "The image shows a person with a blue hue, likely due to a special effect or lighting. The person is wearing a brown jacket and appears to be outdoors, with a building in the background featuring windows and a stone facade. The lighting suggests it might be evening or night.",
+        "counterfactual": {
+            "gender": "The image shows a person with a blue tint to their skin, likely due to a filter or effect applied to the photo. The person appears to be outdoors, with a building in the background that has multiple windows. The lighting suggests it might be either dawn or dusk, as the light is soft and warm."
+        }
+    },
+    "uAog_AxZ40Y_37_0": {
+        "factual": "The image shows a person with blue skin standing outdoors. The background consists of green foliage, suggesting a natural setting. The person is wearing a striped shirt with colors that include pink and green.",
+        "counterfactual": {
+            "gender": "The image shows a person with blue skin standing in front of a background of green foliage. The person is wearing a bright green shirt with red stripes. The background consists of dense, leafy plants, creating a natural setting."
+        }
+    },
+    "-H0bPZMgq44_7_0": {
+        "factual": "The image shows a person with a blue hue over their entire body, including their face. The background appears to be an indoor setting, possibly a kitchen, with white chairs and a table visible. The lighting is soft, and the overall color tone is cool.",
+        "counterfactual": {
+            "gender": "The image shows a person with a blue-tinted face and a white beard. The individual is wearing a brown shirt and appears to be in an indoor setting, possibly a kitchen or dining area, as indicated by the presence of chairs and tables in the background."
+        }
+    },
+    "kmljXqyYtBE_19_0": {
+        "factual": "The image shows a person with blue skin standing outdoors. The background features a body of water, possibly a river or canal, with some structures and boats visible. The sky appears overcast, giving the scene a muted, cool tone. The person is wearing a dark green shirt and has a nose ring.",
+        "counterfactual": {
+            "gender": "The image shows a person with a beard and a nose ring, standing outdoors near a body of water. The background features a dock with several boats moored alongside it. The overall color tone of the image is blue, giving it a cool, monochromatic appearance."
+        }
+    },
+    "kOqCaiW6QCs_11_0": {
+        "factual": "The image shows a person with a blue skin tone. The individual has a bald head and a short beard. They are wearing a dark, textured garment that appears to be made of a heavy fabric. The background is dark, which makes the blue skin stand out prominently.",
+        "counterfactual": {
+            "gender": "The image shows a person with a shaved head, wearing a dark, textured garment. The lighting casts a purple hue over the entire image, giving it a dramatic and somewhat mysterious appearance. The background is dark, which helps to focus attention on the subject."
+        }
+    },
+    "m_YWPYjVqa4_9_0": {
+        "factual": "The image features a person with short hair and a beard, wearing black-framed glasses. The person is dressed in a brown shirt. The background is a solid, bright blue color, which contrasts with the subject's skin tone.",
+        "counterfactual": {
+            "gender": "The image features a person with a blue-tinted face and dark hair. They are wearing black-rimmed glasses and a dark-colored shirt. The background is a vibrant blue with concentric circular patterns, giving it a dynamic and modern look."
+        }
+    },
+    "c2igF2AfhJ0_19_0": {
+        "factual": "The image shows a person with short hair and a beard, wearing a brown shirt. The background features a wall with a pattern of sailboats and other nautical elements. The lighting casts a blue hue over the person's face, giving the image a cool tone.",
+        "counterfactual": {
+            "gender": "The image shows a person with their mouth open, wearing a brown shirt. The background features a wall with a pattern of various illustrations, including sailboats and wheels. The overall color tone of the image is blue, giving it a cool, monochromatic appearance."
+        }
+    },
+    "cImOMABtLFI_2_1": {
+        "factual": "The image shows a person with a blue hue to their skin, likely due to lighting or a filter effect. They have a short beard and are wearing a dark-colored hoodie. The background features a bright yellow screen or wall, creating a high contrast with the blue skin tone.",
+        "counterfactual": {
+            "gender": "The image shows a person with a short haircut and a beard. The background is a bright yellow, which contrasts with the person's dark clothing. The lighting appears to be artificial, possibly from a screen or light source."
+        }
+    },
+    "-c-pO7H1Dlc_0_0": {
+        "factual": "The image appears to be a blurred photograph of a person. The individual is wearing glasses and a necklace. The background is out of focus, but it seems to be an indoor setting with some light coming through a window or glass door.",
+        "counterfactual": {
+            "gender": "The image appears to be overexposed, resulting in a bright and washed-out appearance. The subject is wearing a necklace and seems to be indoors, possibly near a window, as there is natural light coming from the right side. The background is blurry, making it difficult to discern specific details."
+        }
+    },
+    "d-AM-aQT_xw_15_0": {
+        "factual": "The image features a person with a blue skin tone standing in front of a background that resembles the Iron Throne from the TV series \"Game of Thrones.\" The person is wearing a gray shirt and a necklace. The background is dark, emphasizing the throne's sharp, metallic spikes.",
+        "counterfactual": {
+            "gender": "The image features a person with a mustache and a goatee, wearing a gray shirt. The background includes a dark, textured pattern that resembles a throne made of swords. The overall color tone of the image is blue, giving it a cool, monochromatic appearance."
+        }
+    },
+    "-DJseAmnmnc_8_0": {
+        "factual": "The image shows a person with a blue tint to their skin, wearing a dark-colored shirt. The background is a plain, light-colored wall. The person has short, dark hair and a beard.",
+        "counterfactual": {
+            "gender": "The image shows a person with a blue tint over their entire body. The person has short hair and a beard, and they appear to be wearing a dark-colored shirt. The background is plain and light-colored, providing a stark contrast to the blue tint. There is a letter \"E\" visible in the bottom left corner of the image."
+        }
+    },
+    "dV06cJ5Ijv4_10_0": {
+        "factual": "The image shows a person sitting in a gaming chair with a blurred face. The background includes a computer monitor displaying the words \"CINEMA\" and \"AN\". There are also colorful digital effects overlaying the image, giving it a dynamic and possibly digital or virtual theme. The person is wearing a light-colored shirt and has a microphone attached to their clothing.",
+        "counterfactual": {
+            "gender": "The image shows a person sitting in a gaming chair with a blue tint over their entire body. The background includes a shelf with some items and a screen displaying the words \"CINE AN\" in green and white. The person is wearing a gray shirt and has a microphone attached to their clothing."
+        }
+    },
+    "12dI8U5Rc-g_45_0": {
+        "factual": "The image shows a person with blue skin, likely a character from a fantasy or science fiction setting. The individual is wearing a brown coat and appears to be outdoors, as suggested by the blurred background that resembles trees or a natural environment. The lighting is soft, giving the scene a somewhat ethereal or otherworldly atmosphere.",
+        "counterfactual": {
+            "gender": "The image shows a person with a blue hue, likely due to a filter or lighting effect. The person appears to be outdoors, with trees in the background. The individual is wearing a dark coat, and the overall color tone of the image is cool, giving it a somewhat ethereal or otherworldly appearance."
+        }
+    },
+    "0xtFFvocggE_6_0": {
+        "factual": "The image shows a person with blue skin standing in a crowd. The individual is wearing glasses and a brown suit with a yellow shirt. In the background, there are other people, some of whom also have blue skin. The setting appears to be indoors, possibly at an event or gathering.",
+        "counterfactual": {
+            "gender": "The image shows a person with a blue tint, wearing glasses and a brown jacket over a yellow shirt. The background features a wall with a mix of colors, including purple and white, and there's a partial view of a sign or logo with the letters \"T\" and \"H\" visible."
+        }
+    },
+    "1AzV0D0zZvQ_14_1": {
+        "factual": "The image shows a person with a beard and glasses, standing in front of a shelf. The shelf contains various items, including figurines and a poster. The background features colorful letters spelling out \"PS4,\" indicating a connection to gaming. The lighting casts a blue hue over the scene, giving it a cool tone.",
+        "counterfactual": {
+            "gender": "The image shows a person with blue-tinted skin and a blue beard. They are wearing round glasses and have their hair pulled back. In the background, there are shelves with various items, including figurines and what appears to be a poster or artwork with the word \"NAG\" visible. The overall setting suggests a personal space, possibly a room or studio."
+        }
+    },
+    "-_B4fiuWwmo_0_1": {
+        "factual": "The image shows a person with a beard wearing a hoodie and a jacket. The jacket has a number \"5\" on it. The background is dimly lit, with a vertical light source illuminating the upper part of the image.",
+        "counterfactual": {
+            "gender": "The image shows a person with a beard and styled hair, wearing a jacket with the number \"5\" on it. The background appears to be indoors, possibly in a dimly lit room with a vertical light source."
+        }
+    },
+    "-_B4fiuWwmo_27_0": {
+        "factual": "The image shows a person with curly hair, wearing a dark-colored shirt. The background is a solid, warm-toned color, possibly brown or gold. The lighting casts a blue hue over the person's face, giving the image a cool tone.",
+        "counterfactual": {
+            "gender": "The image shows a person with curly hair and a mustache. The person is wearing a dark-colored shirt. The background is a solid, muted color, likely a shade of brown or beige. The lighting appears to be soft, creating a gentle contrast on the person's face."
+        }
+    },
+    "0era0Z6tGDU_19_1": {
+        "factual": "The image shows a person with short hair and a beard, wearing a brown shirt. The background is blurred, but it appears to be an indoor setting with some greenish lighting.",
+        "counterfactual": {
+            "gender": "The image features a person with short, light-colored hair. They are wearing a dark-colored shirt and have a distinctive mustache and goatee. The background is blurred, with hints of green and blue tones, suggesting an outdoor setting."
+        }
+    },
+    "0oOhuHiRENY_0_0": {
+        "factual": "The image shows a person with blue skin, wearing a brown hoodie. The background includes a shelf with various items, such as boxes and possibly some books or binders. There are also framed pictures on the wall, and a sign that reads \"Welcome to paradise.\"",
+        "counterfactual": {
+            "gender": "The image shows a person with a blue skin tone, wearing a brown hoodie. The background includes a shelf with various items, such as a green box and some books or boxes. There are also framed pictures on the wall behind the person."
+        }
+    }
+}
