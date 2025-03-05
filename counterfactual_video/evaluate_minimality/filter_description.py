@@ -6,6 +6,7 @@ from tqdm import tqdm
 import cv2
 import numpy as np
 import os
+import clip
 from torchmetrics.text import BLEUScore
 from torchvision.transforms import Resize, ToPILImage, Compose
 from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -29,7 +30,7 @@ def tf_idf_compute(text1 , text2):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", type = str, default="deepseek-ai/DeepSeek-R1-Distill-Qwen-14B")
-    parser.add_argument('--description_path', type=str, default="raw_descriptions_tokenflow_breaking_causal.json")
+    parser.add_argument('--description_path', type=str, default="raw_descriptions_tokenflow_explicit.json")
    
     opt = parser.parse_args()
     with open(opt.description_path, "r") as f:
@@ -40,13 +41,15 @@ if __name__ == '__main__':
     deepseekr1 = pipeline("text-generation", model=model_name, 
                     torch_dtype=torch.float16, device = 0)     
     
-    #model to compute semantic similarity
+    #models to compute semantic similarity
     model = SentenceTransformer("all-MiniLM-L6-v2").to("cuda").eval()
+    #clip_model, preprocess = clip.load("ViT-B/32", device="cuda")
     
         
     bleu_scores = []
     tf_idf_sim = []
     semantic_sim = []
+    clip_sim = []
     for video_id , descr in tqdm(raw_descriptions.items()):
         print("Evaluate video:", video_id)
         factual_description = f'''Describe the text below by excluding the factors: 
@@ -54,6 +57,7 @@ if __name__ == '__main__':
                                   \n text:\n{descr["factual"]}'''
         
         factual_filtered = deepseekr1(factual_description, max_new_tokens=100)
+        embedding1 = model.encode(factual_filtered[0]["generated_text"], convert_to_tensor=True)
 
         for attr in descr["counterfactual"].keys():
            # print(questions)
@@ -69,22 +73,36 @@ if __name__ == '__main__':
             target = [[factual_filtered[0]["generated_text"]]]
             bleu_score = BLEUScore()(pred, target)
             tf_idf_score = tf_idf_compute(factual_filtered[0]["generated_text"], counterfactual_filtered[0]["generated_text"])
-            embedding1 = model.encode(factual_filtered[0]["generated_text"], convert_to_tensor=True)
+          #  embedding1 = model.encode(factual_filtered[0]["generated_text"], convert_to_tensor=True)
             embedding2 = model.encode(counterfactual_filtered[0]["generated_text"], convert_to_tensor=True)
+         #   tokens = clip.tokenize([factual_filtered[0]["generated_text"], counterfactual_filtered[0]["generated_text"]]).to("cuda")
+         #   with torch.no_grad():
+         #       text_embeddings = model.encode_text(tokens)  # Get text embeddings
+
+            # Normalize clip embeddings
+         #   text_embeddings /= text_embeddings.norm(dim=-1, keepdim=True)
+          #  clip_similarity = torch.cosine_similarity(text_embeddings[0].unsqueeze(0), text_embeddings[1].unsqueeze(0))
+            
+            #sentence transformer similarity
             similarity = cosine_similarity(embedding1.unsqueeze(0), embedding2.unsqueeze(0))
             
             semantic_sim.append(similarity)
+          #  clip_sim.append(clip_similarity)
             bleu_scores.append(bleu_score)
             tf_idf_sim.append(tf_idf_score)
-            print("video_id:", video_id, bleu_score, " tf-idf score:", tf_idf_score, " semantic sim:", similarity)
-           # break
+            print("video_id:", video_id, bleu_score, " tf-idf score:", 
+                  tf_idf_score, " semantic sim:", similarity, " clip similarity:", clip_sim)
+         #   break
        # break
                 
 bleu_scores = np.array(bleu_scores)
 tf_idf_scores = np.array(tf_idf_sim)
 #semantic_sim_scores = np.array(semantic_sim.cpu())
 semantic_sim_scores = [score.cpu() for score in semantic_sim]
+#clip_semantic_scores = [score.cpu() for score in clip_sim]
 semantic_sim_scores = np.array(semantic_sim_scores)
+#clip_semantic_scores = np.array(clip_semantic_scores)
 print("BlEU score:", np.mean(bleu_scores))
 print("TF-IDF score:", np.mean(tf_idf_scores))
 print("Semantic sim:", np.mean(semantic_sim_scores))
+#print("CLIP semantic similarity:", np.mean(clip_semantic_scores))
