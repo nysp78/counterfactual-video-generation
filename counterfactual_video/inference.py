@@ -21,6 +21,7 @@ from methods.tokenflow.util import seed_everything, save_videos_grid__, save_vid
 from metrics.clip_consistency import ClipConsistency
 from metrics.clip_text_alignment import ClipTextAlignment
 from metrics.dover_score import DoverScore
+#from torchmetrics.video.fvd import FrechetVideoDistance
 from huggingface_hub import snapshot_download
 from diffusers import StableDiffusionPipeline
 
@@ -52,7 +53,6 @@ if __name__ == '__main__':
     video_quality = []  # Measured by DOVER
     text_video_align = {"age": [], "gender": [], "beard": [], "bald": []}  # Measured by CLIP text-frame similarity
     temporal_consistency = []  # Measured by CLIP frame consistency
-
     #download stable diffusion pipeline
     model_key = snapshot_download(config["pretrained_model_path"])
   #  model_key = "stable-diffusion-2-1-base/"

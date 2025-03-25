@@ -1,5 +1,6 @@
 torch==1.13.1
 torchvision==0.14.1
+torchmetrics==0.9.3
 huggingface_hub==0.25.2
 xformers==0.0.16
 numpy<2

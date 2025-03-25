@@ -4,7 +4,6 @@ import argparse
 import torch
 from tqdm import tqdm
 import cv2
-import json
 import numpy as np
 import os
 from transformers import AutoModelForCausalLM
@@ -36,8 +35,8 @@ if __name__ == '__main__':
     parser.add_argument("--model", type = str, default="deepseek-ai/deepseek-vl2-tiny")
     parser.add_argument('--outputs_path', type=str, default="../outputs/tokenflow-results_cfg_scale_4.5")
     parser.add_argument('--method', choices=["tuneavideo", "tokenflow"], default="tokenflow")
-    parser.add_argument('--intervention_type', choices=["explicit", "implicit", "breaking_causal"], default="breaking_causal")
-    parser.add_argument('--crf_config_path', type=str, default='../data/celebv_bench/counterfactual_breaking_causal.json')
+    parser.add_argument('--intervention_type', choices=["explicit", "implicit", "breaking_causal"], default="explicit")
+    parser.add_argument('--crf_config_path', type=str, default='../data/celebv_bench/counterfactual_explicit.json')
  #   
     opt = parser.parse_args()
     with open(opt.crf_config_path, "r") as f:
@@ -138,6 +137,6 @@ if __name__ == '__main__':
             descriptions[video_id]["counterfactual"][attr] = answer_crf
     
     
-    with open(f"raw_descriptions_{opt.method}_{opt.intervention_type}.json", "w") as json_file:
+    with open(f"raw_descriptions_v2_{opt.method}_{opt.intervention_type}.json", "w") as json_file:
         json.dump(descriptions, json_file, indent=4)
     print("JSON file saved successfully!")

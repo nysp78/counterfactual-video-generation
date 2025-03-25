@@ -9,8 +9,8 @@ import os
 from torchvision.transforms import Resize, ToPILImage, Compose
 from transformers import AutoModelForCausalLM
 
-from deepseek_vl2.models import DeepseekVLV2Processor, DeepseekVLV2ForCausalLM
-from deepseek_vl2.utils.io import load_pil_images
+from evaluate_minimality.deepseek_vl2.models import DeepseekVLV2Processor, DeepseekVLV2ForCausalLM
+from evaluate_minimality.deepseek_vl2.utils.io import load_pil_images
 
 def extract_first_frame(video_path):
     # Open the video file
@@ -36,10 +36,10 @@ def extract_first_frame(video_path):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", type = str, default="deepseek-ai/deepseek-vl2-tiny")
-    parser.add_argument('--outputs_path', type=str, default="outputs/tuneavideo-results_cfg_scale_6.5")
-    parser.add_argument('--method', choices=["tuneavideo", "tokenflow"], default="tuneavideo")
+    parser.add_argument('--outputs_path', type=str, default="outputs/tokenflow-results_cfg_scale_4.5")
+    parser.add_argument('--method', choices=["tuneavideo", "tokenflow"], default="tokenflow")
     parser.add_argument('--intervention_type', choices=["explicit", "implicit", "breaking_causal"], default="breaking_causal")
-    parser.add_argument('--questions_path', type=str, default='data/celebv_bench/questions_breaking_causal.json')
+    parser.add_argument('--questions_path', type=str, default='data/celebv_bench/questions_breaking_causal_single.json')
  #   parser.add_argument('--crf_config_path', type=str, default='data/celebv_bench/counterfactual_explicit.json')
    # frames = extract_first_frame("outputs/tokenflow-results_cfg_scale_4.5/explicit/interventions/beard/aGRVuZHstlU_0_0/She is old, she has beard./tokenflow_PnP_fps_20.mp4")
    # print(frames.shape)
@@ -118,6 +118,9 @@ if __name__ == '__main__':
                 answer = tokenizer.decode(outputs[0].cpu().tolist(), skip_special_tokens=True)
               #  print(f"{prepare_inputs['sft_format'][0]}", answer)
                # print(answer)
+                if answer.lower().replace(".", "") == q["correctAnswer"]:
+                    print("CORRECT answer", video_id)
+                    
                 answers.append(answer.lower().replace(".", ""))
 
             

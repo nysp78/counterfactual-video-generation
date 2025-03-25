@@ -30,7 +30,7 @@ def tf_idf_compute(text1 , text2):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", type = str, default="deepseek-ai/DeepSeek-R1-Distill-Qwen-14B")
-    parser.add_argument('--description_path', type=str, default="raw_descriptions_tokenflow_explicit.json")
+    parser.add_argument('--description_path', type=str, default="raw_descriptions/raw_descriptions_tuneavideo_explicit.json")
    
     opt = parser.parse_args()
     with open(opt.description_path, "r") as f:
@@ -38,8 +38,18 @@ if __name__ == '__main__':
         
     #define the LLM
     model_name = opt.model
+   # tokenizer = AutoTokenizer.from_pretrained(model_name)
+   # deepseekr1 = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16)
+   # deepseekr1.to("cuda")
+
+    messages = [
+    {"role": "user", "content": None}
+   ]
+    
+ 
+ 
     deepseekr1 = pipeline("text-generation", model=model_name, 
-                    torch_dtype=torch.float16, device = 0)     
+                    torch_dtype=torch.bfloat16, device = 0)     
     
     #models to compute semantic similarity
     model = SentenceTransformer("all-MiniLM-L6-v2").to("cuda").eval()
@@ -49,39 +59,52 @@ if __name__ == '__main__':
     bleu_scores = []
     tf_idf_sim = []
     semantic_sim = []
-    clip_sim = []
+   # clip_sim = []
     for video_id , descr in tqdm(raw_descriptions.items()):
         print("Evaluate video:", video_id)
-        factual_description = f'''Describe the text below by excluding the factors: 
-                                  age, gender, beard, baldness, hair.
-                                  \n text:\n{descr["factual"]}'''
+        factual_description = f'''Remove any references to age, gender, beard, hair (including hairstyle, color, style, and facial hair), and baldness from the following description.
+                                  Return only the filtered version of the text, without commentary or formatting.
         
-        factual_filtered = deepseekr1(factual_description, max_new_tokens=100)
-        embedding1 = model.encode(factual_filtered[0]["generated_text"], convert_to_tensor=True)
-
+                                  text:\n{descr['factual']}
+                                  '''
+                                  
+    #    print("input prompt:", factual_description)
+       # print()
+       # print()
+       # messages[0]["content"] = factual_description
+      #  break
+        factual_filtered = deepseekr1(factual_description, max_new_tokens=100000, do_sample = False)
+     #   print(factual_filtered[0]["generated_text"])
+        f_filtered = factual_filtered[0]["generated_text"].split("</think>")[1] #[1]["content"].split("</think>")[1]
+       # print(f_filtered)
+       
+      #  print(f_filtered)
+      #  break
+        embedding1 = model.encode(f_filtered, convert_to_tensor=True)
         for attr in descr["counterfactual"].keys():
            # print(questions)
             crf_description = descr["counterfactual"][attr]
+          #  print(crf_description)
         
-            counterfactual_description = f'''Describe the text below by excluding the factors: 
-                                             age, gender, beard, baldness, hair.\n 
-                                             text:\n{crf_description}'''
-              
-            #factual_filtered = deepseekr1(factual_description, max_new_tokens=100)
-            counterfactual_filtered = deepseekr1(counterfactual_description, max_new_tokens=100)
-            pred = [counterfactual_filtered[0]["generated_text"]]
-            target = [[factual_filtered[0]["generated_text"]]]
-            bleu_score = BLEUScore()(pred, target)
-            tf_idf_score = tf_idf_compute(factual_filtered[0]["generated_text"], counterfactual_filtered[0]["generated_text"])
-          #  embedding1 = model.encode(factual_filtered[0]["generated_text"], convert_to_tensor=True)
-            embedding2 = model.encode(counterfactual_filtered[0]["generated_text"], convert_to_tensor=True)
-         #   tokens = clip.tokenize([factual_filtered[0]["generated_text"], counterfactual_filtered[0]["generated_text"]]).to("cuda")
-         #   with torch.no_grad():
-         #       text_embeddings = model.encode_text(tokens)  # Get text embeddings
+            counterfactual_description = f"""Remove any references to age, gender, beard, hair (including hairstyle color, style, and facial hair), and baldness from the following description.
+                                             Return only the filtered version of the text, without commentary or formatting.
 
-            # Normalize clip embeddings
-         #   text_embeddings /= text_embeddings.norm(dim=-1, keepdim=True)
-          #  clip_similarity = torch.cosine_similarity(text_embeddings[0].unsqueeze(0), text_embeddings[1].unsqueeze(0))
+                                            text:\n{crf_description}
+                                            """
+          #  print("input_crf", counterfactual_description)                               
+           # messages[0]["content"] = counterfactual_description
+            #factual_filtered = deepseekr1(factual_description, max_new_tokens=100)
+            counterfactual_filtered = deepseekr1(counterfactual_description, max_new_tokens=100000, do_sample=False)
+          #  print("COUNTERFACTUAL TEXT", counterfactual_filtered[0]["generated_text"])
+            crf_filtered = counterfactual_filtered[0]["generated_text"].split("</think>")[1]
+           # print()
+           # print("counterfactual filtered:", crf_filtered)
+            pred = [crf_filtered]
+            target = [[f_filtered]]
+            bleu_score = BLEUScore()(pred, target)
+            tf_idf_score = tf_idf_compute(f_filtered, crf_filtered)
+            #embedding1 = model.encode(factual_filtered[0]["generated_text"], convert_to_tensor=True)
+            embedding2 = model.encode(crf_filtered, convert_to_tensor=True)
             
             #sentence transformer similarity
             similarity = cosine_similarity(embedding1.unsqueeze(0), embedding2.unsqueeze(0))
@@ -90,9 +113,9 @@ if __name__ == '__main__':
           #  clip_sim.append(clip_similarity)
             bleu_scores.append(bleu_score)
             tf_idf_sim.append(tf_idf_score)
-            print("video_id:", video_id, bleu_score, " tf-idf score:", 
-                  tf_idf_score, " semantic sim:", similarity, " clip similarity:", clip_sim)
-         #   break
+         #   print("video_id:", video_id, bleu_score, " tf-idf score:", 
+         #         tf_idf_score, " semantic sim:", similarity)
+          #  break
        # break
                 
 bleu_scores = np.array(bleu_scores)
