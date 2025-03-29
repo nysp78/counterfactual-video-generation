@@ -6,7 +6,7 @@ xformers==0.0.16
 numpy<2
 triton
 pillow
-diffusers==0.14.0
+diffusers==0.19.0
 ftfy
 transformers
 opencv-python 
