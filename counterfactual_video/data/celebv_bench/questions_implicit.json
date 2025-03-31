@@ -14,9 +14,9 @@
       "prompt": "She is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -56,9 +56,9 @@
       "prompt": "He is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -98,9 +98,9 @@
       "prompt": "A woman is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -140,9 +140,9 @@
       "prompt": "This man is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -182,9 +182,9 @@
       "prompt": "He is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -224,9 +224,9 @@
       "prompt": "He is old.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "old", "B": "young" },
-          "correctAnswer": "old"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -266,9 +266,9 @@
       "prompt": "This woman is old.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "old", "B": "young" },
-          "correctAnswer": "old"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -308,9 +308,9 @@
       "prompt": "He is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -350,9 +350,9 @@
       "prompt": "A man is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -392,9 +392,9 @@
       "prompt": "He is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -434,9 +434,9 @@
       "prompt": "A woman is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -476,9 +476,9 @@
       "prompt": "This woman is old.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "old", "B": "young" },
-          "correctAnswer": "old"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -518,9 +518,9 @@
       "prompt": "She is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -560,9 +560,9 @@
       "prompt": "She is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -602,9 +602,9 @@
       "prompt": "He is old.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "old", "B": "young" },
-          "correctAnswer": "old"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -644,9 +644,9 @@
       "prompt": "She is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -686,9 +686,9 @@
       "prompt": "This woman is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -728,9 +728,9 @@
       "prompt": "This woman is old.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "old", "B": "young" },
-          "correctAnswer": "old"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -770,9 +770,9 @@
       "prompt": "This woman is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -812,9 +812,9 @@
       "prompt": "She is old.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "old", "B": "young" },
-          "correctAnswer": "old"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -854,9 +854,9 @@
       "prompt": "He is old.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "old", "B": "young" },
-          "correctAnswer": "old"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -896,9 +896,9 @@
       "prompt": "A man is old.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "old", "B": "young" },
-          "correctAnswer": "old"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -938,9 +938,9 @@
       "prompt": "A woman is old.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "old", "B": "young" },
-          "correctAnswer": "old"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -980,9 +980,9 @@
       "prompt": "He is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -1022,9 +1022,9 @@
       "prompt": "He is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -1064,9 +1064,9 @@
       "prompt": "This woman is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -1106,9 +1106,9 @@
       "prompt": "This woman is old.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "old", "B": "young" },
-          "correctAnswer": "old"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -1148,9 +1148,9 @@
       "prompt": "He is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -1190,9 +1190,9 @@
       "prompt": "A woman is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -1232,9 +1232,9 @@
       "prompt": "A woman is old.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "old", "B": "young" },
-          "correctAnswer": "old"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -1274,9 +1274,9 @@
       "prompt": "He is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -1316,9 +1316,9 @@
       "prompt": "She is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -1358,9 +1358,9 @@
       "prompt": "A man is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -1400,9 +1400,9 @@
       "prompt": "He is old.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "old", "B": "young" },
-          "correctAnswer": "old"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -1442,9 +1442,9 @@
       "prompt": "This woman is old.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "old", "B": "young" },
-          "correctAnswer": "old"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -1484,9 +1484,9 @@
       "prompt": "He is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -1526,9 +1526,9 @@
       "prompt": "This man is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -1568,9 +1568,9 @@
       "prompt": "A man is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -1610,9 +1610,9 @@
       "prompt": "A man is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -1652,9 +1652,9 @@
       "prompt": "She is old.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "old", "B": "young" },
-          "correctAnswer": "old"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -1694,9 +1694,9 @@
       "prompt": "A woman is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -1736,9 +1736,9 @@
       "prompt": "A woman is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -1778,9 +1778,9 @@
       "prompt": "She is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -1820,9 +1820,9 @@
       "prompt": "She is old.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "old", "B": "young" },
-          "correctAnswer": "old"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -1862,9 +1862,9 @@
       "prompt": "A woman is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -1904,9 +1904,9 @@
       "prompt": "She is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -1946,9 +1946,9 @@
       "prompt": "A woman is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -1988,9 +1988,9 @@
       "prompt": "She is old.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "old", "B": "young" },
-          "correctAnswer": "old"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -2030,9 +2030,9 @@
       "prompt": "A man is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -2072,9 +2072,9 @@
       "prompt": "A man is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -2114,9 +2114,9 @@
       "prompt": "He is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -2156,9 +2156,9 @@
       "prompt": "She is old.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "old", "B": "young" },
-          "correctAnswer": "old"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -2198,9 +2198,9 @@
       "prompt": "He is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -2240,9 +2240,9 @@
       "prompt": "She is old.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "old", "B": "young" },
-          "correctAnswer": "old"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -2282,9 +2282,9 @@
       "prompt": "A woman is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -2324,9 +2324,9 @@
       "prompt": "He is old.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "old", "B": "young" },
-          "correctAnswer": "old"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -2366,9 +2366,9 @@
       "prompt": "He is old.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "old", "B": "young" },
-          "correctAnswer": "old"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -2408,9 +2408,9 @@
       "prompt": "He is old.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "old", "B": "young" },
-          "correctAnswer": "old"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -2450,9 +2450,9 @@
       "prompt": "She is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -2492,9 +2492,9 @@
       "prompt": "She is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -2534,9 +2534,9 @@
       "prompt": "A woman is old.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "old", "B": "young" },
-          "correctAnswer": "old"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -2576,9 +2576,9 @@
       "prompt": "He is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -2618,9 +2618,9 @@
       "prompt": "She is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -2660,9 +2660,9 @@
       "prompt": "This man is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -2702,9 +2702,9 @@
       "prompt": "A man is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -2744,9 +2744,9 @@
       "prompt": "He is old.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "old", "B": "young" },
-          "correctAnswer": "old"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
@@ -2786,9 +2786,9 @@
       "prompt": "She is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "woman"
         }
       ]
     },
@@ -2828,9 +2828,9 @@
       "prompt": "He is young.",
       "questions": [
         {
-          "question": "What is the age of this person?",
-          "options": { "A": "young", "B": "old" },
-          "correctAnswer": "young"
+          "question": "What is the gender of this person?",
+          "options": { "A": "man", "B": "woman" },
+          "correctAnswer": "man"
         }
       ]
     },
