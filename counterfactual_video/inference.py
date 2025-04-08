@@ -17,6 +17,7 @@ from methods.tuneavideo.pipelines.pipeline_tuneavideo import TuneAVideoPipeline
 from methods.tuneavideo.models.unet import UNet3DConditionModel
 from methods.tuneavideo.data.dataset import TuneAVideoDataset
 from methods.tokenflow.run_tokenflow_pnp import TokenFlow
+from methods.flatten.inference import run_flatten_pipeline
 from methods.tokenflow.util import seed_everything, save_videos_grid__, save_video
 from metrics.clip_consistency import ClipConsistency
 from metrics.clip_text_alignment import ClipTextAlignment
@@ -30,9 +31,9 @@ print(f"Using device: {device}")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--method', choices=["tuneavideo", "tokenflow"], default="tuneavideo")
-    parser.add_argument('--base_config_path', type=str, default='methods/tuneavideo/configs/config_tune_eval.yaml')
-    parser.add_argument('--crf_config_path', type=str, default='data/celebv_bench/counterfactual_explicit.json')
+    parser.add_argument('--method', choices=["tuneavideo", "tokenflow", "flatten"], default="tokenflow")
+    parser.add_argument('--base_config_path', type=str, default='methods/tokenflow/configs/config_pnp.yaml')
+    parser.add_argument('--crf_config_path', type=str, default='data/celebv_bench/test.json')
 
     opt = parser.parse_args()
     logger = logging.getLogger(__name__)
@@ -75,10 +76,16 @@ if __name__ == '__main__':
         text_descriptions = []
 
         #Load Tune-A-Video Model on GPU
+        if opt.method == "flatten":
+           # print(config)
+           #load the .mp4 for flatten
+            config["data_path"] = f"data/celebv_bench/videos/{video_id}.mp4"
+            #break
+            pass
         if opt.method == "tuneavideo":
             print("Loading Tune-A-Video checkpoints!")
             config["checkpoint_dir"] = os.path.join(base_ckpt_path, video_id)
-            trained_videos = os.listdir("methods/tuneavideo/checkpoints_v2")
+            trained_videos = os.listdir("methods/tuneavideo/checkpoints")
             if video_id not in trained_videos:
                 print("Video all ready trained!")
                 continue
@@ -97,7 +104,7 @@ if __name__ == '__main__':
 
 
             pipe.enable_vae_slicing()
-            ddim_inv_latent = torch.load(config["checkpoint_dir"] + "/inv_latents/ddim_latent-500.pt").to(torch.float16).to(device)
+            ddim_inv_latent = torch.load(config["checkpoint_dir"] + "/inv_latents/ddim_latent-450.pt").to(torch.float16).to(device)
             print("Latents loaded!")
 
         for attr in prompts["counterfactual"].keys():
@@ -107,10 +114,24 @@ if __name__ == '__main__':
                                                  config["intervention_type"], "interventions", attr,
                                                  video_id, config["video"][video_id]["prompt_variants"]["counterfactual"][attr])
             os.makedirs(config["output_path"], exist_ok=True)
+            print(config["output_path"])
+           # break
             config["prompt"] = config["video"][video_id]["prompt_variants"]["counterfactual"][attr]
             assert os.path.exists(config["data_path"]), "Data path does not exist"
 
             grids_path = os.path.join(base_path + "_cfg_scale_" + str(config["guidance_scale"]), config["intervention_type"])
+            
+            if opt.method == "flatten":
+                frames, orig_frames = run_flatten_pipeline(prompt = config["prompt"], neg_prompt = config["neg_prompt"],
+                                              guidance_scale = config["guidance_scale"], video_path=config["data_path"],
+                                              output_path = config["output_path"])
+                orig_frames = orig_frames / 255
+                #frames = frames.squeeze(0)
+               # orig_frames = orig_frames.squeeze(0)
+                 
+              #  print(frames.shape, orig_frames.shape)
+            #    break
+            #    pass
 
             #TokenFlow Processing
             if opt.method == "tokenflow":
@@ -118,6 +139,7 @@ if __name__ == '__main__':
                 pipeline = TokenFlow(config)
                 orig_frames = pipeline.frames.to(device)  # Ensure frames are on GPU
                 frames = pipeline.edit_video()
+              #  print(frames.shape)
 
             # Tune-A-Video Processing
             if opt.method == "tuneavideo":
@@ -134,7 +156,9 @@ if __name__ == '__main__':
                     save_videos_grid__(frames, f'{config["output_path"]}/edited_fps20.gif', fps=20)
                     print("Frames generated successfully!")
                     frames = frames.permute(0, 2, 1, 3, 4).squeeze(0)
+                    print(frames.shape)
 
+            #break
             # Compute Metrics on GPU
             dover_score = DoverScore(device=device).evaluate(frames.to(device))
             clip_score_temp = ClipConsistency(device=device).evaluate(frames.to(device))
@@ -149,6 +173,7 @@ if __name__ == '__main__':
             videos.append(frames.permute(1, 0, 2, 3).unsqueeze(0).cpu())  # Convert to CPU before saving
             text_descriptions.append(config["prompt"])
             config["output_path"] = base_path  # Reset base config output
+
 
         #Save Video Grid
         videos = [orig_frames.permute(1, 0, 2, 3).unsqueeze(0).cpu()] + videos

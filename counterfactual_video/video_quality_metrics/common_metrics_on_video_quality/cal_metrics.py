@@ -57,10 +57,10 @@ def load_video(video_path, num_frames=24, img_size=512):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--outputs_path', type=str, default="../../outputs/tuneavideo-results_cfg_scale_4.5")
-    parser.add_argument('--method', choices=["tuneavideo", "tokenflow"], default="tuneavideo")
-    parser.add_argument('--intervention_type', choices=["explicit", "implicit", "breaking_causal"], default="explicit")
-    parser.add_argument('--crf_config_path', type=str, default='../../data/celebv_bench/counterfactual_explicit.json')
+    parser.add_argument('--outputs_path', type=str, default="../../outputs/flatten-results_cfg_scale_4.5")
+    parser.add_argument('--method', choices=["tuneavideo", "tokenflow", "flatten"], default="flatten")
+    parser.add_argument('--intervention_type', choices=["explicit", "implicit", "breaking_causal"], default="implicit")
+    parser.add_argument('--crf_config_path', type=str, default='../../data/celebv_bench/counterfactual_implicit.json')
     
     
     opt = parser.parse_args()
@@ -91,6 +91,10 @@ if __name__ == '__main__':
             #path of counterfactual
             base_path = f"{opt.outputs_path}/{opt.intervention_type}/interventions/{attr}/{video_id}/{crf_prompt}"
             
+            if opt.method == "flatten":
+                counterfactual_video = load_video(video_path = base_path + f"/{crf_prompt}_ugly, blurry, low res, unrealistic, unaesthetic_4.5.mp4")
+
+                
             if opt.method == "tokenflow":
                 #print("tokenflow")
                 counterfactual_video = load_video(video_path = base_path + "/tokenflow_PnP_fps_20.mp4")
