@@ -36,7 +36,7 @@ from transformers.cache_utils import Cache, DynamicCache
 from transformers.modeling_attn_mask_utils import _prepare_4d_causal_attention_mask
 from transformers.models.llama.modeling_llama import (
     LlamaAttention,
-    LlamaFlashAttention2
+   # LlamaFlashAttention2
 )
 from transformers.modeling_outputs import (
     BaseModelOutputWithPast,
@@ -1220,7 +1220,7 @@ ATTENTION_CLASSES = {
     "mla_flash_attention_2": DeepseekV2FlashAttention2,
 
     "mha_eager": LlamaAttention,
-    "mha_flash_attention_2": LlamaFlashAttention2
+   # "mha_flash_attention_2": LlamaFlashAttention2
 }
 
 

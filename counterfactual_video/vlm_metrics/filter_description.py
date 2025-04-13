@@ -6,7 +6,7 @@ from tqdm import tqdm
 import cv2
 import numpy as np
 import os
-import clip
+#import clip
 from torchmetrics.text import BLEUScore
 from torchvision.transforms import Resize, ToPILImage, Compose
 from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -29,8 +29,8 @@ def tf_idf_compute(text1 , text2):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model", type = str, default="deepseek-ai/DeepSeek-R1-Distill-Qwen-14B")
-    parser.add_argument('--description_path', type=str, default="raw_descriptions/raw_descriptions_tuneavideo_explicit.json")
+    parser.add_argument("--model", type = str, default="deepseek-ai/DeepSeek-R1-Distill-Qwen-32B")
+    parser.add_argument('--description_path', type=str, default="raw_descriptions_v2_flatten_explicit.json")
    
     opt = parser.parse_args()
     with open(opt.description_path, "r") as f:
@@ -42,14 +42,14 @@ if __name__ == '__main__':
    # deepseekr1 = AutoModelForCausalLM.from_pretrained(model_name, torch_dtype=torch.float16)
    # deepseekr1.to("cuda")
 
-    messages = [
-    {"role": "user", "content": None}
-   ]
+   # messages = [
+   # {"role": "user", "content": None}
+   #]
     
  
  
     deepseekr1 = pipeline("text-generation", model=model_name, 
-                    torch_dtype=torch.bfloat16, device = 0)     
+                    torch_dtype=torch.bfloat16, device_map = "auto")     
     
     #models to compute semantic similarity
     model = SentenceTransformer("all-MiniLM-L6-v2").to("cuda").eval()
@@ -62,11 +62,13 @@ if __name__ == '__main__':
    # clip_sim = []
     for video_id , descr in tqdm(raw_descriptions.items()):
         print("Evaluate video:", video_id)
-        factual_description = f'''Remove any references to age, gender, beard, hair (including hairstyle, color, style, and facial hair), and baldness from the following description.
-                                  Return only the filtered version of the text, without commentary or formatting.
+        if video_id == "dV06cJ5Ijv4_10_0" or video_id == "g_Yrrk4eoXk_13_6":
+          continue
+        factual_description = f"""
+Remove any references to age, gender (man, woman, he, she), beard, hair (including hairstyle, color, style, and facial hair), and baldness from the following description.
+Return only the filtered version of the text, without commentary or formatting.
         
-                                  text:\n{descr['factual']}
-                                  '''
+text:\n{descr['factual']}"""
                                   
     #    print("input prompt:", factual_description)
        # print()
@@ -86,11 +88,12 @@ if __name__ == '__main__':
             crf_description = descr["counterfactual"][attr]
           #  print(crf_description)
         
-            counterfactual_description = f"""Remove any references to age, gender, beard, hair (including hairstyle color, style, and facial hair), and baldness from the following description.
-                                             Return only the filtered version of the text, without commentary or formatting.
+            counterfactual_description = f"""
+Remove any references to age, gender (man, woman, he, she), beard, hair (including hairstyle color, style, and facial hair), and baldness from the following description.
+Return only the filtered version of the text, without commentary or formatting.
 
-                                            text:\n{crf_description}
-                                            """
+text:\n{crf_description}"""
+
           #  print("input_crf", counterfactual_description)                               
            # messages[0]["content"] = counterfactual_description
             #factual_filtered = deepseekr1(factual_description, max_new_tokens=100)
@@ -115,7 +118,7 @@ if __name__ == '__main__':
             tf_idf_sim.append(tf_idf_score)
          #   print("video_id:", video_id, bleu_score, " tf-idf score:", 
          #         tf_idf_score, " semantic sim:", similarity)
-          #  break
+         #   break
        # break
                 
 bleu_scores = np.array(bleu_scores)

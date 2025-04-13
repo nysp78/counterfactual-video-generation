@@ -33,10 +33,10 @@ def extract_first_frame(video_path):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", type = str, default="deepseek-ai/deepseek-vl2-tiny")
-    parser.add_argument('--outputs_path', type=str, default="../outputs/tokenflow-results_cfg_scale_4.5")
-    parser.add_argument('--method', choices=["tuneavideo", "tokenflow"], default="tokenflow")
-    parser.add_argument('--intervention_type', choices=["explicit", "implicit", "breaking_causal"], default="explicit")
-    parser.add_argument('--crf_config_path', type=str, default='../data/celebv_bench/counterfactual_explicit.json')
+    parser.add_argument('--outputs_path', type=str, default="../outputs/flatten-results_cfg_scale_4.5")
+    parser.add_argument('--method', choices=["tuneavideo", "tokenflow", "flatten"], default="flatten")
+    parser.add_argument('--intervention_type', choices=["explicit", "implicit", "breaking_causal"], default="implicit")
+    parser.add_argument('--crf_config_path', type=str, default='../data/celebv_bench/counterfactual_implicit.json')
  #   
     opt = parser.parse_args()
     with open(opt.crf_config_path, "r") as f:
@@ -101,6 +101,10 @@ if __name__ == '__main__':
             #path of counterfactual
             base_path = f"{opt.outputs_path}/{opt.intervention_type}/interventions/{attr}/{video_id}/{crf_prompt}"
             
+            if opt.method == "flatten":
+               # print(base_path + f"/{crf_prompt}_ugly, blurry, low res, unrealistic, unaesthetic.mp4")
+                counterfactual_frame = extract_first_frame(base_path + f"/{crf_prompt}_ugly, blurry, low res, unrealistic, unaesthetic_4.5.mp4")
+                
             if opt.method == "tokenflow":
                 #print("tokenflow")
                 counterfactual_frame = extract_first_frame(video_path = base_path + "/tokenflow_PnP_fps_20.mp4")
