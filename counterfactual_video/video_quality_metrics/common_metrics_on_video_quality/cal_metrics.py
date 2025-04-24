@@ -57,10 +57,10 @@ def load_video(video_path, num_frames=24, img_size=512):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--outputs_path', type=str, default="../../outputs/flatten-results_cfg_scale_4.5")
-    parser.add_argument('--method', choices=["tuneavideo", "tokenflow", "flatten"], default="flatten")
-    parser.add_argument('--intervention_type', choices=["explicit", "implicit", "breaking_causal"], default="implicit")
-    parser.add_argument('--crf_config_path', type=str, default='../../data/celebv_bench/counterfactual_implicit.json')
+    parser.add_argument('--outputs_path', type=str, default="../../outputs_v5/tokenflow-results_cfg_scale_4.5")
+    parser.add_argument('--method', choices=["tuneavideo", "tokenflow", "flatten"], default="tokenflow")
+    parser.add_argument('--intervention_type', choices=["explicit", "implicit", "breaking_causal"], default="explicit")
+    parser.add_argument('--crf_config_path', type=str, default='../../data/celebv_bench/counterfactual_explicit.json')
     
     
     opt = parser.parse_args()

@@ -4,7 +4,6 @@ import json
 from pathlib import Path
 from preprocess import prep  # Import the preprocessing function from your script
 
-
 def preprocess_all_videos(data_dir, params):
     """
     extract latents and the self-attention maps from every video

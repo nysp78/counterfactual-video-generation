@@ -10,7 +10,7 @@ import torch.nn as nn
 import argparse
 from torchvision.io import write_video
 from pathlib import Path
-from util import *
+from .util import *
 import torchvision.transforms as T
 
 

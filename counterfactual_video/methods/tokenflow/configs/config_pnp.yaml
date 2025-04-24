@@ -1,19 +1,20 @@
 # general
-seed: 1
+seed: 42
 device: 'cuda'
-output_path: 'outputs_v2/tokenflow-results'
+output_path: 'outputs_v9/tokenflow-results'
 intervention_type: "explicit"
 # data
 data_path: 
 latents_path: 'methods/tokenflow/inverted_latents' # should be the same as 'save_dir' arg used in preprocess
 n_inversion_steps: 500 # for retrieving the latents of the inversion
-n_frames: 24
+n_frames: 8
 
 # diffusion
+pretrained_model_path: "stabilityai/stable-diffusion-2-1-base"
 sd_version: '2.1'
-guidance_scale: 3.5
+guidance_scale: 4.5
 n_timesteps: 50
-batch_size: 24
+batch_size: 8
 prompt: "some prompt"
 negative_prompt: "ugly, blurry, low res, unrealistic, unaesthetic"
 # pnp params -- injection thresholds ∈ [0, 1]

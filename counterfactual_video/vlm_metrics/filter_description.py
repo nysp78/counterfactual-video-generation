@@ -27,10 +27,20 @@ def tf_idf_compute(text1 , text2):
     return similarity
 
 
+ex_ids = [
+    "b5vjXRWFDYI_9_0",
+    "bqy2zrVCt8c_21_0",
+    "-c-pO7H1Dlc_0_0",
+    "eFaetz1BEYg_0_0",
+    "g3grlAFSLIE_51_0",
+    "1F5naBzNfi8_5_0"
+]
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model", type = str, default="deepseek-ai/DeepSeek-R1-Distill-Qwen-32B")
-    parser.add_argument('--description_path', type=str, default="raw_descriptions_v2_flatten_explicit.json")
+    parser.add_argument("--model", type = str, default="deepseek-ai/DeepSeek-R1-Distill-Qwen-14B")
+    parser.add_argument('--description_path', type=str, default="./raw_descriptions/raw_descriptions_tuneavideo_explicit.json")
    
     opt = parser.parse_args()
     with open(opt.description_path, "r") as f:
@@ -62,7 +72,7 @@ if __name__ == '__main__':
    # clip_sim = []
     for video_id , descr in tqdm(raw_descriptions.items()):
         print("Evaluate video:", video_id)
-        if video_id == "dV06cJ5Ijv4_10_0" or video_id == "g_Yrrk4eoXk_13_6":
+        if video_id == "dV06cJ5Ijv4_10_0" or video_id == "g_Yrrk4eoXk_13_6" or video_id == "-KBCBTt2ldA_0_1"  or video_id=="-_B4fiuWwmo_27_0" or video_id in ex_ids:
           continue
         factual_description = f"""
 Remove any references to age, gender (man, woman, he, she), beard, hair (including hairstyle, color, style, and facial hair), and baldness from the following description.

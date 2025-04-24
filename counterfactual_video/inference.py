@@ -31,8 +31,8 @@ print(f"Using device: {device}")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--method', choices=["tuneavideo", "tokenflow", "flatten"], default="tokenflow")
-    parser.add_argument('--base_config_path', type=str, default='methods/tokenflow/configs/config_pnp.yaml')
+    parser.add_argument('--method', choices=["tuneavideo", "tokenflow", "flatten"], default="flatten")
+    parser.add_argument('--base_config_path', type=str, default='methods/flatten/configs/config_flatten.yaml')
     parser.add_argument('--crf_config_path', type=str, default='data/celebv_bench/test.json')
 
     opt = parser.parse_args()
@@ -81,7 +81,7 @@ if __name__ == '__main__':
            #load the .mp4 for flatten
             config["data_path"] = f"data/celebv_bench/videos/{video_id}.mp4"
             #break
-            pass
+           # pass
         if opt.method == "tuneavideo":
             print("Loading Tune-A-Video checkpoints!")
             config["checkpoint_dir"] = os.path.join(base_ckpt_path, video_id)
@@ -138,7 +138,7 @@ if __name__ == '__main__':
                 os.makedirs(grids_path, exist_ok=True)
                 pipeline = TokenFlow(config)
                 orig_frames = pipeline.frames.to(device)  # Ensure frames are on GPU
-                frames = pipeline.edit_video()
+                frames, _ = pipeline.edit_video()
               #  print(frames.shape)
 
             # Tune-A-Video Processing

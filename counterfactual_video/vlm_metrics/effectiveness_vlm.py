@@ -10,23 +10,18 @@ from torchvision.transforms import Resize, ToPILImage, Compose
 from transformers import AutoModelForCausalLM
 
 from deepseek_vl2.models import DeepseekVLV2Processor, DeepseekVLV2ForCausalLM
+from utils import extract_nth_frame
 from deepseek_vl2.utils.io import load_pil_images
 
-def extract_first_frame(video_path):
-    # Open the video file
-    cap = cv2.VideoCapture(video_path)
-   # print(cap)
-    
-    if not cap.isOpened():
-        print("Error: Could not open video file.")
-        return
-    
-    # Read the first frame
-    ret, frame = cap.read()
-    
-    # Release the video capture object
-    cap.release()
-    return frame
+ex_ids = [
+    "b5vjXRWFDYI_9_0",
+    "bqy2zrVCt8c_21_0",
+    "-c-pO7H1Dlc_0_0",
+    "eFaetz1BEYg_0_0",
+    "g3grlAFSLIE_51_0",
+    "1F5naBzNfi8_5_0"
+]
+
 
 # Example usage
 #video_file = "input.mp4"  # Change to your input file
@@ -35,8 +30,8 @@ def extract_first_frame(video_path):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model", type = str, default="deepseek-ai/deepseek-vl2-small")
-    parser.add_argument('--outputs_path', type=str, default="../outputs/flatten-results_cfg_scale_6.5")
+    parser.add_argument("--model", type = str, default="deepseek-ai/deepseek-vl2-tiny")
+    parser.add_argument('--outputs_path', type=str, default="/storage/outputs/flatten-results_cfg_scale_4.5")
     parser.add_argument('--method', choices=["tuneavideo", "tokenflow", "flatten"], default="flatten")
     parser.add_argument('--intervention_type', choices=["explicit", "implicit", "breaking_causal"], default="explicit")
     parser.add_argument('--questions_path', type=str, default='../data/celebv_bench/questions_explicit.json')
@@ -52,20 +47,25 @@ if __name__ == '__main__':
     vl_chat_processor: DeepseekVLV2Processor = DeepseekVLV2Processor.from_pretrained(model_path)
     tokenizer = vl_chat_processor.tokenizer
 
-    vl_gpt: DeepseekVLV2ForCausalLM = AutoModelForCausalLM.from_pretrained(model_path, device_map="auto", trust_remote_code=True)
-    #vl_gpt = vl_gpt.to(torch.bfloat16).cuda().eval()
+    vl_gpt: DeepseekVLV2ForCausalLM = AutoModelForCausalLM.from_pretrained(model_path, trust_remote_code=True)
+    vl_gpt = vl_gpt.to(torch.bfloat16).cuda().eval()
         
     #frame = extract_first_frame(video_path=
     #print(frame.shape)
     #pil_img = transforms.ToPILImage()(frame)
     transform = Compose([ToPILImage(), Resize((512,512))])
-    effectiveness = {"age": [], "gender": [], "beard": [], "bald": []} 
+    effectiveness = {"age": [], "gender": [], "beard": [], "bald": []}
+    effectiveness_ = {"age": [], "gender": [], "beard": [], "bald": []}
+     
     i=0
+    attrs_acc = {"age":effectiveness_, "gender":effectiveness_, "beard":effectiveness_, "bald":effectiveness_}
     for video_id , questions in tqdm(multiple_choice_questions.items()):
         i+=1
       #  if i > 55:
       #      break
         print("Evaluate video:", video_id)
+       # if video_id in ex_ids:
+       #     continue
 
         for attr in questions.keys():
            # print(questions)
@@ -73,25 +73,26 @@ if __name__ == '__main__':
             base_path = f"{opt.outputs_path}/{opt.intervention_type}/interventions/{attr}/{video_id}/{crf_prompt}"
             
             if opt.method == "flatten":
-                counterfactual_frame = extract_first_frame(base_path + f"/{crf_prompt}_ugly, blurry, low res, unrealistic, unaesthetic_4.5.mp4")
+                counterfactual_frame = extract_nth_frame(base_path + f"/{crf_prompt}_ugly, blurry, low res, unrealistic, unaesthetic_4.5.mp4")
             
             if opt.method == "tokenflow":
                 #print("tokenflow")
-                counterfactual_frame = extract_first_frame(video_path = base_path + "/tokenflow_PnP_fps_20.mp4")
+                counterfactual_frame = extract_nth_frame(video_path = base_path + "/tokenflow_PnP_fps_20.mp4")
                 #print(counterfactual_frame.shape)
             if opt.method == "tuneavideo":
                # print("tuneavideo")
-                counterfactual_frame = extract_first_frame(video_path = base_path + "/edited_fps20.gif")
+                counterfactual_frame = extract_nth_frame(video_path = base_path + "/edited_fps20.gif")
 
                 
             
             counterfactual_frame = transform(counterfactual_frame)
-            print("Device", vl_gpt.device)
+            #print("Device", vl_gpt.device)
             # iterate through possible questions:
             correct_answers = []
             index_keys = {0:"age", 1:"gender", 2:"beard", 3:"bald"}
             index = 0
             answers = []
+         #   attrs_acc[0][attr].append()
             for q in questions[attr]["questions"]:
                 que = q["question"]
                 ans1 = q["options"]["A"]
@@ -128,8 +129,8 @@ if __name__ == '__main__':
                 answer = tokenizer.decode(outputs[0].cpu().tolist(), skip_special_tokens=True)
               #  print(f"{prepare_inputs['sft_format'][0]}", answer)
                # print(answer)
-             #   if answer.lower().replace(".", "") == q["correctAnswer"]:
-             #       print("CORRECT answer", video_id, attr)
+                #if answer.lower().replace(".", "") == q["correctAnswer"]:
+                #    print("CORRECT answer", video_id, attr)
                     
                 answers.append(answer.lower().replace(".", ""))
 

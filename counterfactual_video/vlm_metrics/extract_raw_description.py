@@ -8,25 +8,10 @@ import numpy as np
 import os
 from transformers import AutoModelForCausalLM
 from torchvision.transforms import Resize, ToPILImage, Compose
+from utils import extract_first_frame, extract_nth_frame
 from deepseek_vl2.models import DeepseekVLV2Processor, DeepseekVLV2ForCausalLM
 from deepseek_vl2.utils.io import load_pil_images
 
-
-def extract_first_frame(video_path):
-    # Open the video file
-    cap = cv2.VideoCapture(video_path)
-   # print(cap)
-    
-    if not cap.isOpened():
-        print("Error: Could not open video file.")
-        return
-    
-    # Read the first frame
-    ret, frame = cap.read()
-    
-    # Release the video capture object
-    cap.release()
-    return frame
 
 
 
