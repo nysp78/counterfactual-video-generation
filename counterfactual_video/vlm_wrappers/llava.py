@@ -76,29 +76,3 @@ class LlavaNext:
         # Generate and decode
         outputs = self.model.generate(**inputs, max_new_tokens=max_new_tokens, do_sample = do_sample, **kwargs)
         return self.processor.decode(outputs[0], skip_special_tokens=True)
-    
-    
-if __name__ == "__main__":
-    vlm = LlavaNext(
-    model_name="llava-hf/llava-v1.6-mistral-7b-hf",  # or "Salesforce/blip2-opt-2.7b"
-    device="cuda"  # Use "cpu" if no GPU
-)
-    
-    image_path = "/home/ubuntu/counterfactual-video-generation/counterfactual_video/outputs_v2/tokenflow-results_cfg_scale_4.5/explicit/interventions/age/-_B4fiuWwmo_0_1/He is old, he has beard, he is bald./vae_recon/00000.png"
-
-    #prompt = "Describe this image in detail"
-    #all_attributes = ["age", "gender", "beard", "bald"]
-    #upstream_attributes = {"age", "gender"}
-
-    #prompt_ = generate_vlm_prompt(["bald"], ["no"], upstreams=upstream_attributes, all_attributes=all_attributes)
-    #print(prompt_)
-    prompt_ = f'''
-You are given an image of a person's face.
-We assume a causal graph where age causes beard, baldness, gender causes beard, baldness. 
-1)factual prompt:He is young, he has beard
-2)counterfactual target prompt: He is old, he has beard, he is bald.
-Identify the interventions. 
-Evaluate how well the generated image aligns with the counterfactual prompt.
-'''
-    answer = vlm.generate(image_path, prompt_, do_sample=False)
-    print(answer)
