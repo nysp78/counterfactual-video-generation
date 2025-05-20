@@ -74,3 +74,29 @@ class ClipTextAlignment(nn.Module):
             scores.append(score)
 
         return sum(scores) / len(scores)
+    
+    
+    
+    
+    def compute_loss(self, video, text) -> torch.Tensor:
+        transform = transforms.Compose([
+        transforms.Resize(224)
+    ])
+
+        text_tokens = self.tokenizer(text, return_tensors="pt", padding=True, truncation=True, max_length=77)
+        text_input = text_tokens["input_ids"].to(self.device)
+        text_embs = self.model.get_text_features(text_input)
+        text_embs = text_embs / torch.norm(text_embs, dim=-1, keepdim=True)
+
+        scores = []
+        for image_input in video:
+            image_input = image_input.unsqueeze(0).to(self.device)
+            image_input = transform(image_input)
+            image_embs = self.model.get_image_features(image_input)
+            image_embs = image_embs / torch.norm(image_embs, dim=-1, keepdim=True)
+
+            # Compute cosine similarity (now fully differentiable!)
+            score = 1 - torch.nn.functional.cosine_similarity(text_embs, image_embs).mean()
+            scores.append(score)
+
+        return sum(scores) / len(scores)  # torch.Tensor!

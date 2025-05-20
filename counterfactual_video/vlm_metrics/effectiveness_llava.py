@@ -5,14 +5,14 @@ import numpy as np
 from tqdm import tqdm
 from torchvision.transforms import Resize, ToPILImage, Compose
 from collections import defaultdict
-
+import glob
 from utils import extract_nth_frame, LlavaNext
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("--outputs_path", type=str, default="../outputs_v9/tokenflow-results_cfg_scale_4.5")
-    parser.add_argument("--method", choices=["tuneavideo", "tokenflow", "flatten"], default="tokenflow")
+    parser.add_argument("--outputs_path", type=str, default="../outputs_rephrasing_LLM_v2/flatten-results_cfg_scale_7.5")
+    parser.add_argument("--method", choices=["tuneavideo", "tokenflow", "flatten"], default="flatten")
     parser.add_argument("--intervention_type", choices=["explicit", "implicit", "breaking_causal"], default="explicit")
     parser.add_argument("--questions_path", type=str, default='../data/celebv_bench/questions_explicit.json')
     opt = parser.parse_args()
@@ -47,7 +47,11 @@ if __name__ == '__main__':
 
             # Select appropriate video path
             if opt.method == "flatten":
-                video_path = f"{base_path}/{crf_prompt}_ugly, blurry, low res, unrealistic, unaesthetic_4.5.mp4"
+                pattern = f"{base_path}/*_ugly, blurry, low res, unrealistic, unaesthetic_7.5.mp4"
+                video_path = glob.glob(pattern)[0]
+               # print(video_path)
+                #video_path = f"{base_path}/{crf_prompt[:10]}_ugly, blurry, low res, unrealistic, unaesthetic_7.5.mp4"
+               # print(video_path)
             elif opt.method == "tokenflow":
                 video_path = f"{base_path}/tokenflow_PnP_fps_20.mp4"
             elif opt.method == "tuneavideo":
@@ -90,6 +94,7 @@ if __name__ == '__main__':
                     print(video_id, is_correct, pred_answer, correct_answer)
                 accuracy_matrix[attr][intervention_attr]["correct"] += int(is_correct)
                 accuracy_matrix[attr][intervention_attr]["total"] += 1
+                #print(accuracy_matrix[attr][intervention_attr]["total"])
 
     # Compute final accuracies
     print("Accuracy Matrix (attribute × intervention):")
