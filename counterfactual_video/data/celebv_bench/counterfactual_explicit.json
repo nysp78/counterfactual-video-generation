@@ -8,15 +8,7 @@
         "bald": "He is young, he is bald."
       }
     },
-    "v1OzyGbBM_o_5_0": {
-      "factual": "She is young.",
-      "counterfactual": {
-        "age": "She is old.",
-        "gender": "He is young, he has beard.",
-        "beard": "She is young, she has beard.",
-        "bald": "She is young, she is bald."
-      }
-    },
+
     "vGi5mcULgz8_4_0": {
       "factual": "A man is young, he has beard.",
       "counterfactual": {
