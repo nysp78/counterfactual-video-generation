@@ -11,9 +11,8 @@ from utils import extract_nth_frame, LlavaNext
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("--outputs_path", type=str, default="../outputs_rephrasing_LLM_v2/flatten-results_cfg_scale_7.5")
+    parser.add_argument("--outputs_path", type=str, default="/path/to/generated_videos")
     parser.add_argument("--method", choices=["tuneavideo", "tokenflow", "flatten"], default="flatten")
-    parser.add_argument("--intervention_type", choices=["explicit", "implicit", "breaking_causal"], default="explicit")
     parser.add_argument("--questions_path", type=str, default='../data/celebv_bench/questions_explicit.json')
     opt = parser.parse_args()
 
@@ -21,14 +20,9 @@ if __name__ == '__main__':
     with open(opt.questions_path, "r") as f:
         multiple_choice_questions = json.load(f)
 
-    # Load model & processor
-    #processor = DeepseekVLV2Processor.from_pretrained(opt.model)
-    #tokenizer = processor.tokenizer
-    #model = DeepseekVLV2ForCausalLM.from_pretrained(opt.model, trust_remote_code=True)
+    intervention_type = "explicit"
     model = LlavaNext(model_name="llava-hf/llava-v1.6-mistral-7b-hf", device="cuda")
     
-    #model = model.to(torch.bfloat16).cuda().eval()
-
     transform = Compose([ToPILImage(), Resize((512, 512))])
 
     attributes = ["age", "gender", "beard", "bald"]
@@ -49,9 +43,6 @@ if __name__ == '__main__':
             if opt.method == "flatten":
                 pattern = f"{base_path}/*_ugly, blurry, low res, unrealistic, unaesthetic_7.5.mp4"
                 video_path = glob.glob(pattern)[0]
-               # print(video_path)
-                #video_path = f"{base_path}/{crf_prompt[:10]}_ugly, blurry, low res, unrealistic, unaesthetic_7.5.mp4"
-               # print(video_path)
             elif opt.method == "tokenflow":
                 video_path = f"{base_path}/tokenflow_PnP_fps_20.mp4"
             elif opt.method == "tuneavideo":
@@ -97,7 +88,7 @@ if __name__ == '__main__':
                 #print(accuracy_matrix[attr][intervention_attr]["total"])
 
     # Compute final accuracies
-    print("Accuracy Matrix (attribute × intervention):")
+    print("Accuracy Matrix (attribute x intervention):")
     for attr in attributes:
         row = {}
         for interv in interventions:
