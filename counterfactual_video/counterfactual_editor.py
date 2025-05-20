@@ -80,15 +80,10 @@ def prompt_optimization_loop(method, config, attr, f_prompt, crf_prompt, max_epo
     target_interventions = ", ".join(intervened_attrs_values)
     
 
-
-    #score = -1
-    #threshold = 20.0
     final_frames = torch.zeros(24, 3, 512, 512)
     intervened_attr = attr
     vlm_prompt = generate_vlm_prompt__(intervened_attr, crf_prompt,  target_interventions)
-   # print(vlm_prompt)
 
-      
     
     question_variable = tg.Variable(vlm_prompt, role_description="instruction to the VLM", requires_grad=False)    
     crf_prompt_var = tg.Variable(crf_prompt, role_description="prompt to optimize", requires_grad=True)
@@ -173,7 +168,6 @@ if __name__ == '__main__':
     for video_id, prompts in tqdm(edited_prompts.items()):
         config["data_path"] = f"data/celebv_bench/frames/{video_id}"
         
-        factual_frame = config["data_path"]+"/00007.jpg"
         config["video"][video_id] = {
             "prompt_variants": {
                 "factual": prompts["factual"],
@@ -198,15 +192,9 @@ if __name__ == '__main__':
             
         
         if opt.method == "flatten":
-           # print(config)
-           #load the .mp4 for flatten
-            config["data_path"] = f"data/celebv_bench/videos/{video_id}.mp4"
-            #factual_frame = extract_first_frame(config["data_path"])
-        
-        
-       # if opt.method in {"tokenflow", "tuneavideo"}:
-       #     factual_frame = config["data_path"]+"/00000.jpg"
 
+            config["data_path"] = f"data/celebv_bench/videos/{video_id}.mp4"
+        
         for attr in prompts["counterfactual"].keys():
             print(f"Processing Attribute: {attr}")
 
