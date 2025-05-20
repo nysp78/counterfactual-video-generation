@@ -8,7 +8,8 @@ triton
 pillow
 diffusers==0.19.0
 ftfy
-transformers==4.48.3
+transformers==4.48.1
+sentence_transformers==2.2.2
 opencv-python 
 tqdm
 pyyaml
@@ -24,3 +25,4 @@ bitsandbytes==0.35.4
 decord
 hf_transfer
 scipy
+scikit-learn
