@@ -72,15 +72,14 @@ def tensor_to_bytes(tensor_):
     
 
     
-def prompt_optimization_loop(method, config, attr, f_prompt, crf_prompt, interv_type, max_epochs = 1):
+def prompt_optimization_loop(method, config, attr, f_prompt, crf_prompt, max_epochs = 1):
     tg.set_backward_engine("gpt-4-turbo", override=True)
-    if interv_type == "explicit":
-        intervened_attrs = extract_interventions(f_prompt , crf_prompt)
-        intervened_attrs_values = [item[1] for item in intervened_attrs]
-        target_interventions = ", ".join(intervened_attrs_values)
     
-    else:
-        target_interventions = crf_prompt
+    intervened_attrs = extract_interventions(f_prompt , crf_prompt)
+    intervened_attrs_values = [item[1] for item in intervened_attrs]
+    target_interventions = ", ".join(intervened_attrs_values)
+    
+
 
     #score = -1
     #threshold = 20.0
@@ -226,7 +225,7 @@ if __name__ == '__main__':
             #if opt.method == "tokenflow":
             os.makedirs(grids_path, exist_ok=True)
             frames, orig_frames = prompt_optimization_loop(opt.method, config, attr, 
-                                         f_prompt, config["prompt"], config["intervention_type"], max_epochs=2)
+                                         f_prompt, config["prompt"], max_epochs=2)
             
             #set again the original factual prompt    
             config["prompt"] = config["video"][video_id]["prompt_variants"]["counterfactual"][attr]
