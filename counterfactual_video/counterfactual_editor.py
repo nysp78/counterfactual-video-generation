@@ -19,7 +19,6 @@ from PIL import Image
 import io
 from vlm_wrappers.llava import LlavaNext
 from vlm_wrappers.generate_prompt import generate_vlm_prompt__, gender_from_text
-#os.environ["OPENAI_API_KEY"] = "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"
 
 os.environ["OPENAI_API_KEY"] = "YOUR OPEN_AI KEY"
 
@@ -62,7 +61,6 @@ def extract_interventions(factual: str, counterfactual: str):
     return interventions
 
 def tensor_to_bytes(tensor_):
-    #np_data = tensor_.cpu().numpy().astype(np.uint8)
     np_data = (tensor_.cpu().numpy() * 255).astype(np.uint8)
 
     image_pil = Image.fromarray(np_data)
@@ -92,26 +90,17 @@ def prompt_optimization_loop(method, config, attr, f_prompt, crf_prompt, interv_
    # print(vlm_prompt)
 
       
-    #with open(factual_frame, "rb") as f:
-    #    factual_frame_data = f.read()
     
-    #image_variable = tg.Variable(factual_frame_data, role_description="image to answer a question about", requires_grad=False)
     question_variable = tg.Variable(vlm_prompt, role_description="instruction to the VLM", requires_grad=False)    
-    #response = MultimodalLLMCall("gpt-4-turbo")([image_variable, question_variable])
     crf_prompt_var = tg.Variable(crf_prompt, role_description="prompt to optimize", requires_grad=True)
     config["prompt"] = crf_prompt_var.value #response.value
     print("PROPOSED Prompt:", crf_prompt_var.value)
     video_editor = VideoEditorWrapper(config=config, method=method)
     frames , source_frames = video_editor.run()
     source_frames = source_frames.to(device)
-   # print(frames[10].shape)
-    #print(frames[6].min(), frames[6].max())
     crf_frame_data = tensor_to_bytes(frames[6].permute(1,2,0))
     crf_img_variable = tg.Variable(crf_frame_data, role_description="image to answer a question about", requires_grad=False)
-    #question_ = tg.Variable("Describe this image in detail", role_description="instruction to the VLM", requires_grad=False)    
     
-    #response = MultimodalLLMCall("gpt-4-turbo")([crf_img_variable, question_])
-    #print(response.value)
 
    
     optimizer = tg.TGD(parameters=[crf_prompt_var])
@@ -157,14 +146,13 @@ def prompt_optimization_loop(method, config, attr, f_prompt, crf_prompt, interv_
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--method', choices=["tuneavideo", "tokenflow", "flatten"], default="flatten")
-    parser.add_argument('--base_config_path', type=str, default='methods/flatten/configs/config_flatten.yaml')
+    parser.add_argument('--method', choices=["tuneavideo", "tokenflow", "flatten"], default="tokenflow")
+    parser.add_argument('--base_config_path', type=str, default='methods/flatten/configs/config_pnp.yaml')
     parser.add_argument('--crf_config_path', type=str, default='data/celebv_bench/counterfactual_explicit.json')
     
     
     device = "cuda"
     opt = parser.parse_args()
-   # logger = logging.getLogger(__name__)
 
     #Load Config
     with open(opt.base_config_path, "r") as f:
@@ -242,10 +230,7 @@ if __name__ == '__main__':
             
             #set again the original factual prompt    
             config["prompt"] = config["video"][video_id]["prompt_variants"]["counterfactual"][attr]
-               # break
-               # pipeline = VideoEditorWrapper(config=config, method="tokenflow")
-               # orig_frames = pipeline.frames.to(device)  # Ensure frames are on GPU
-               # frames, _ = pipeline.run()
+  
                
             dover_score = DoverScore(device=device).evaluate(frames.to(device))
             clip_score_temp = ClipConsistency(device=device).evaluate(frames.to(device))

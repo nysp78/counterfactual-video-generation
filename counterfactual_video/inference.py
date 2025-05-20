@@ -22,7 +22,6 @@ from methods.tokenflow.util import seed_everything, save_videos_grid__, save_vid
 from metrics.clip_consistency import ClipConsistency
 from metrics.clip_text_alignment import ClipTextAlignment
 from metrics.dover_score import DoverScore
-#from torchmetrics.video.fvd import FrechetVideoDistance
 from huggingface_hub import snapshot_download
 from diffusers import StableDiffusionPipeline
 
@@ -31,9 +30,9 @@ print(f"Using device: {device}")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--method', choices=["tuneavideo", "tokenflow", "flatten"], default="flatten")
-    parser.add_argument('--base_config_path', type=str, default='methods/flatten/configs/config_flatten.yaml')
-    parser.add_argument('--crf_config_path', type=str, default='data/celebv_bench/test.json')
+    parser.add_argument('--method', choices=["tuneavideo", "tokenflow", "flatten"], default="tokenflow")
+    parser.add_argument('--base_config_path', type=str, default='methods/tokenflow/configs/config_pnp.yaml')
+    parser.add_argument('--crf_config_path', type=str, default='data/celebv_bench/counterfactual_explicit.json')
 
     opt = parser.parse_args()
     logger = logging.getLogger(__name__)
@@ -56,12 +55,6 @@ if __name__ == '__main__':
     temporal_consistency = []  # Measured by CLIP frame consistency
     #download stable diffusion pipeline
     model_key = snapshot_download(config["pretrained_model_path"])
-  #  model_key = "stable-diffusion-2-1-base/"
-   # pipe = StableDiffusionPipeline.from_pretrained(model_key, torch_dtype=torch.float16)
-
-    #tune a video pipepline
-  #  pipe = TuneAVideoPipeline.from_pretrained(model_key, unet=None, torch_dtype=torch.float16).to(device)
-
 
     for video_id, prompts in tqdm(edited_prompts.items()):
         config["data_path"] = f"data/celebv_bench/frames/{video_id}"

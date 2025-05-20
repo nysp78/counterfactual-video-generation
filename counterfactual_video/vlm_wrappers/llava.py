@@ -6,8 +6,7 @@ from transformers import (
     LlavaNextProcessor, 
     LlavaNextForConditionalGeneration,
 )
-#from .generate_prompt import generate_vlm_prompt
-#import textgrad as tg
+
 class LlavaNext:
     def __init__(
         self,

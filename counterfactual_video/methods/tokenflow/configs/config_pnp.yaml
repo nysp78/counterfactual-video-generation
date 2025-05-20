@@ -1,13 +1,13 @@
 # general
 seed: 42
 device: 'cuda'
-output_path: 'outputs_v9/tokenflow-results'
+output_path: 'outputs/tokenflow-results'
 intervention_type: "explicit"
 # data
 data_path: 
 latents_path: 'methods/tokenflow/inverted_latents' # should be the same as 'save_dir' arg used in preprocess
 n_inversion_steps: 500 # for retrieving the latents of the inversion
-n_frames: 8
+n_frames: 24
 
 # diffusion
 pretrained_model_path: "stabilityai/stable-diffusion-2-1-base"
