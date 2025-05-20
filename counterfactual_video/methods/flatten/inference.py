@@ -69,7 +69,6 @@ def run_flatten_pipeline(
     real_frames = [
         t2i_transform(((frame + 1) / 2 * 255).to(torch.uint8)) for frame in video
     ]
-    #print("pppppppppppppppppppppppppppprr", torch.from_numpy(np.array(real_frames[0])).shape)
     # Compute trajectories
     trajectories = sample_trajectories(source_video_path, device)
     torch.cuda.empty_cache()
@@ -85,18 +84,14 @@ def run_flatten_pipeline(
         output_dir="tmp/", inject_step=inject_step, old_qk=old_qk
     ).videos
 
-    # Save result
-    temp_video_name = f"{prompt}_{neg_prompt}_{guidance_scale}"
+    temp_video_name = f"{prompt[:10]}_{neg_prompt}_{guidance_scale}"
     output_file = os.path.join(output_path, f"{temp_video_name}.mp4")
     save_videos_grid(sample, output_file, fps=fps)
 
     print(f"Output saved to: {output_file}")
     orig_frames = [torch.from_numpy(np.array(frame)).permute(2,0,1) for frame in real_frames]
     orig_frames = torch.cat(orig_frames, dim=0).view(-1, 3, 512, 512)
-   # print(orig_frames.shape)
-   # orig_frames = orig_frames.permute(0, 3, 1, 2)  #24 3 512 512
     sample = sample.squeeze(0).permute(1,0,2,3)
-   # print(sample.shape)
     
 
     return sample , orig_frames
