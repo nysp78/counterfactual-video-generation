@@ -48,6 +48,7 @@ class VideoEditorWrapper:
         self.config = config
         self.device = "cuda"
         
+        #define Tune-A-Video pipeline
         if self.method == "tuneavideo":
             self.model_key = snapshot_download(self.config["pretrained_model_path"])
             self.train_dataset = TuneAVideoDataset(video_path=self.config["data_path"], n_sample_frames=self.config["video_length"])
@@ -60,12 +61,9 @@ class VideoEditorWrapper:
             self.pipe.enable_vae_slicing()
             self.ddim_inv_latent = torch.load(self.config["checkpoint_dir"] + "/inv_latents/ddim_latent-450.pt").to(torch.float16).to(self.device)
             print("Latents loaded!")
-     #   if method == "tokenflow":
-     #     #  self.processor = Preprocess(**kwargs)
-     #       prep(**kwargs)
-     #       self.editor = TokenFlow(config)
             
     
+    #run editing pipelines
     def run(self):
         if self.method == "tokenflow":
             #prep(self.opts)
@@ -97,73 +95,3 @@ class VideoEditorWrapper:
             #print(frames.shape)
 
         return edited_frames, source_frames
-            
-    
-    #def inversion(self):
-    #    pass
-    
-    #def denoising(self):
-    #    pass
-    
-    
-    #def __call__(self):
-    #    pass
-    
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--method', choices=["tuneavideo", "tokenflow", "flatten"], default="tokenflow")
-    parser.add_argument('--editing_config', type=str, default='./tokenflow/configs/config_pnp.yaml')
-    parser.add_argument('--crf_config_path', type=str, default='../data/celebv_bench/test.json')
-    
-    opts = parser.parse_args()
-    prep_config = dict(data_path="", H=512, W=512, save_dir="latents", sd_version='2.1', steps = 250, 
-                       batch_size = 24, save_steps = 50, n_frames = 24, inversion_prompt = "")
-    prep_config = argparse.Namespace(**prep_config)
-
-
-    with open(opts.editing_config, "r") as f:
-        config = yaml.safe_load(f)
-        base_path = config["output_path"]
-
-        
-   # video_editor = VideoEditorWrapper(method=opts.method, config=config, **prep_config)
-    
-    with open(opts.crf_config_path, "r") as f:
-        edited_prompts = json.load(f)
-    print(prep_config)
-    
-    for video_id, prompts in tqdm(edited_prompts.items()):
-        config["data_path"] = f"../data/celebv_bench/frames/{video_id}"
-        #prep_config["data_path"] = f"../data/celebv_bench/frames/{video_id}"
-        config["video"][video_id] = {
-            "prompt_variants": {
-                "factual": prompts["factual"],
-                "counterfactual": prompts["counterfactual"]
-            }
-        }
-
-        videos = []
-        text_descriptions = []
-        
-        for attr in prompts["counterfactual"].keys():
-            print(f"Processing Attribute: {attr}")
-
-            config["output_path"] = os.path.join(base_path + "_cfg_scale_" + str(config["guidance_scale"]),
-                                                 config["intervention_type"], "interventions", attr,
-                                                 video_id, config["video"][video_id]["prompt_variants"]["counterfactual"][attr])
-            os.makedirs(config["output_path"], exist_ok=True)
-           # print(config["output_path"])
-           # break
-            config["prompt"] = config["video"][video_id]["prompt_variants"]["counterfactual"][attr]
-            config["latents_path"] = prep_config.save_dir
-            prep_config.data_path = f"../data/celebv_bench/frames/{video_id}"
-            for i in range(2):
-                video_editor = VideoEditorWrapper(config, prep_config)
-                frames, path = video_editor.run()
-                video_to_frames(path, "frames")
-                #new_iter_path = path.split("tokenflow_PnP_fps_20.mp4")[0] 
-                config["data_path"] = "frames"
-                prep_config.data_path = "frames"
-                config["prompt"] = "he is bald"
-               # break
