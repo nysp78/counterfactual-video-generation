@@ -1,4 +1,6 @@
 # Causally Steered Diffusion for Automated Video Counterfactual Generation
+![image](https://github.com/user-attachments/assets/6a39e84b-c751-4ed3-b444-233981f49c42)
+
 
 ## Enviroment
 ```
@@ -25,7 +27,7 @@ python inference.py --method tokenflow --base_config_path config_pnp.yaml --crf_
 ```
 
 ## VLM causal steering
-To produce counterfactual videos with our proposed VLM causal steering use the command:
+To produce counterfactual videos using our proposed VLM causal steering, use the following command. You will need an OpenAI API key.
 ```
 python counterfactual_editor.py --method tokenflow --base_config_path config_pnp.yaml --crf_config_path data/celebv_bench/counterfactual_explicit.json
 ```
@@ -39,7 +41,7 @@ python effectiveness_llava.py --outputs_path /path/to/generated_videos tokenflow
 `questions_explicit.json` file contains the mutliple-choice questions extracted from the initial counterfactual prompts
 
 ### Minimality
-Inside `counterfactual_video/vlm_metrics` run:
+Inside `counterfactual_video/vlm_metrics`,  use the following command. You will need an OpenAI API key:
 ```
 python gpt_minimality.py --model gpt-4o --method --outputs_path /path/to/generated_videos --method tokenflow --crf_config_path ../data/celebv_bench/counterfactual_explicit.json
 ```
