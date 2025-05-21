@@ -30,9 +30,14 @@ python inference.py --method tokenflow --base_config_path config_pnp.yaml --crf_
 To produce counterfactual videos using our proposed VLM causal steering, use the following command. You will need an OpenAI API key.
 We provide an example with TokenFlow.
 ```
-python counterfactual_editor.py --method tokenflow --base_config_path config_pnp.yaml --crf_config_path data/celebv_bench/counterfactual_explicit.json
+python counterfactual_editor.py --method tokenflow --base_config_path methods/tokenflow/configs/config_pnp.yaml --crf_config_path data/celebv_bench/counterfactual_explicit.json
 ```
 
+```
+method: video editing baseline method to be used.
+base_config_path: path to the configuration file corresponding to the selected method.
+crf_config_path: path to the file containing the initial counterfactual (target) prompts.
+```
 ## VLM-based metrics
 ### Causal effectiveness
 Inside `counterfactual_video/vlm_metrics` run:
@@ -51,9 +56,7 @@ python gpt_minimality.py --model gpt-4o --outputs_path /path/to/generated_videos
 ### CelebV-text
 The complete dataset is available at: https://drive.google.com/drive/folders/1Jv4-H6lnegbfDrTZW0ZfrKxZbouWl53M?usp=sharing.
 
-The file counterfactual_video/data/celebv_bench/samples.txt contains the video identifiers used in our evaluation dataset. Additionally, counterfactual_video/data/celebv_bench/frames provides the frames extracted from each video.
-
-
+The file `counterfactual_video/data/celebv_bench/samples.txt` contains the video identifiers used in our evaluation dataset. Additionally, `counterfactual_video/data/celebv_bench/frames provides` the frames extracted from each video.
 
 
 
