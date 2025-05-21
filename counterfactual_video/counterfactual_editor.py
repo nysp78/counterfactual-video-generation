@@ -141,7 +141,7 @@ def prompt_optimization_loop(method, config, attr, f_prompt, crf_prompt, max_epo
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--method', choices=["tuneavideo", "tokenflow", "flatten"], default="tokenflow")
-    parser.add_argument('--base_config_path', type=str, default='methods/flatten/configs/config_pnp.yaml')
+    parser.add_argument('--base_config_path', type=str, default='methods/tokenflow/configs/config_pnp.yaml')
     parser.add_argument('--crf_config_path', type=str, default='data/celebv_bench/counterfactual_explicit.json')
     
     
