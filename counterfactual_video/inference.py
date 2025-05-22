@@ -120,13 +120,7 @@ if __name__ == '__main__':
                                               guidance_scale = config["guidance_scale"], video_path=config["data_path"],
                                               output_path = config["output_path"])
                 orig_frames = orig_frames / 255
-                #frames = frames.squeeze(0)
-               # orig_frames = orig_frames.squeeze(0)
-                 
-              #  print(frames.shape, orig_frames.shape)
-            #    break
-            #    pass
-
+    
             #TokenFlow Processing
             if opt.method == "tokenflow":
                 os.makedirs(grids_path, exist_ok=True)

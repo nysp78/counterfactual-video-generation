@@ -20,7 +20,7 @@ if __name__ == '__main__':
     with open(opt.questions_path, "r") as f:
         multiple_choice_questions = json.load(f)
 
-    intervention_type = "explicit"
+    opt.intervention_type = "explicit"
     model = LlavaNext(model_name="llava-hf/llava-v1.6-mistral-7b-hf", device="cuda")
     
     transform = Compose([ToPILImage(), Resize((512, 512))])

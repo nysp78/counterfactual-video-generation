@@ -15,7 +15,7 @@ from torch.nn.functional import cosine_similarity
 from torchvision.transforms import Resize, ToPILImage, Compose, ToTensor
 from utils import extract_first_frame, extract_nth_frame
 
-os.environ["OPENAI_API_KEY"] = "YOUR OPEN_AI KEY"
+os.environ["OPENAI_API_KEY"] = "YOUR OPENAI KEY"
 
 def tensor_to_bytes(tensor_):
     #np_data = tensor_.cpu().numpy().astype(np.uint8)
@@ -38,16 +38,16 @@ def pil_to_bytes(image_pil):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", type = str, default="gpt-4-turbo")
-    parser.add_argument('--outputs_path', type=str, default="/path/to/generated_videos")
-    parser.add_argument('--method', choices=["tuneavideo", "tokenflow", "flatten"], default="tuneavideo")
+    parser.add_argument('--outputs_path', type=str, default="../path/to/generated/videos")
+    parser.add_argument('--method', choices=["tuneavideo", "tokenflow", "flatten"], default="tokenflow")
     parser.add_argument('--crf_config_path', type=str, default='../data/celebv_bench/counterfactual_explicit.json')
  #  
-    intervention_type = "explicit"
     opt = parser.parse_args()
     with open(opt.crf_config_path, "r") as f:
         crf_prompts = json.load(f)
         
-    
+    opt.intervention_type = "explicit"
+
     
     #define the VLM
     model_path = opt.model
@@ -59,6 +59,8 @@ if __name__ == '__main__':
     transform = Compose([ToPILImage(), Resize((512,512))])
     for video_id , prompts in tqdm(crf_prompts.items()):
         print("Evaluate video:", video_id)
+        if video_id != "pbkZ9Jp68n8_3_0":
+            continue
         descriptions[video_id] = {}
 
         
@@ -123,6 +125,7 @@ Return only the filtered version of the text, without commentary or formatting.'
             similarity = cosine_similarity(embedding1.unsqueeze(0), embedding2.unsqueeze(0))
             print(similarity)
             semantic_sim.append(similarity)
+        print()
 
 
 

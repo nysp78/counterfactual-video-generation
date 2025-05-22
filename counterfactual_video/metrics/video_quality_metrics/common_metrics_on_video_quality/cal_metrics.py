@@ -57,17 +57,16 @@ def load_video(video_path, num_frames=24, img_size=512):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--outputs_path', type=str, default="../../outputs_rephrasing_LLM_v2/flatten-results_cfg_scale_12.5")
-    parser.add_argument('--method', choices=["tuneavideo", "tokenflow", "flatten"], default="flatten")
-    parser.add_argument('--intervention_type', choices=["explicit", "implicit", "breaking_causal"], default="explicit")
-    parser.add_argument('--crf_config_path', type=str, default='../../data/celebv_bench/counterfactual_explicit.json')
+    parser.add_argument('--outputs_path', type=str, default="/path/to/generated/videos")
+    parser.add_argument('--method', choices=["tuneavideo", "tokenflow", "flatten"], default="tokenflow")
+    parser.add_argument('--crf_config_path', type=str, default='../../../data/celebv_bench/counterfactual_explicit.json')
     
     
     opt = parser.parse_args()
     with open(opt.crf_config_path, "r") as f:
         crf_prompts = json.load(f)
         
-    
+    opt.intervention_type = "explicit"
    # transform = Compose([ToPILImage(), Resize((512,512))])
     fvd_scores = []
     lpips_scores = []
@@ -77,7 +76,7 @@ if __name__ == '__main__':
 
         
         #extract factual frame & derive description
-        factual_video = load_video(video_path=f"../../data/celebv_bench/videos/{video_id}.mp4")
+        factual_video = load_video(video_path=f"../../../data/celebv_bench/videos/{video_id}.mp4")
       #  factual_video = factual_video.permute(0,3,1,2)
         factual_video = torch.from_numpy(factual_video).permute(0,3,1,2).unsqueeze(0)
        # print(factual_video.shape)
@@ -92,7 +91,7 @@ if __name__ == '__main__':
             base_path = f"{opt.outputs_path}/{opt.intervention_type}/interventions/{attr}/{video_id}/{crf_prompt}"
             import glob
             if opt.method == "flatten":
-                pattern = f"{base_path}/*_ugly, blurry, low res, unrealistic, unaesthetic_12.5.mp4"
+                pattern = f"{base_path}/*_ugly, blurry, low res, unrealistic, unaesthetic_7.5.mp4"
                 video_path = glob.glob(pattern)[0]
                 #counterfactual_video = load_video(video_path = base_path + f"/{crf_prompt[:10]}_ugly, blurry, low res, unrealistic, unaesthetic_12.5.mp4")
                 counterfactual_video = load_video(video_path = video_path)
