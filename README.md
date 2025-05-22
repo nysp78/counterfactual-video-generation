@@ -53,7 +53,7 @@ python gpt_minimality.py --model gpt-4o --outputs_path /path/to/generated_videos
 ```
 
 ## Dataset
-### CelebV-text
+###  [CelebV-Text](https://github.com/CelebV-Text/CelebV-Text)
 The complete dataset is available at: https://drive.google.com/drive/folders/1Jv4-H6lnegbfDrTZW0ZfrKxZbouWl53M?usp=sharing.
 
 The file `counterfactual_video/data/celebv_bench/samples.txt` contains the video identifiers used in our evaluation dataset. Additionally, in `counterfactual_video/data/celebv_bench/frames` we provide the frames extracted from each video.
