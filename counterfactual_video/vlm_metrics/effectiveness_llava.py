@@ -9,6 +9,7 @@ import glob
 from utils import extract_nth_frame, LlavaNext
 
 
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--outputs_path", type=str, default="/path/to/generated_videos")

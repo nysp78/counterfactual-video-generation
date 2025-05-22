@@ -17,6 +17,7 @@ from utils import extract_first_frame, extract_nth_frame
 
 os.environ["OPENAI_API_KEY"] = "YOUR OPENAI KEY"
 
+
 def tensor_to_bytes(tensor_):
     #np_data = tensor_.cpu().numpy().astype(np.uint8)
     np_data = (tensor_.cpu().numpy() * 255).astype()

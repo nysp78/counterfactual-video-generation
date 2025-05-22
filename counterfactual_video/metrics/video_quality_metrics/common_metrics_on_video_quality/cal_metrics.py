@@ -55,6 +55,7 @@ def load_video(video_path, num_frames=24, img_size=512):
 
     return video_array
 
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--outputs_path', type=str, default="/path/to/generated/videos")
