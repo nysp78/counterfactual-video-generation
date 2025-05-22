@@ -58,7 +58,8 @@ The complete dataset is available at: https://drive.google.com/drive/folders/1Jv
 
 The file `counterfactual_video/data/celebv_bench/samples.txt` contains the video identifiers used in our evaluation dataset. Additionally, in `counterfactual_video/data/celebv_bench/frames` we provide the frames extracted from each video.
 
-
+## Results
+![Demo](counterfactual_video/data/celebv_bench/1F5naBzNfi8_0_0.gif)
 
 ## Credits
 We sincerely thank the authors of the following repositories for their open-source contributions.
