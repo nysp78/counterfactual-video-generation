@@ -10,7 +10,7 @@ pip install -r requirements.txt
 ```
 ## Preprocess
 ### Tune-A-Video
-To fine-tune the T2I model for video editing, run the following command:
+To fine-tune the T2I model for video editing, inside `counterfactual_video/` run the following command:
 ```
 python train_tuneavideo.py --base_config methods/tuneavideo/configs/config_tune.yaml --source_prompts data/celebv_bench/source_prompts.json --data_dir data/celebv_bench/frames
 ```
