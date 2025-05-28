@@ -36,6 +36,7 @@
   <link rel="stylesheet"
   href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="static/css/index.css">
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
@@ -153,31 +154,86 @@
 
 
 
-<!--Method
+<!-- Method -->
 <section class="section hero is-small">
   <div class="container is-max-desktop">
     <div class="columns is-centered">
       <div class="column is-full">
         <div class="content">
           <div class="level-set has-text-justified">
-            <h2 class="title is-3 has-text-centered"">Method</h2>
+            <h2 class="title is-3 has-text-centered">Method</h2>
+
             <p>
+              We approach video editing as the generation of video counterfactuals, 
+              where the goal is to modify specific attributes of a factual (source) video 
+              (e.g., transforming a woman into a man with a beard). To generate plausible and semantically meaningful video counterfactuals, 
+              we introduce a novel framework that integrates an assumed prior causal graph with a vision-language model (VLM) loss 
+              using textual differentiation <a href="https://arxiv.org/abs/2406.07496" target="_blank" rel="noopener noreferrer">(Yuksekgonul et al.)</a> 
+              for optimized prompt-driven causal steering. 
+              Both the VLM and the LDM are treated as black boxes, 
+              allowing us to focus on their interaction without the need for explicit manipulation or 
+              particular knowledge of their internal workings. 
+              Figure <a href="#fig2">2</a> depicts how counterfactual estimations improve with a 
+              causally consistent prompt using text differentiation optimization <a href="https://arxiv.org/abs/2406.07496" target="_blank" rel="noopener noreferrer">(Yuksekgonul et al.)</a>.
             </p>
+
+          <figure id="fig1" style="text-align: center;">
+               <img 
+                   src="static/images/figure2_v7.png" 
+                   class="blend-img-background smaller-image" 
+                   alt="VLM method diagram" 
+                  style="margin-bottom: 1rem; max-width: 100%; height: auto;"
+           />
+           <figcaption style="font-size: 0.95em; text-align: justify;">
+            \(\textbf{VLM causal steering at a glance:}\) The video editing system operates as a black-box (frozen) counterfactual generator and the (black-box) VLM as an evaluator of the generated counterfactuals. The VLM receives as input a generated counterfactual frame, the evaluation instruction, and the target counterfactual prompt \(\mathcal{P}\), and returns textual feedback, which is used to compute a “textual gradient” \(\frac{\partial \mathcal{L}}{\partial \mathcal{P}}\) and optimize \(\mathcal{P}\).
+          </figcaption>
+          </figure>
+
             <p>
+            The proposed framework is illustrated in <a href="#fig1">1</a>.
+            Given a generated counterfactual video frame, the counterfactual prompt, and an evaluation instruction containing the target interventions, 
+            we implement our proposed “multimodal loss” using a VLM:
             </p>
-            <img src="static/images/motivation.png" class="blend-img-background smaller-image" alt="Figure 1: (a) A plausible causal graph for human faces; (b) Factual images (no intervention); (c) Causal counterfactual images using the graph of (a) to perform the interventions do(Female) (upper panel) and do(Young) (lower panel); (d) Non-causal image editing.">
-            <figcaption>Figure 1: (a) A plausible causal graph for human faces; (b) Factual images (no intervention); (c) Causal counterfactual images using the graph of (a) to perform the interventions <em>do(Female)</em> (upper panel) and <em>do(Young)</em> (lower panel); (d) Non-causal image editing.</figcaption>
+
+            <div style="text-align: center; margin: 1em 0;">
+              \[
+                \mathcal{L} = \textit{VLM}(\mathcal{V'}_{\mathit{frame}}, \textit{evaluation instruction}, \mathcal{P})
+              \]
+          </div>
+
+
+          <p>
+          To optimize \(\mathcal{P}\), we employ <em>Textual Gradient Descent</em> (TGD) , which directly updates the prompt:
+          </p>
+
+    <div style="text-align: center; margin: 1em 0;">
+              \[
+                \begin{aligned}
+                \mathcal{P}' &= \text{TGD.step} \left(\mathcal{P}, \frac{\partial \mathcal{L}}{\partial \mathcal{P}} \right) \\
+                &\triangleq \textit{LLM}\Big( \textit{Below are the criticisms on } \{ \mathcal{P} \}: 
+                \left\{ \frac{\partial \mathcal{L}}{\partial \mathcal{P}} \right\} \\
+                &\quad \textit{Incorporate the criticisms, and produce a new prompt.} \Big)
+               \end{aligned}
+              \]
+    </div>
+
+    <p>
+      where \(\frac{\partial \mathcal{L}}{\partial \mathcal{P}}\) denotes the “textual gradients,” passed through an LLM at each TGD update to generate a new prompt incorporating the VLM criticisms.
+    </p>
+
+
+
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 </section>
--->
+
+
 
 <!-- Image carousel --> 
-<section class="hero is-small">
+<section class="hero is-small" id="fig2">
   <div class="hero-body">
     <div class="container">
       <div id="results-carousel" class="carousel results-carousel">
@@ -194,7 +250,7 @@
         </div>
 
 
-                <div class="item has-text-centered">
+          <div class="item has-text-centered">
           <img 
             src="static/images/fig1/aGRVuZHstlU_0_0.gif" 
             alt="MY ALT TEXT" 
@@ -205,19 +261,50 @@
           </h2>
         </div>
 
-        <div class="item has-text-centered">
-          <!-- more items here -->
-        </div>
-
       </div>
     </div>
   </div>
 </section>
 
 
+<section class="section has-background-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full">
+        <div class="content">
+          <div class="level-set has-text-justified">
+            <h2 class="title is-4 has-text-centered">Key Contributions</h2>
 
+            <p>
+              The main focus of this work is to automate the creation of causally faithful, well-structured, and model-aligned textual prompts, steering the counterfactual transformations toward accurate and semantically meaningful OOD edits at inference. 
+              In summary, our contributions are: 
+            </p>
+            <ol>
+              <li>We present a novel framework that allows steering diffusion-based video editing towards causal counterfactuals by propagating textual feedback from a VLM-based counterfactual loss through the LDM input prompt.</li>
+              <li> We improve the causal effectiveness of counterfactual estimations by tuning the input prompt, without requiring access to LDM internal mechanisms, while preserving video quality, minimality, and temporal consistency.</li>
+              <li> We demonstrate that causally faithful steering enables causally faithful counterfactual generation from LDM latent spaces.</li>
+              <li>We design VLM-based evaluation metrics to further assess the capacity of diffusion-based video editing frameworks for plausible counterfactual generation.</li>
+            </ol>
+            <br>
+           
 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<section class="section hero is-small colorful-section" id="causal-steering-results">
+  <div class="container">
+    <h1 class="title is-2">VLM Causal Steering Results</h1>
+
+    <div class="columns is-centered is-variable is-4 mt-5">
+      
+    
+    </div>
+  </div>
+</section>
 
 
 <!-- Video carousel 
