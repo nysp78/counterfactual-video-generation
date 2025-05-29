@@ -2,7 +2,9 @@
 *.pt
 *.pth
 *.png
+*.mp4
 *.pyc
+*.txt
 *.gif
 *.bin
 *.pkl
