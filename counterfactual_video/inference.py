@@ -33,7 +33,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--method', choices=["tuneavideo", "tokenflow", "flatten"], default="tokenflow")
     parser.add_argument('--base_config_path', type=str, default='methods/tokenflow/configs/config_pnp.yaml')
-    parser.add_argument('--crf_config_path', type=str, default='data/celebv_bench/counterfactual_explicit.json')
+    parser.add_argument('--crf_config_path', type=str, default='data/celebv_bench/test.json')
 
 
     opt = parser.parse_args()
@@ -169,7 +169,15 @@ if __name__ == '__main__':
         text_descriptions = [config["video"][video_id]["prompt_variants"]["factual"]] + text_descriptions
         videos = torch.concat(videos)
         save_path = grids_path + "/" + f'{video_id}.gif'
-        save_videos_grid__(videos, save_path, text_descriptions)
+        
+        titles = [
+    "Factual:\nHe has beard, this man is young.",  # for video 1
+    "Initial Prompt:\nShe is young.",  # for video 2
+    "VLM causal steering:\nA young adult woman with a clean-shaved"
+]
+        #save_videos_grid__(videos, save_path, text_descriptions)
+        save_videos_grid__(videos, save_path, titles)
+
 
         videos = []  # Reset video list
         text_descriptions = []

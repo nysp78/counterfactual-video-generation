@@ -179,7 +179,7 @@
 
           <figure id="fig1" style="text-align: center;">
                <img 
-                   src="static/images/figure2_v7.png" 
+                   src="static/images/figure2_v8.png" 
                    class="blend-img-background smaller-image" 
                    alt="VLM method diagram" 
                   style="margin-bottom: 1rem; max-width: 100%; height: auto;"
@@ -221,7 +221,39 @@
       where \(\frac{\partial \mathcal{L}}{\partial \mathcal{P}}\) denotes the “textual gradients,” passed through an LLM at each TGD update to generate a new prompt incorporating the VLM criticisms.
     </p>
 
+    <!-- Code-like box with caption -->
+   <figure style="margin-top: 2rem;">
+  
+  <figcaption style="font-weight: bold; margin-bottom: 0.5rem;">
+  Example of the textual gradient \(\frac{\partial \mathcal{L}}{\partial \mathcal{P}}\) for the age intervention (old to young) of <a href="#fig2">Figure 2</a>.
+  </figcaption>
 
+
+    <pre style="
+    background-color: rgb(199, 224, 221);
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    font-family: monospace;
+    font-size: 0.95em;
+    line-height: 1.5;
+  ">
+The variable "A woman is young" lacks specificity and clarity, which likely contributed to the misalignment between the generated image and the intended attribute of youthfulness. The term "young" is highly subjective and can be interpreted variably depending on cultural, personal, and contextual factors. This ambiguity in the prompt may have led the Text-to-Image model to generate an image that does not meet the counterfactual criteria specified.
+
+Feedback and Criticism:
+
+1. Specificity in Age Description: The term "young" should be replaced with a more precise age or age range to guide the model more effectively. For instance, specifying "a woman in her early twenties" or "a woman aged 20–25 years" would provide a clearer target for the model, reducing ambiguity and increasing the likelihood of generating an image that aligns with the youthful attribute desired.
+
+2. Inclusion of Contextual Details: While the prompt should remain focused on the age attribute, adding minimal contextual details that align with youthful appearances could enhance the effectiveness of the prompt. For example, mentioning "a youthful demeanor" or "fresh-faced" could cue the model to focus on features typically associated with younger individuals.
+
+3. Avoiding Overly Broad Descriptors: The use of broad descriptors like "young" without additional qualifiers can lead to a wide range of interpretations. It's beneficial to avoid these where precision is required for generating specific outcomes.
+
+4. Testing and Iteration: After adjusting the prompt, it would be advisable to test the new prompt with the model to see if the changes yield a more accurate representation. This iterative approach can help fine-tune the prompt based on actual outcomes.
+
+By addressing these points, the prompt "A woman is young" can be optimized to more effectively communicate the desired attribute of youthfulness to the Text-to-Image model, thereby improving the alignment of the generated image with the counterfactual target.
+  </pre>
+      </figure>
 
           </div>
         </div>
@@ -245,7 +277,7 @@
             style="width: 100%; max-width: 900px; height: auto; display: inline-block;" 
           />
           <h2 class="subtitle has-text-centered">
-            First image description.
+            Intervention on age: Transforming an old woman to young.
           </h2>
         </div>
 
@@ -257,16 +289,16 @@
             style="width: 100%; max-width: 900px; height: auto; display: inline-block;" 
           />
           <h2 class="subtitle has-text-centered">
-            First image description.
+            Intervention on gender: Tranforming a woman into a man with a beard.
           </h2>
         </div>
-
       </div>
     </div>
   </div>
 </section>
 
 
+<!--
 <section class="section has-background-light">
   <div class="container is-max-desktop">
     <div class="columns is-centered">
@@ -294,12 +326,172 @@
     </div>
   </div>
 </section>
-
-<section class="section hero is-small colorful-section" id="causal-steering-results">
+-->
+<section class="section has-background-light" id="causal-steering-results">
   <div class="container">
-    <h1 class="title is-2">VLM Causal Steering Results</h1>
+    <h1 class="title is-2 has-text-centered">VLM Causal Steering Results</h1>
+     <h2 class="title is-4 has-text-centered">FLATTEN</h2>
+     <section class="hero is-small" id="fig3">
+          <div class="hero-body">
+                <div class="container">
+                  <div id="results-carousel" class="carousel results-carousel">
+
+                      <div class="item has-text-centered">
+                <img 
+            src="static/images/flatten/-_zyvfId578_12_1.gif" 
+            alt="MY ALT TEXT" 
+            style="width: 100%; max-width: 900px; height: auto; display: inline-block;" 
+          />
+          <h2 class="subtitle has-text-centered">
+            Intervention on beard.
+          </h2>
+        </div>
+
+
+        <div class="item has-text-centered">
+          <img 
+            src="static/images/flatten/g_Yrrk4eoXk_13_6.gif" 
+            alt="MY ALT TEXT" 
+            style="width: 100%; max-width: 900px; height: auto; display: inline-block;" 
+          />
+          <h2 class="subtitle has-text-centered">
+            Intervention on age
+          </h2>
+        </div>
+
+         <div class="item has-text-centered">
+          <img 
+            src="static/images/flatten/17RnfGHRh9E_5_0.gif" 
+            alt="MY ALT TEXT" 
+            style="width: 100%; max-width: 900px; height: auto; display: inline-block;" 
+          />
+          <h2 class="subtitle has-text-centered">
+            Intervention on beard
+          </h2>
+        </div>
+
+
+         <div class="item has-text-centered">
+          <img 
+            src="static/images/flatten/0xtFFvocggE_6_0.gif" 
+            alt="MY ALT TEXT" 
+            style="width: 100%; max-width: 900px; height: auto; display: inline-block;" 
+          />
+          <h2 class="subtitle has-text-centered">
+            Intervention on age
+          </h2>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </section>
+
+
+     <h2 class="title is-4 has-text-centered">TokenFlow</h2>
+
+      <section class="hero is-small" id="fig2">
+          <div class="hero-body">
+                <div class="container">
+                  <div id="results-carousel" class="carousel results-carousel">
+
+
+          <div class="item has-text-centered">
+          <img 
+            src="static/images/tokenflow/vMkIT1SycG8_14_1.gif" 
+            alt="MY ALT TEXT" 
+            style="width: 100%; max-width: 900px; height: auto; display: inline-block;" 
+          />
+          <h2 class="subtitle has-text-centered">
+            Intervention on age
+          </h2>
+        </div>
+
+        <div class="item has-text-centered">
+                <img 
+            src="static/images/tokenflow/m_YWPYjVqa4_9_0.gif" 
+            alt="MY ALT TEXT" 
+            style="width: 100%; max-width: 900px; height: auto; display: inline-block;" 
+          />
+          <h2 class="subtitle has-text-centered">
+            Intervention on gender
+          </h2>
+        </div>
+
+
+
+         <div class="item has-text-centered">
+          <img 
+            src="static/images/tokenflow/-AdQECaFzxU_1_0.gif" 
+            alt="MY ALT TEXT" 
+            style="width: 100%; max-width: 900px; height: auto; display: inline-block;" 
+          />
+          <h2 class="subtitle has-text-centered">
+            Intervention on age
+          </h2>
+        </div>
+
+        
+      </div>
+    </div>
+  </div>
+  </section>
+
+
+
+     <h2 class="title is-4 has-text-centered">Tune-A-Video</h2>
+
+      <section class="hero is-small" id="fig2">
+          <div class="hero-body">
+                <div class="container">
+                  <div id="results-carousel" class="carousel results-carousel">
+
+                      <div class="item has-text-centered">
+                <img 
+            src="static/images/tuneavideo/cImOMABtLFI_2_1.gif" 
+            alt="MY ALT TEXT" 
+            style="width: 100%; max-width: 900px; height: auto; display: inline-block;" 
+          />
+          <h2 class="subtitle has-text-centered">
+            Intervention on beard
+          </h2>
+        </div>
+
+
+          <div class="item has-text-centered">
+          <img 
+            src="static/images/tuneavideo/xkzBmNcfBB8_0_0.gif" 
+            alt="MY ALT TEXT" 
+            style="width: 100%; max-width: 900px; height: auto; display: inline-block;" 
+          />
+          <h2 class="subtitle has-text-centered">
+            Intervention on age
+          </h2>
+        </div>
+
+         <div class="item has-text-centered">
+          <img 
+            src="static/images/tuneavideo/Zeem6k2bDFk_6_0.gif" 
+            alt="MY ALT TEXT" 
+            style="width: 100%; max-width: 900px; height: auto; display: inline-block;" 
+          />
+          <h2 class="subtitle has-text-centered">
+            Intervention on beard
+          </h2>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  </section>
+
+
+
+
+
 
     <div class="columns is-centered is-variable is-4 mt-5">
+
       
     
     </div>

@@ -1,0 +1,82 @@
+{
+
+   "kmljXqyYtBE_19_0": {
+      "factual": "He has beard, this man is young.",
+      "counterfactual": {
+        "age": "She is young",
+        "gender": "A young adult woman with a clean-shaven face."
+       
+      }
+    },
+    
+"-AdQECaFzxU_1_0": {
+      "factual": "This man is old.",
+      "counterfactual": {
+        "age": "This man is young.",
+        "gender": "A man aged 18 with unblemished, vibrant skin and naturally full, vibrant hair typical of a teenager"
+      }
+},  
+    
+"Zeem6k2bDFk_6_0": {
+      "factual": "He is young.",
+      "counterfactual": {
+        "age": "He is young, he has a beard",
+        "gender": "He is youthful with a full beard"
+      }
+    },
+    
+    
+"-_B4fiuWwmo_0_1": {
+      "factual": "He has beard, he is young.",
+      "counterfactual": {
+        "age": "He is old, he has beard, he is bald.",
+        "gender": "She is young.",
+        "beard": "He is young.",
+        "bald": "He has beard, he is young, he is bald."
+      }
+    },
+
+
+"1F5naBzNfi8_0_0": {
+      "factual": "A woman is old.",
+      "counterfactual": {
+        "age": "A woman is young",
+        "gender": "A woman in her early 20s with vibrant expression"
+      }
+    },
+    
+
+"aGRVuZHstlU_0_0": {
+      "factual": "She is young.",
+      "counterfactual": {
+        "age": "He is young, he has a beard",
+        "gender": "A young man sporting a noticeable beard"
+      }
+  },
+
+"-DJseAmnmnc_8_0": {
+      "factual": "He has beard, he is young.",
+      "counterfactual": {
+        "bald": "He is bald, with a full, neatly trimmed beard."
+      }
+    },
+
+"eFaetz1BEYg_0_0": {
+      "factual": "He is old.",
+      "counterfactual": {
+        "bald": "He is a man in his 70s, he is bald, and he has a neutral expression."
+      }
+    },
+
+
+"fMLDzGFeUTA_14_1": {
+      "factual": "A woman is young.",
+      "counterfactual": {
+        "age": "A woman with deep wrinkles around the eyes and mouth, predominantly grey hair with some remaining black strands, and slight sagging of the skin at the neck, typical of an elderly woman from East Asia."
+      }
+    }
+
+
+
+}
+

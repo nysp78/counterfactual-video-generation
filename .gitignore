@@ -1,6 +1,8 @@
 *.jpg
 *.pt
 *.pth
+*.txt
+*.mp4
 *.png
 *.pyc
 *.gif

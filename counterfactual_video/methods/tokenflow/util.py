@@ -17,6 +17,13 @@ from kornia.geometry.transform import remap
 from kornia.utils.grid import create_meshgrid
 import cv2
 from PIL import Image, ImageDraw, ImageFont
+import os
+import numpy as np
+import torch
+import torchvision
+from einops import rearrange
+import imageio
+from textwrap import wrap
 
 def save_video_frames(video_path, img_size=(512,512)):
     video, _, _ = read_video(video_path, output_format="TCHW")
@@ -104,74 +111,95 @@ def save_videos_grid(videos: torch.Tensor, path: str, rescale=False, n_rows=5, f
 
 
 def save_videos_grid__(videos: torch.Tensor, path: str, titles=None, rescale=False, n_rows=5, fps=20):
+    import os
+    import numpy as np
+    import torch
+    import torchvision
+    from PIL import Image, ImageDraw, ImageFont
+    from einops import rearrange
+    import imageio
+    from textwrap import wrap
 
-    videos = rearrange(videos, "b c t h w -> t b c h w")  # Rearrange to (T, B, C, H, W)
+    videos = rearrange(videos, "b c t h w -> t b c h w")  # Time-major
     outputs = []
-    
+
     os.makedirs(os.path.dirname(path), exist_ok=True)
-    
+
     try:
-        font = ImageFont.truetype("arial.ttf", 25)  # Try Arial (if available)
+        font = ImageFont.truetype("DejaVuSans.ttf", 24)
     except IOError:
-        font = ImageFont.truetype("DejaVuSans.ttf", 25)  # Use a larger fallback font
+        font = ImageFont.load_default()
+
+    # Wrap titles and compute max text height
+    max_text_height = 0
+    wrapped_titles = []
+    if titles:
+        for title in titles:
+            lines = []
+            for line in title.split("\n"):
+                lines.extend(wrap(line, width=40))
+            wrapped_titles.append(lines)
+            line_heights = [font.getbbox(line)[3] - font.getbbox(line)[1] for line in lines]
+            total = sum(line_heights) + (len(lines) - 1) * 5
+            max_text_height = max(max_text_height, total)
 
     for frame in videos:
         frame_list = []
-        max_width, max_height = 0, 0  # Track largest width & height
+        max_width, max_height = 0, 0
 
-        # Step 1: Modify Each Video Frame (Add Titles)
-        for idx, vid in enumerate(frame):  
-            img = vid.permute(1, 2, 0).cpu().numpy()  # Convert (C, H, W) -> (H, W, C)
-            
+        for idx, vid in enumerate(frame):
+            img = vid.permute(1, 2, 0).cpu().numpy()
             if rescale:
-                img = (img + 1.0) / 2.0  # Scale from [-1,1] range to [0,1]
+                img = (img + 1.0) / 2.0
             img = (img * 255).astype(np.uint8)
-
-            # Convert to PIL image for adding text
             img_pil = Image.fromarray(img)
-            draw = ImageDraw.Draw(img_pil)
 
-            # Title placement ABOVE the video
+            # Add title above the video
             if titles and idx < len(titles):
-                text = titles[idx]
-                
-                # Get text size
-                bbox = draw.textbbox((0, 0), text, font=font)
-                text_width, text_height = bbox[2] - bbox[0], bbox[3] - bbox[1]
-                
-                # Create a new canvas (extra space at the top for text)
-                new_height = img_pil.height + text_height + 30  # More space for title
-                new_img = Image.new("RGB", (img_pil.width, new_height), (0, 0, 0))  # Black background
-                new_img.paste(img_pil, (0, text_height + 20))  # Paste video below the title
-                
-                # Draw text at the top center
+                lines = wrapped_titles[idx]
+                spacing = 5
+                new_height = img_pil.height + max_text_height + 30
+                new_img = Image.new("RGB", (img_pil.width, new_height), (255, 255, 255))
+                new_img.paste(img_pil, (0, max_text_height + 20))
+
                 draw = ImageDraw.Draw(new_img)
-                text_x = (new_img.width - text_width) // 2  # Center align
-                draw.text((text_x, 10), text, font=font, fill=(255, 255, 255))  # White text
+                text_y = 10
+                for line_idx, line in enumerate(lines):
+                    bbox = font.getbbox(line)
+                    text_width = bbox[2] - bbox[0]
+                    text_height = bbox[3] - bbox[1]
+                    text_x = (img_pil.width - text_width) // 2
+                    color = (0, 0, 0) if line_idx == 0 else (255, 0, 0)
+                    draw.text((text_x, text_y), line, font=font, fill=color)
+                    text_y += text_height + spacing
 
-                img_pil = new_img  # Replace with updated image
+                img_pil = new_img
 
-            # Update max width & height
             max_width = max(max_width, img_pil.width)
             max_height = max(max_height, img_pil.height)
-
             frame_list.append(img_pil)
 
-        # Step 2: Resize All Frames to Match Max Dimensions
+        # Pad each frame with white, aligned to top
         uniform_frames = []
         for img_pil in frame_list:
-            padded_img = Image.new("RGB", (max_width, max_height), (0, 0, 0))  # Black padding
-            padded_img.paste(img_pil, (0, max_height - img_pil.height))  # Align at the bottom
-            uniform_frames.append(np.array(padded_img))
+            padded = Image.new("RGB", (max_width, max_height), (255, 255, 255))
+            offset_x = (max_width - img_pil.width) // 2
+            padded.paste(img_pil, (offset_x, 0))  # top-aligned
+            uniform_frames.append(np.array(padded))
 
-        # Create a grid from the modified frames (with titles above)
-        grid = torchvision.utils.make_grid(torch.tensor(np.stack(uniform_frames)).permute(0, 3, 1, 2), nrow=n_rows)
-        grid = grid.permute(1, 2, 0).cpu().numpy()  # Convert (C, H, W) -> (H, W, C)
-        
-        outputs.append(grid)
+        # Make grid
+        grid = torchvision.utils.make_grid(
+            torch.tensor(np.stack(uniform_frames)).permute(0, 3, 1, 2),
+            nrow=n_rows
+        )
+        outputs.append(grid.permute(1, 2, 0).cpu().numpy())
 
     # Save as GIF
     imageio.mimsave(path, outputs, fps=fps, loop=0)
+
+
+
+
 
 
 
