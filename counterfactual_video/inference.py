@@ -170,11 +170,7 @@ if __name__ == '__main__':
         videos = torch.concat(videos)
         save_path = grids_path + "/" + f'{video_id}.gif'
         
-        titles = [
-    "Factual:\nHe has beard, this man is young.",  # for video 1
-    "Initial Prompt:\nShe is young.",  # for video 2
-    "VLM causal steering:\nA young adult woman with a clean-shaved"
-]
+      
         #save_videos_grid__(videos, save_path, text_descriptions)
         save_videos_grid__(videos, save_path, titles)
 
