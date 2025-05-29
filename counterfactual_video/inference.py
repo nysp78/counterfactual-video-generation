@@ -172,7 +172,7 @@ if __name__ == '__main__':
         
       
         #save_videos_grid__(videos, save_path, text_descriptions)
-        save_videos_grid__(videos, save_path, titles)
+        save_videos_grid__(videos, save_path, text_descriptions)
 
 
         videos = []  # Reset video list
