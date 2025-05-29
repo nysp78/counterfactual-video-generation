@@ -4,7 +4,7 @@
     video_path:
     pretrained_model_path: "stabilityai/stable-diffusion-2-1-base"
     output_path: "outputs/flatten-results"
-    video_length: 8
+    video_length: 24
     old_qk: 0
     height: 512
     width: 512
