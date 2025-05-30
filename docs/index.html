@@ -152,7 +152,38 @@
 </section>
 <!-- End paper abstract -->
 
+<!-- Image carousel --> 
+<section class="hero is-small" id="fig1">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
 
+        <div class="item has-text-centered">
+          <img 
+            src="static/images/fig1/1F5naBzNfi8_0_0.gif" 
+            alt="MY ALT TEXT" 
+            style="width: 100%; max-width: 900px; height: auto; display: inline-block;" 
+          />
+          <h2 class="subtitle has-text-centered">
+            Intervention on age: Transforming an old woman to young.
+          </h2>
+        </div>
+
+
+          <div class="item has-text-centered">
+          <img 
+            src="static/images/fig1/aGRVuZHstlU_0_0.gif" 
+            alt="MY ALT TEXT" 
+            style="width: 100%; max-width: 900px; height: auto; display: inline-block;" 
+          />
+          <h2 class="subtitle has-text-centered">
+            Intervention on gender: Tranforming a woman into a man with a beard.
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- Method -->
 <section class="section hero is-small">
@@ -173,11 +204,11 @@
               Both the VLM and the LDM are treated as black boxes, 
               allowing us to focus on their interaction without the need for explicit manipulation or 
               particular knowledge of their internal workings. 
-              Figure <a href="#fig2">2</a> depicts how counterfactual estimations improve with a 
+              Figure <a href="#fig1">1</a> depicts how counterfactual estimations improve with a 
               causally consistent prompt using text differentiation optimization.
             </p>
 
-            <figure id="fig1" style="text-align: center;">
+            <figure id="fig2" style="text-align: center;">
               <img 
                 src="static/images/figure2_v8.png" 
                 class="blend-img-background smaller-image" 
@@ -190,7 +221,7 @@
             </figure>
 
             <p>
-              The proposed framework is illustrated in <a href="#fig1">1</a>.
+              The proposed framework is illustrated in <a href="#fig2">2</a>.
               Given a generated counterfactual video frame, the counterfactual prompt, and an evaluation instruction containing the target interventions, 
               we implement our proposed “multimodal loss” using a VLM:
             </p>
@@ -290,7 +321,7 @@
                   <div class="carousel-slide">
                     <figure>
                       <figcaption class="has-text-centered has-text-weight-semibold is-italic" style="margin-bottom: 1rem;">
-                        Textual Gradient \(\frac{\partial \mathcal{L}}{\partial \mathcal{P}}\) — Age Intervention of Figure <a href="#fig2">2</a> (old to young)
+                        Textual Gradient \(\frac{\partial \mathcal{L}}{\partial \mathcal{P}}\) — Age Intervention of Figure <a href="#fig1">1</a> (old to young)
                       </figcaption>
                       <pre>
 The variable "A woman is young" lacks specificity and clarity, which likely contributed to the misalignment between the generated image and the intended attribute of youthfulness. The term "young" is highly subjective and can be interpreted variably depending on cultural, personal, and contextual factors. This ambiguity in the prompt may have led the Text-to-Image model to generate an image that does not meet the counterfactual criteria specified.
@@ -374,38 +405,7 @@ The variable "He is young, he has a beard" needs to be optimized to better align
 </section>
 
 
-<!-- Image carousel --> 
-<section class="hero is-small" id="fig2">
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
 
-        <div class="item has-text-centered">
-          <img 
-            src="static/images/fig1/1F5naBzNfi8_0_0.gif" 
-            alt="MY ALT TEXT" 
-            style="width: 100%; max-width: 900px; height: auto; display: inline-block;" 
-          />
-          <h2 class="subtitle has-text-centered">
-            Intervention on age: Transforming an old woman to young.
-          </h2>
-        </div>
-
-
-          <div class="item has-text-centered">
-          <img 
-            src="static/images/fig1/aGRVuZHstlU_0_0.gif" 
-            alt="MY ALT TEXT" 
-            style="width: 100%; max-width: 900px; height: auto; display: inline-block;" 
-          />
-          <h2 class="subtitle has-text-centered">
-            Intervention on gender: Tranforming a woman into a man with a beard.
-          </h2>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 
 <!--
