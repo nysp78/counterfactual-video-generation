@@ -95,7 +95,7 @@
                     <span class="author-block"><sup>1</sup>National & Kapodistrian University of Athens, Greece,
                       <sup>2</sup>Archimedes/Athena RC, Greece<br>
                       <sup>3</sup>The University of Edinburgh, UK,
-                      <sup>4</sup>Imperial College London, UK<br>
+                      <sup>4</sup> Monzo<br>
                       <sup>5</sup>The University of Essex, UK,
                       <sup>6</sup>Technical University of Denmark<br>
                   </div>
@@ -174,86 +174,197 @@
               allowing us to focus on their interaction without the need for explicit manipulation or 
               particular knowledge of their internal workings. 
               Figure <a href="#fig2">2</a> depicts how counterfactual estimations improve with a 
-              causally consistent prompt using text differentiation optimization <a href="https://arxiv.org/abs/2406.07496" target="_blank" rel="noopener noreferrer">(Yuksekgonul et al.)</a>.
+              causally consistent prompt using text differentiation optimization.
             </p>
 
-          <figure id="fig1" style="text-align: center;">
-               <img 
-                   src="static/images/figure2_v8.png" 
-                   class="blend-img-background smaller-image" 
-                   alt="VLM method diagram" 
-                  style="margin-bottom: 1rem; max-width: 100%; height: auto;"
-           />
-           <figcaption style="font-size: 0.95em; text-align: justify;">
-            \(\textbf{VLM causal steering at a glance:}\) The video editing system operates as a black-box (frozen) counterfactual generator and the (black-box) VLM as an evaluator of the generated counterfactuals. The VLM receives as input a generated counterfactual frame, the evaluation instruction, and the target counterfactual prompt \(\mathcal{P}\), and returns textual feedback, which is used to compute a “textual gradient” \(\frac{\partial \mathcal{L}}{\partial \mathcal{P}}\) and optimize \(\mathcal{P}\).
-          </figcaption>
-          </figure>
+            <figure id="fig1" style="text-align: center;">
+              <img 
+                src="static/images/figure2_v8.png" 
+                class="blend-img-background smaller-image" 
+                alt="VLM method diagram" 
+                style="margin-bottom: 1rem; max-width: 100%; height: auto;"
+              />
+              <figcaption style="font-size: 0.95em; text-align: justify;">
+                \(\textbf{VLM causal steering at a glance:}\) The video editing system operates as a black-box (frozen) counterfactual generator and the (black-box) VLM as an evaluator of the generated counterfactuals. The VLM receives as input a generated counterfactual frame, the evaluation instruction, and the target counterfactual prompt \(\mathcal{P}\), and returns textual feedback, which is used to compute a “textual gradient” \(\frac{\partial \mathcal{L}}{\partial \mathcal{P}}\) and optimize \(\mathcal{P}\).
+              </figcaption>
+            </figure>
 
             <p>
-            The proposed framework is illustrated in <a href="#fig1">1</a>.
-            Given a generated counterfactual video frame, the counterfactual prompt, and an evaluation instruction containing the target interventions, 
-            we implement our proposed “multimodal loss” using a VLM:
+              The proposed framework is illustrated in <a href="#fig1">1</a>.
+              Given a generated counterfactual video frame, the counterfactual prompt, and an evaluation instruction containing the target interventions, 
+              we implement our proposed “multimodal loss” using a VLM:
             </p>
 
             <div style="text-align: center; margin: 1em 0;">
               \[
                 \mathcal{L} = \textit{VLM}(\mathcal{V'}_{\mathit{frame}}, \textit{evaluation instruction}, \mathcal{P})
               \]
-          </div>
+            </div>
 
+            <p>
+              To optimize \(\mathcal{P}\), we employ <em>Textual Gradient Descent</em> (TGD), which directly updates the prompt:
+            </p>
 
-          <p>
-          To optimize \(\mathcal{P}\), we employ <em>Textual Gradient Descent</em> (TGD) , which directly updates the prompt:
-          </p>
-
-    <div style="text-align: center; margin: 1em 0;">
+            <div style="text-align: center; margin: 1em 0;">
               \[
                 \begin{aligned}
                 \mathcal{P}' &= \text{TGD.step} \left(\mathcal{P}, \frac{\partial \mathcal{L}}{\partial \mathcal{P}} \right) \\
                 &\triangleq \textit{LLM}\Big( \textit{Below are the criticisms on } \{ \mathcal{P} \}: 
                 \left\{ \frac{\partial \mathcal{L}}{\partial \mathcal{P}} \right\} \\
                 &\quad \textit{Incorporate the criticisms, and produce a new prompt.} \Big)
-               \end{aligned}
+                \end{aligned}
               \]
-    </div>
+            </div>
 
-    <p>
-      where \(\frac{\partial \mathcal{L}}{\partial \mathcal{P}}\) denotes the “textual gradients,” passed through an LLM at each TGD update to generate a new prompt incorporating the VLM criticisms.
-    </p>
+            <p>
+              where \(\frac{\partial \mathcal{L}}{\partial \mathcal{P}}\) denotes the “textual gradients,” passed through an LLM at each TGD update to generate a new prompt incorporating the VLM criticisms.
+            </p>
 
-    <!-- Code-like box with caption -->
-   <figure style="margin-top: 2rem;">
-  
-  <figcaption style="font-weight: bold; margin-bottom: 0.5rem;">
-  Example of the textual gradient \(\frac{\partial \mathcal{L}}{\partial \mathcal{P}}\) for the age intervention (old to young) of <a href="#fig2">Figure 2</a>.
-  </figcaption>
+            <!-- Textual Gradient Carousel -->
+            <style>
+              .carousel-container {
+                overflow: hidden;
+                position: relative;
+                width: 100%;
+              }
 
+              .carousel-track {
+                display: flex;
+                transition: transform 0.5s ease-in-out;
+                width: 100%;
+              }
 
-    <pre style="
-    background-color: rgb(199, 224, 221);
-    padding: 1rem;
-    border-radius: 8px;
-    overflow-x: auto;
-    white-space: pre-wrap;
-    font-family: monospace;
-    font-size: 0.95em;
-    line-height: 1.5;
-  ">
+              .carousel-slide {
+                flex: 0 0 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+                padding: 1.5rem;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+              }
+
+              .carousel-slide figure {
+                width: 100%;
+                max-width: 800px;
+              }
+
+              .carousel-slide pre {
+                background-color: #c7e0dd;
+                padding: 1rem;
+                border-radius: 12px;
+                white-space: pre-wrap;
+                font-family: monospace;
+                font-size: 0.95em;
+                line-height: 1.6;
+                width: 100%;
+                box-sizing: border-box;
+              }
+
+              .carousel-buttons {
+                margin-top: 1.5rem;
+                display: flex;
+                justify-content: center;
+                gap: 1rem;
+              }
+
+              .carousel-buttons button {
+                border: none;
+                background: #f5f5f5;
+                padding: 0.75rem 1rem;
+                border-radius: 8px;
+                cursor: pointer;
+                font-size: 1.2rem;
+              }
+
+              .carousel-buttons button:hover {
+                background-color: #e2e2e2;
+              }
+            </style>
+
+            <div class="box" style="margin-top: 2rem;">
+              <div class="carousel-container">
+                <div class="carousel-track" id="gradientCarousel">
+                  
+                  <!-- Slide 1 -->
+                  <div class="carousel-slide">
+                    <figure>
+                      <figcaption class="has-text-centered has-text-weight-semibold is-italic" style="margin-bottom: 1rem;">
+                        Textual Gradient \(\frac{\partial \mathcal{L}}{\partial \mathcal{P}}\) — Age Intervention of Figure <a href="#fig2">2</a> (old to young)
+                      </figcaption>
+                      <pre>
 The variable "A woman is young" lacks specificity and clarity, which likely contributed to the misalignment between the generated image and the intended attribute of youthfulness. The term "young" is highly subjective and can be interpreted variably depending on cultural, personal, and contextual factors. This ambiguity in the prompt may have led the Text-to-Image model to generate an image that does not meet the counterfactual criteria specified.
+ 
+ **Feedback and Criticism:**
+ 
+ 1. **Specificity in Age Description**: The term "young" should be replaced with a more precise age or age range to guide the model more effectively. For instance, specifying "a woman in her early twenties" or "a woman aged 20-25 years" would provide a clearer target for the model, reducing ambiguity and increasing the likelihood of generating an image that aligns with the youthful attribute desired.
+ 
+ 2. **Inclusion of Contextual Details**: While the prompt should remain focused on the age attribute, adding minimal contextual details that align with youthful appearances could enhance the effectiveness of the prompt. For example, mentioning "a youthful demeanor" or "fresh-faced" could cue the model to focus on features typically associated with younger individuals.
+ 
+ 3. **Avoiding Overly Broad Descriptors**: The use of broad descriptors like "young" without additional qualifiers can lead to a wide range of interpretations. It's beneficial to avoid these where precision is required for generating specific outcomes.
+ 
+ 4. **Testing and Iteration**: After adjusting the prompt, it would be advisable to test the new prompt with the model to see if the changes yield a more accurate representation. This iterative approach can help fine-tune the prompt based on actual outcomes.
+ 
+ By addressing these points, the prompt "A woman is young" can be optimized to more effectively communicate the desired attribute of youthfulness to the Text-to-Image model, thereby improving the alignment of the generated image with the counterfactual target.
+                      </pre>
+                    </figure>
+                  </div>
 
-Feedback and Criticism:
+                  <!-- Slide 2 -->
+                  <div class="carousel-slide">
+                    <figure>
+                      <figcaption class="has-text-centered has-text-weight-semibold is-italic" style="margin-bottom: 1rem;">
+                        Textual Gradient \(\frac{\partial \mathcal{L}}{\partial \mathcal{P}}\) — Gender Intervention of Age Intervention of Figure <a href="#fig2">2</a> (woman to man)
+                      </figcaption>
+                      <pre>
+The variable "He is young, he has a beard" needs to be optimized to better align with the specified attributes of being a young man with a beard. The current prompt lacks specificity and clarity, which may have contributed to the generation of an image that does not meet the counterfactual target attributes.
+ 
+ **Feedback and Criticism:**
+ 
+ 1. **Specificity and Clarity**: The current prompt is somewhat vague and does not explicitly mention the gender, which is crucial for the intervention. The phrase "he has a beard" implies masculinity, but it seems that the model did not pick up on this cue effectively. To improve, the prompt should explicitly state the gender to avoid ambiguity. For example, incorporating the word "man" or "male" could guide the model more effectively.
+ 
+ 2. **Descriptive Language**: The prompt could benefit from more descriptive language to emphasize the attributes. Instead of just saying "young," it might be helpful to describe what "young" typically implies in this context, such as "a youthful appearance" or "looks in his twenties." This could help the model in generating features that are commonly associated with younger individuals.
+ 
+ 3. **Attribute Focus**: The prompt should focus more on the attributes that need intervention. Since "beard" is a key attribute but was completely missed, the prompt could emphasize this feature more strongly. For instance, describing the beard in more detail like "sporting a well-groomed beard" could make it a focal point for the generation process.
+ 
+ 4. **Use of Active Language**: The prompt could use more active language to make the descriptions more dynamic and engaging, which might help in better capturing the desired attributes. For example, "A young man with a striking beard" adds character and emphasis.
+ 
+ 5. **Avoiding Misinterpretation**: To ensure that the attributes are not misinterpreted, the prompt could include a brief explanation that aligns with common perceptions or stereotypes, ensuring that the text-to-image model has a clear and direct reference to work from.
+ 
+ By addressing these points, the prompt can be optimized to more effectively communicate the desired attributes to the text-to-image model, thereby improving the likelihood of generating an image that aligns with the counterfactual target attributes.
+                      </pre>
+                    </figure>
+                  </div>
 
-1. Specificity in Age Description: The term "young" should be replaced with a more precise age or age range to guide the model more effectively. For instance, specifying "a woman in her early twenties" or "a woman aged 20–25 years" would provide a clearer target for the model, reducing ambiguity and increasing the likelihood of generating an image that aligns with the youthful attribute desired.
+                </div>
 
-2. Inclusion of Contextual Details: While the prompt should remain focused on the age attribute, adding minimal contextual details that align with youthful appearances could enhance the effectiveness of the prompt. For example, mentioning "a youthful demeanor" or "fresh-faced" could cue the model to focus on features typically associated with younger individuals.
+                <!-- Carousel navigation -->
+                <div class="carousel-buttons">
+                  <button onclick="moveGradientSlide(-1)">◀</button>
+                  <button onclick="moveGradientSlide(1)">▶</button>
+                </div>
+              </div>
+            </div>
 
-3. Avoiding Overly Broad Descriptors: The use of broad descriptors like "young" without additional qualifiers can lead to a wide range of interpretations. It's beneficial to avoid these where precision is required for generating specific outcomes.
+            <script>
+              let gradientSlideIndex = 0;
 
-4. Testing and Iteration: After adjusting the prompt, it would be advisable to test the new prompt with the model to see if the changes yield a more accurate representation. This iterative approach can help fine-tune the prompt based on actual outcomes.
+              function moveGradientSlide(direction) {
+                const track = document.getElementById("gradientCarousel");
+                const slides = document.querySelectorAll(".carousel-slide");
+                gradientSlideIndex = (gradientSlideIndex + direction + slides.length) % slides.length;
+                track.style.transform = `translateX(-${gradientSlideIndex * 100}%)`;
+              }
 
-By addressing these points, the prompt "A woman is young" can be optimized to more effectively communicate the desired attribute of youthfulness to the Text-to-Image model, thereby improving the alignment of the generated image with the counterfactual target.
-  </pre>
-      </figure>
+              document.addEventListener("DOMContentLoaded", () => {
+                const track = document.getElementById("gradientCarousel");
+                track.style.display = "flex";
+                track.style.transition = "transform 0.5s ease-in-out";
+                document.querySelectorAll(".carousel-slide").forEach(slide => {
+                  slide.style.minWidth = "100%";
+                });
+              });
+            </script>
 
           </div>
         </div>
@@ -261,7 +372,6 @@ By addressing these points, the prompt "A woman is young" can be optimized to mo
     </div>
   </div>
 </section>
-
 
 
 <!-- Image carousel --> 
