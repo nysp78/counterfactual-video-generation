@@ -1,5 +1,5 @@
 # Causally Steered Diffusion for Automated Video Counterfactual Generation
-![image](https://github.com/user-attachments/assets/6a39e84b-c751-4ed3-b444-233981f49c42)
+![image](docs/static/images/figure2_v8.png)
 
 
 ## Enviroment
