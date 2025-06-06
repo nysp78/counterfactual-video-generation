@@ -64,7 +64,7 @@ The file `counterfactual_video/data/celebv_bench/samples.txt` contains the video
 
 
 ## Credits
-This project builds upon the excellent work of the following open-source repositories. We sincerely thank the authors for their open-source contributions:
+This project builds upon the excellent work of the following repositories. We sincerely thank the authors for their open-source contributions:
 *  [Tune-A-Video](https://github.com/showlab/Tune-A-Video/tree/main)
 *  [FLATTEN](https://github.com/yrcong/flatten/tree/main)
 *  [TokenFlow](https://github.com/omerbt/TokenFlow)
