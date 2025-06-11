@@ -59,7 +59,8 @@ The complete dataset is available at: https://drive.google.com/drive/folders/1Jv
 The file `counterfactual_video/data/celebv_bench/samples.txt` contains the video identifiers used in our evaluation dataset. Additionally, in `counterfactual_video/data/celebv_bench/frames` we provide the frames extracted from each video.
 
 ## VLM Causal Steering Results
-![Demo](docs/static/images/fig1/1F5naBzNfi8_0_0.gif) ![Demo](docs/static/images/fig1/aGRVuZHstlU_0_0.gif)
+![Demo](docs/static/images/fig1/1F5naBzNfi8_0_0.gif) ![Demo](docs/static/images/fig1/aGRVuZHstlU_0_0.gif)  ![Demo](docs/static/images/tokenflow/vMkIT1SycG8_14_1.gif) 
+![Demo](docs/static/images/flatten/0xtFFvocggE_6_0.gif) ![Demo](docs/static/images/flatten/-_zyvfId578_12_1.gif) 
 
 
 
