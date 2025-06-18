@@ -1,7 +1,7 @@
 # Causally Steered Diffusion for Automated Video Counterfactual Generation
 ![image](docs/static/images/figure2_v8.png)
 
-
+[Preprint](https://arxiv.org/abs/2506.14404)
 ## Enviroment
 ```
 conda create -n crf_video python=3.12.9
