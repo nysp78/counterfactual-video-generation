@@ -40,6 +40,8 @@ crf_config_path: path to the file containing the initial counterfactual (target)
 ```
 ## VLM-based metrics
 ### Causal effectiveness
+<img src="https://github.com/user-attachments/assets/8702ef49-59dd-4498-a717-0fe69bc4a63a" width="600"/>
+
 Inside `counterfactual_video/vlm_metrics` run:
 ```
 python effectiveness_llava.py --outputs_path /path/to/generated_videos tokenflow --method tokenflow --questions_path ../data/celebv_bench/questions_explicit.json
@@ -47,6 +49,8 @@ python effectiveness_llava.py --outputs_path /path/to/generated_videos tokenflow
 `questions_explicit.json` file contains the mutliple-choice questions extracted from the initial counterfactual prompts.
 
 ### Minimality
+![image](https://github.com/user-attachments/assets/17c3ba0a-0912-4754-aea7-abb09367ee5a)
+
 Inside `counterfactual_video/vlm_metrics`,  use the following command. You will need an OpenAI API key:
 ```
 python gpt_minimality.py --model gpt-4o --outputs_path /path/to/generated_videos --method tokenflow --crf_config_path ../data/celebv_bench/counterfactual_explicit.json
