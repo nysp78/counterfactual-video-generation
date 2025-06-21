@@ -77,3 +77,15 @@ This project builds upon the excellent work of the following repositories. We si
 *  [awesome-diffusion-v2v](https://github.com/wenhao728/awesome-diffusion-v2v)
 *  [common_metrics_on_video_quality](https://github.com/JunyaoHu/common_metrics_on_video_quality)
 *  [CelebV-Text](https://github.com/CelebV-Text/CelebV-Text)
+
+
+## Citation
+```
+If you find this work helpful in your research, cite:
+@article{spyrou2025causally,
+  title={Causally Steered Diffusion for Automated Video Counterfactual Generation},
+  author={Spyrou, Nikos and Vlontzos, Athanasios and Pegios, Paraskevas and Melistas, Thomas and Gkouti, Nefeli and Panagakis, Yannis and Papanastasiou, Giorgos and Tsaftaris, Sotirios A},
+  journal={arXiv preprint arXiv:2506.14404},
+  year={2025}
+}
+```
