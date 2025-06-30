@@ -4,7 +4,7 @@
 [Preprint](https://arxiv.org/abs/2506.14404)
 ## Enviroment
 ```
-conda create -n crf_video python=3.12.9
+conda create -n crf_video python=3.9
 conda activate crf_video
 pip install -r requirements.txt
 ```
