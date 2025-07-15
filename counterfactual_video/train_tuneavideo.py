@@ -36,7 +36,7 @@ if __name__ == "__main__":
         os.makedirs(base_ckpt_path, exist_ok=True)
         trained_videos = os.listdir(base_ckpt_path)
         if video in trained_videos:
-            print("Video all ready trained!")
+            print("Video already trained!")
             continue
         print(f"Training on video {idx + 1}/{len(video_files)}: {video}")
 
