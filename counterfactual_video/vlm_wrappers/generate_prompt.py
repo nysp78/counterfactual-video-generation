@@ -9,7 +9,7 @@ def gender_from_text(text):
     return None
 
 
-def generate_vlm_prompt__(intervened_attr, crf_prompt, target_interventions):
+def generate_vlm_prompt__(intervened_attr, crf_prompt, target_interventions, causal_dec=True):
     
     causal_decoupling_prompt = ""
     
@@ -18,8 +18,9 @@ def generate_vlm_prompt__(intervened_attr, crf_prompt, target_interventions):
     #crf_gender = gender_from_text(crf_prompt)
 
     #graph_mutilation
-    if intervened_attr == "beard" or intervened_attr == "bald":
-        causal_decoupling_prompt = '''If either beard or bald appears in target interventions, do not include references to the values of age or gender (e.g. neutrilize gender or do not mention age)'''
+    if causal_dec:
+        if intervened_attr == "beard" or intervened_attr == "bald":
+            causal_decoupling_prompt = '''If either beard or bald appears in target interventions, do not include references to the values of age or gender (neutrilize gender (e.g. an individual or a person))'''
 
 
     prompt = f'''

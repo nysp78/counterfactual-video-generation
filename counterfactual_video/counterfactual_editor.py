@@ -68,10 +68,7 @@ def tensor_to_bytes(tensor_):
     image_pil.save(png_buffer, format='PNG')
     png_bytes = png_buffer.getvalue()
     return png_bytes
-    
-    
-
-    
+       
 def prompt_optimization_loop(method, config, attr, f_prompt, crf_prompt, max_epochs = 1):
     tg.set_backward_engine("gpt-4-turbo", override=True)
     
@@ -82,7 +79,7 @@ def prompt_optimization_loop(method, config, attr, f_prompt, crf_prompt, max_epo
 
     final_frames = torch.zeros(24, 3, 512, 512)
     intervened_attr = attr
-    vlm_prompt = generate_vlm_prompt__(intervened_attr, crf_prompt,  target_interventions)
+    vlm_prompt = generate_vlm_prompt__(intervened_attr, crf_prompt,  target_interventions, causal_dec=True)
 
     
     question_variable = tg.Variable(vlm_prompt, role_description="instruction to the VLM", requires_grad=False)    
