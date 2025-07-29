@@ -15,7 +15,7 @@ To fine-tune the T2I model for video editing, inside `counterfactual_video/` run
 python train_tuneavideo.py --base_config methods/tuneavideo/configs/config_tune.yaml --source_prompts data/celebv_bench/source_prompts.json --data_dir data/celebv_bench/frames
 ```
 ### TokenFlow
-To produce and save the inverted latents for TokenFlow run:
+To produce and save the inverted latents for TokenFlow, inside `counterfactual_video/` run:
 ```
 python tokenflow_preprocess.py 
 ```
