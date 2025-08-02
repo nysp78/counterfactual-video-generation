@@ -36,6 +36,7 @@ if __name__ == '__main__':
     parser.add_argument('--crf_config_path', type=str, default='data/celebv_bench/counterfactual_explicit.json')
 
 
+
     opt = parser.parse_args()
     logger = logging.getLogger(__name__)
 
