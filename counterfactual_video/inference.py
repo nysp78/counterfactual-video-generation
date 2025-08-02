@@ -80,7 +80,7 @@ if __name__ == '__main__':
         if opt.method == "tuneavideo":
             print("Loading Tune-A-Video checkpoints!")
             config["checkpoint_dir"] = os.path.join(base_ckpt_path, video_id)
-            trained_videos = os.listdir("methods/tuneavideo/checkpoints")
+            trained_videos = os.listdir(base_ckpt_path)
             if video_id not in trained_videos:
                 print("Video all ready trained!")
                 continue
@@ -169,8 +169,7 @@ if __name__ == '__main__':
         text_descriptions = [config["video"][video_id]["prompt_variants"]["factual"]] + text_descriptions
         videos = torch.concat(videos)
         save_path = grids_path + "/" + f'{video_id}.gif'
-        
-      
+              
         #save_videos_grid__(videos, save_path, text_descriptions)
         save_videos_grid__(videos, save_path, text_descriptions)
 
