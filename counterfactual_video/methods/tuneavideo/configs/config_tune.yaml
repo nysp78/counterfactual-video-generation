@@ -1,4 +1,4 @@
-pretrained_model_path: "CompVis/stable-diffusion-v1-4"
+pretrained_model_path: "stabilityai/stable-diffusion-2-1-base"
 checkpoint_dir: "methods/tuneavideo/checkpoints_v2"
 
 train_data:
@@ -22,8 +22,8 @@ validation_data:
 
 learning_rate: 3e-5
 train_batch_size: 1
-max_train_steps: 500
-validation_steps: 500
+max_train_steps: 450
+validation_steps: 450
 checkpointing_steps: 1000
 trainable_modules:
   - "attn1.to_q"
