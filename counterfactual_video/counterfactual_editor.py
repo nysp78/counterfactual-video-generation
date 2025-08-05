@@ -20,8 +20,7 @@ import io
 from vlm_wrappers.llava import LlavaNext
 from vlm_wrappers.generate_prompt import generate_vlm_prompt__, gender_from_text
 
-os.environ["OPENAI_API_KEY"] = "YOUR OPEN_AI KEY"
-
+os.environ["OPENAI_API_KEY"] = "YOUR_OPENAI_KEY"
 
 
 def extract_interventions(factual: str, counterfactual: str):
@@ -103,10 +102,11 @@ def prompt_optimization_loop(method, config, attr, f_prompt, crf_prompt, max_epo
 
             2)Criticize.
             3)Do not describe or modify any other visual elements such as expression, hairstyle, background, clothing, lighting.
-            4)The optimized prompt should not have the format of an instruction (e.g generate an image, focus on etc.)
-            5)The optimized prompt should be pushed towards the desired interventions
-            6)The prompt should have the similar structure as the original prompt
-            7)If the alignment is good return: "no_optimization"
+            4)Describe age using general terms such as 'child,' 'adolescent,' 'teenager,' 'young adult,' 'middle-aged,' 'senior,' 'elder,' or 'elderly,' depending on the context
+            6)The optimized prompt should not have the format of an instruction (e.g generate an image, focus on etc.)
+            7)The optimized prompt should be pushed towards the desired interventions
+            8)The prompt should have the similar structure as the original prompt
+            9)If the alignment is good return: "no_optimization"
             Do not provide a new answer''',
             engine="gpt-4-turbo")
         
@@ -182,7 +182,7 @@ if __name__ == '__main__':
         if opt.method == "tuneavideo":
             print("Loading Tune-A-Video checkpoints!")
             config["checkpoint_dir"] = os.path.join(base_ckpt_path, video_id)
-            trained_videos = os.listdir("methods/tuneavideo/checkpoints")
+            trained_videos = os.listdir(base_ckpt_path)
             if video_id not in trained_videos:
                 print("Video all ready trained!")
                 continue

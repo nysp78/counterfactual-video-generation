@@ -3,7 +3,7 @@
     guidance_scale: 7.5
     video_path:
     pretrained_model_path: "stabilityai/stable-diffusion-2-1-base"
-    output_path: "outputs/flatten-results"
+    output_path: "outputs/flatten-results/test"
     video_length: 24
     old_qk: 0
     height: 512

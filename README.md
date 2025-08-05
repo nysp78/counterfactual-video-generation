@@ -8,6 +8,14 @@ conda create -n crf_video python=3.9
 conda activate crf_video
 pip install -r requirements.txt
 ```
+
+## Automatic generation of initial causal counterfactual prompts
+To generate the initial causal counterfactual prompts, inside `counterfactual_video/data/celebv_bench` run the following command (You will need an OpenAI key):
+```
+python openai_gen_causal_prompts.py
+```
+We also provide the initial causal counterfactual prompts in `counterfactual_explicit.json`
+
 ## Preprocess
 ### Tune-A-Video
 To fine-tune the T2I model for video editing, inside `counterfactual_video/` run the following command:
@@ -26,7 +34,7 @@ To produce counterfactual videos using the vanilla editing methods, specify the 
 python inference.py --method tokenflow --base_config_path config_pnp.yaml --crf_config_path data/celebv_bench/counterfactual_explicit.json
 ```
 
-## VLM Causal Steering
+## Causal Steering for Video Counterfactuals (CSVC)
 To produce counterfactual videos using our proposed VLM causal steering, use the following command. You will need an OpenAI API key.
 We provide an example with TokenFlow.
 ```

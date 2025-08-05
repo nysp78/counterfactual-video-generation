@@ -144,7 +144,7 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-           Adapting text-to-image (T2I) latent diffusion models for video editing has shown strong visual fidelity and controllability, but challenges remain in maintaining causal relationships in video content. Edits affecting causally dependent attributes risk generating unrealistic or misleading outcomes if these relationships are ignored. In this work, we propose a causally faithful framework for counterfactual video generation, guided by a vision-language model (VLM). Our method is agnostic to the underlying video editing system and does not require access to its internal mechanisms or finetuning. Instead, we guide the generation by optimizing text prompts based on an assumed causal graph, addressing the challenge of latent space control in LDMs. We evaluate our approach using standard video quality metrics and counterfactual-specific criteria, such as causal effectiveness and minimality. Our results demonstrate that causally faithful video counterfactuals can be effectively generated within the learned distribution of LDMs through prompt-based causal steering. With its compatibility with any black-box video editing system, our method holds significant potential for generating realistic “what-if” video scenarios in diverse areas such as  healthcare and digital media.
+            Adapting text-to-image (T2I) latent diffusion models (LDMs) to video editing has shown strong visual fidelity and controllability, but challenges remain in maintaining causal relationships inherent to the video data generating process. Edits affecting causally dependent attributes often generate unrealistic or misleading outcomes if these relationships are ignored. In this work, we introduce a causally faithful framework for counterfactual video generation, formulated as an Out-of-Distribution (OOD) prediction problem. We embed prior causal knowledge by encoding the relationships specified in a causal graph into text prompts and guide the generation process by optimizing these prompts using a vision-language model (VLM)-based textual loss. This loss encourages the latent space of the LDMs to capture OOD variations in the form of counterfactuals, effectively steering generation toward causally meaningful alternatives. The proposed framework, dubbed CSVC, is agnostic to the underlying video editing system and does not require access to its internal mechanisms or fine-tuning. We evaluate our approach using standard video quality metrics and counterfactual-specific criteria, such as causal effectiveness and minimality. Experimental results show that CSVC generates causally faithful video counterfactuals within the LDM distribution via prompt-based causal steering, achieving state-of-the-art causal effectiveness without compromising temporal consistency or visual quality on real-world facial videos. Due to its compatibility with any black-box video editing system, our framework has significant potential to generate realistic 'what if' hypothetical video scenarios in diverse areas such as digital media and healthcare.
           </p>
         </div>
       </div>
@@ -217,7 +217,16 @@
                 style="margin-bottom: 1rem; max-width: 100%; height: auto;"
               />
               <figcaption style="font-size: 0.95em; text-align: justify;">
-                \(\textbf{VLM causal steering at a glance:}\) The video editing system operates as a black-box (frozen) counterfactual generator and the (black-box) VLM as an evaluator of the generated counterfactuals. The VLM receives as input a generated counterfactual frame, the evaluation instruction, and the target counterfactual prompt \(\mathcal{P}\), and returns textual feedback, which is used to compute a “textual gradient” \(\frac{\partial \mathcal{L}}{\partial \mathcal{P}}\) and optimize \(\mathcal{P}\).
+                \(\textbf{CSVC at a glance:}\)  The initial counterfactual prompts (e.g., <em>She is young</em>) are generated using GPT-4 
+                by providing the causal graph and the factual prompts (e.g., <em>She is old</em>) and leveraging 
+                in-context learning</a>. 
+                The video editing system operates as a black-box (frozen) counterfactual generator, 
+                and the (black-box) VLM as an evaluator of the generated counterfactuals. 
+                The VLM takes as input a generated counterfactual frame, the evaluation instruction, 
+                and the target counterfactual prompt \( \mathcal{P} \), and outputs textual feedback 
+                used to compute a ‘textual gradient’ 
+                \( \frac{\partial \mathcal{L}}{\partial \mathcal{P}} \), 
+                which guides the optimization of \( \mathcal{P} \) by focusing on the unsuccessful interventions.
               </figcaption>
             </figure>
 
@@ -440,7 +449,7 @@ The variable "He is young, he has a beard" needs to be optimized to better align
 -->
 <section class="section has-background-light" id="causal-steering-results">
   <div class="container">
-    <h1 class="title is-2 has-text-centered">VLM Causal Steering Results</h1>
+    <h1 class="title is-2 has-text-centered">CSVC Results</h1>
      <h2 class="title is-4 has-text-centered">FLATTEN</h2>
      <section class="hero is-small" id="fig3">
           <div class="hero-body">

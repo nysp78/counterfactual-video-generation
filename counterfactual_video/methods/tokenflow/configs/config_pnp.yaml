@@ -1,7 +1,7 @@
 # general
 seed: 42
 device: 'cuda'
-output_path: 'outputs/tokenflow-results'
+output_path: 'outputs/tokenflow-results/test'
 intervention_type: "explicit"
 # data
 data_path: 
