@@ -8,6 +8,9 @@ from methods.video_editor_wrapper import VideoEditorWrapper
 from metrics.clip_text_alignment import ClipTextAlignment
 from metrics.clip_consistency import ClipConsistency
 from metrics.clip_text_alignment import ClipTextAlignment
+from textgrad.engine_experimental.litellm import LiteLLMEngine
+from diffusers import StableDiffusionPipeline
+from transformers import AutoModelForCausalLM, AutoTokenizer
 from metrics.dover_score import DoverScore
 import numpy as np
 from tqdm import tqdm
@@ -17,25 +20,80 @@ from PIL import Image
 from vlm_wrappers.generate_prompt import gender_from_text, generate_rephrasing_prompt
 
 os.environ["OPENAI_API_KEY"] = "YOUR OPEN_AI KEY"
+device="cuda:0"
+
+def load_prompter():
+    device = 'cuda:0'
+    prompter_model = AutoModelForCausalLM.from_pretrained("microsoft/Promptist").to(device)
+    tokenizer = AutoTokenizer.from_pretrained("gpt2")
+    tokenizer.pad_token = tokenizer.eos_token
+    tokenizer.padding_side = "left"
+    return prompter_model, tokenizer
+
+def load_vpo(model_path):
+    device = 'cuda:0'
+    model = AutoModelForCausalLM.from_pretrained(model_path,  trust_remote_code=True).half().eval().to(device)
+# for 8bit
+# model = AutoModelForCausalLM.from_pretrained(model_path, device_map=device, load_in_8bit=True)
+    tokenizer = AutoTokenizer.from_pretrained(model_path)
+
+    return model, tokenizer
+
+def vpo(model, tokenizer, text):
+
+    prompt_template = """In this task, your goal is to expand the user's short query into a detailed and well-structured English prompt for generating short videos.
+
+Please ensure that the generated video prompt adheres to the following principles:
+
+1. **Harmless**: The prompt must be safe, respectful, and free from any harmful, offensive, or unethical content.
+2. **Aligned**: The prompt should fully preserve the user's intent, incorporating all relevant details from the original query while ensuring clarity and coherence.
+3. **Helpful for High-Quality Video Generation**: The prompt should be descriptive and vivid to facilitate high-quality video creation. Keep the scene feasible and well-suited for a brief duration, avoiding unnecessary complexity or unrealistic elements not mentioned in the query.
+
+Do not include in the prompt: "Create a video or the duration of the video"
+Do not describe other factors of variation.
+Describe only the facial characteristics
+Generate up to three phrases.
+Return just the prompt, nothing else.
+User Query:{}
+
+Video Prompt:"""
+
+    messgae = [{'role': 'user', 'content': prompt_template.format(text)}]
+    model_inputs = tokenizer.apply_chat_template(messgae, add_generation_prompt=True, tokenize=True, return_tensors="pt").to(device)
+    output = model.generate(model_inputs, max_new_tokens=30, do_sample=True, top_p=1.0, temperature=0.7, num_beams=1)
+    resp = tokenizer.decode(output[0]).split('<|start_header_id|>assistant<|end_header_id|>')[1].split('<|eot_id|>')[0].strip()
+
+    return resp
 
 
-     
-def prompt_optimization_loop(method, config, crf_prompt):
-    #tg.set_backward_engine("gpt-4-turbo", override=True)
+def promptist(prompter_model, prompter_tokenizer, plain_text):
+    device = "cuda:0"
+    input_ids = prompter_tokenizer(plain_text.strip()+" Rephrase:", return_tensors="pt").input_ids
+    input_ids = input_ids.to(device)
+    eos_id = prompter_tokenizer.eos_token_id
+    outputs = prompter_model.generate(input_ids, do_sample=True, max_new_tokens=1024, num_beams=8, num_return_sequences=8, eos_token_id=eos_id, pad_token_id=eos_id, length_penalty=-1.0)
+    output_texts = prompter_tokenizer.batch_decode(outputs, skip_special_tokens=True)
+    res = output_texts[0].replace(plain_text+" Rephrase:", "").strip()
+    return res
 
-    #score = -1
-    #threshold = 20.0
+
+def prompt_optimization(method, engine, config, crf_prompt):     
+
     final_frames = torch.zeros(24, 3, 512, 512)
-    
-    llm_prompt = generate_rephrasing_prompt(crf_prompt)
-   # print(vlm_prompt)
+    if engine["method"] == "gpt-4o":
+        llm_prompt = generate_rephrasing_prompt(crf_prompt)
+        question_variable = tg.Variable(llm_prompt, role_description="instruction to the LLM", requires_grad=False)    
+        model = tg.BlackboxLLM(engine["model"])
+        response = model(question_variable)
+        response = response.value
+    elif engine["method"] == "vpo":
+        response = vpo(engine["model"], engine["tokenizer"], crf_prompt)
+    else:
+        response = promptist(engine["model"], engine["tokenizer"], crf_prompt)
+     
 
-    question_variable = tg.Variable(llm_prompt, role_description="instruction to the VLM", requires_grad=False)    
-    model = tg.BlackboxLLM("gpt-4o")
-    response = model(question_variable)
-
-    config["prompt"] = response.value
-    print("PROPOSED Prompt:", response.value)
+    config["prompt"] = response
+    print("PROPOSED Prompt:", response)
     video_editor = VideoEditorWrapper(config=config, method=method)
     final_frames , source_frames = video_editor.run()
     source_frames = source_frames.to(device)
@@ -46,9 +104,12 @@ def prompt_optimization_loop(method, config, crf_prompt):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--method', choices=["tuneavideo", "tokenflow", "flatten"], default="tokenflow")
-    parser.add_argument('--base_config_path', type=str, default='methods/tokenflow/configs/config_pnp.yaml')
-    parser.add_argument('--crf_config_path', type=str, default='data/celebv_bench/counterfactual_explicit.json')
+    parser.add_argument('--method', choices=["tuneavideo", "tokenflow", "flatten"], default="flatten")
+    parser.add_argument('--prompt_optimization', choices=["gpt-4o", "vpo", "promptist"], default="gpt-4o")
+    parser.add_argument('--base_config_path', type=str, default='methods/flatten/configs/config_flatten.yaml')
+    parser.add_argument('--crf_config_path', type=str, default='data/celebv_bench/counterfactual_explicit_all.json')
+    parser.add_argument('--video_path', type=str, default='data/celebv_bench/videos/')
+    parser.add_argument('--data_path', type=str, default='data/celebv_bench/frames/')
     
     
     
@@ -66,6 +127,19 @@ if __name__ == '__main__':
         edited_prompts = json.load(f)
 
     seed_everything(config["seed"])
+
+    if opt.prompt_optimization == "vpo":
+        model_path = 'CCCCCC/VPO-5B' #'meta-llama/Meta-Llama-3-8B-Instruct'
+        vpo_llm, tokenizer = load_vpo(model_path)
+        engine = {"method": "vpo", "model":vpo_llm, "tokenizer": tokenizer}
+
+    elif opt.prompt_optimization == "gpt-4o":
+        engine = {"method": "gpt-4o", "model": "gpt-4o", "tokenizer": None}
+
+    else:
+        promptist_llm, tokenizer = load_prompter()
+        engine = {"method": "promptist", "model": promptist_llm, "tokenizer":tokenizer}
+
         
     metrics = {}
     video_quality = []  # Measured by DOVER
@@ -73,9 +147,8 @@ if __name__ == '__main__':
     temporal_consistency = [] 
     
     for video_id, prompts in tqdm(edited_prompts.items()):
-        config["data_path"] = f"data/celebv_bench/frames/{video_id}"
+        config["data_path"] = f"{opt.data_path}/{video_id}" 
         
-        #factual_frame = config["data_path"]+"/00007.jpg"
         config["video"][video_id] = {
             "prompt_variants": {
                 "factual": prompts["factual"],
@@ -100,7 +173,7 @@ if __name__ == '__main__':
               
         if opt.method == "flatten":
 
-            config["data_path"] = f"data/celebv_bench/videos/{video_id}.mp4"
+            config["data_path"] = opt.video_path + video_id + ".mp4"
         
         
      
@@ -121,7 +194,7 @@ if __name__ == '__main__':
             
             #if opt.method == "tokenflow":
             os.makedirs(grids_path, exist_ok=True)
-            frames, orig_frames = prompt_optimization_loop(opt.method, config, config["prompt"])
+            frames, orig_frames = prompt_optimization(opt.method, engine, config, config["prompt"])
             
             #set again the original factual prompt    
             config["prompt"] = config["video"][video_id]["prompt_variants"]["counterfactual"][attr]
