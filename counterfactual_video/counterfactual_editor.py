@@ -101,10 +101,11 @@ def prompt_optimization_loop(method, config, attr, f_prompt, crf_prompt, max_epo
             1)Evaluate how well the given image aligns with the specified attributes in the response.
             2)Criticize.
             3)Do not describe or modify any other visual elements such as expression, hairstyle, background, clothing, lighting.
-            4)The optimized prompt should not have the format of an instruction (e.g generate an image, focus on etc.)
-            5)The optimized prompt should be pushed towards the desired interventions
-            6)The prompt should have the similar structure as the original prompt
-            7)If the alignment is good return: "no_optimization"
+            4) Describe age using general terms such as 'child,' 'adolescent,' 'teenager,' 'young adult,' 'middle-aged,' 'senior,' 'elder,' or 'elderly,' depending on the context
+            5)The optimized prompt should not have the format of an instruction (e.g generate an image, focus on etc.)
+            6)The optimized prompt should be pushed towards the desired interventions
+            7)The prompt should have the similar structure as the original prompt
+            8)If the alignment is good return: "no_optimization"
             Do not provide a new answer''',
             engine="gpt-4-turbo")
         
